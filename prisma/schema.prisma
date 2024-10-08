@@ -28,18 +28,25 @@ model Article {
   updatedAt       DateTime      @updatedAt
   categories      Category[]    @relation("ArticleCategories")
   tags            Tag[]         @relation("ArticleTags")
+
+  @@index([status])
+  @@index([publishedAt])
 }
 
 model Category {
   id       Int       @id @default(autoincrement())
   name     String    @unique
   articles Article[] @relation("ArticleCategories")
+
+  @@index([name])
 }
 
 model Tag {
   id       Int       @id @default(autoincrement())
   name     String    @unique
   articles Article[] @relation("ArticleTags")
+
+  @@index([name])
 }
 
 enum ArticleStatus {
