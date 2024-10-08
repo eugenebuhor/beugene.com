@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { Prisma } from '@prisma/client';
+import { Prisma, ArticleStatus } from '@prisma/client';
 import type { NextRequest } from 'next/server';
 import prisma from '@/lib/prisma';
 import { handleError } from '@/lib/apiErrorHandler';
@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
 
   try {
     let whereClause: Prisma.ArticleWhereInput = {
-      status: 'PUBLISHED' as const,
+      status: ArticleStatus.PUBLISHED,
     };
 
     if (searchQuery) {
