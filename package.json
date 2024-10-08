@@ -8,9 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky",
-    "db:migrate": "prisma migrate dev",
-    "db:seed": "ts-node prisma/seed.ts",
-    "vercel:build": "prisma generate && prisma migrate deploy && next build"
+    "db-migrate": "prisma migrate dev",
+    "db-seed": "ts-node prisma/seed.ts",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
