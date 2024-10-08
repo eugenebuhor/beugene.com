@@ -15,10 +15,10 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    let tags;
+    let categories;
 
     if (searchQuery) {
-      tags = await prisma.tag.findMany({
+      categories = await prisma.category.findMany({
         where: {
           name: {
             contains: searchQuery,
@@ -30,14 +30,14 @@ export async function GET(request: NextRequest) {
         },
       });
     } else {
-      tags = await prisma.tag.findMany({
+      categories = await prisma.category.findMany({
         orderBy: {
           name: 'asc',
         },
       });
     }
 
-    return NextResponse.json(tags);
+    return NextResponse.json(categories);
   } catch (error) {
     return handleError(error);
   }
