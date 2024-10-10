@@ -1,0 +1,4 @@
+.footer {
+    min-width: var(--size-min-width);
+    min-height: var(--size-footer-min-height);
+}
