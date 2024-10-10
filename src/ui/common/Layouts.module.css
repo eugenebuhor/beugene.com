@@ -1,0 +1,15 @@
+.layoutMain {
+    width: 100%;
+    min-width: var(--size-min-width);
+    min-height: 100vh;
+    padding-top: var(--size-header-height);
+}
+
+.layoutSection {}
+
+.layoutContent {
+    width: 100%;
+    max-width: var(--size-max-width);
+    margin: 0 auto;
+    padding: 0 var(--padding-layout);
+}

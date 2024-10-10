@@ -1,0 +1,31 @@
+@import './theme.css';
+
+html,
+body {
+    padding: 0;
+    margin: 0;
+    color: var(--text-primary);
+    box-sizing: border-box;
+    overflow-y: visible;
+}
+
+body {
+    background: var(--main-surface-background);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+button {
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    user-select: none;
+}
+
+button:disabled {
+    cursor: initial;
+}

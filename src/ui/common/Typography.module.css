@@ -1,0 +1,171 @@
+.typography {
+    font-family: var(--font-family), sans-serif;
+}
+
+/* Variants */
+.h1 {
+    font-size: 96px;
+    line-height: 1.2;
+    font-weight: var(--font-weight-light);
+}
+
+.h2 {
+    font-size: 60px;
+    line-height: 1.2;
+    font-weight: var(--font-weight-light);
+}
+
+.h3 {
+    font-size: 48px;
+    line-height: 1.2;
+    font-weight: var(--font-weight-regular);
+}
+
+.h4 {
+    font-size: 34px;
+    line-height: 1.2;
+    font-weight: var(--font-weight-regular);
+}
+
+.h5 {
+    font-size: 24px;
+    line-height: 1.2;
+    font-weight: var(--font-weight-regular);
+}
+
+.h6 {
+    font-size: 20px;
+    line-height: 1.2;
+    font-weight: var(--font-weight-medium);
+}
+
+.subtitle1 {
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: var(--font-weight-regular);
+}
+
+.subtitle2 {
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: var(--font-weight-medium);
+}
+
+.body1 {
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: var(--font-weight-regular);
+}
+
+.body2 {
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: var(--font-weight-regular);
+}
+
+.caption {
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: var(--font-weight-regular);
+}
+
+.overline {
+    font-size: 10px;
+    line-height: 1.5;
+    font-weight: var(--font-weight-regular);
+}
+
+/* Weights */
+.fontWeight-thin {
+    font-weight: var(--font-weight-thin);
+}
+
+.fontWeight-light {
+    font-weight: var(--font-weight-light);
+}
+
+.fontWeight-regular {
+    font-weight: var(--font-weight-regular);
+}
+
+.fontWeight-medium {
+    font-weight: var(--font-weight-medium);
+}
+
+.fontWeight-bold {
+    font-weight: var(--font-weight-bold);
+}
+
+.fontWeight-black {
+    font-weight: var(--font-weight-black);
+}
+
+/* Text Align */
+.textAlign-left {
+    text-align: left;
+}
+
+.textAlign-center {
+    text-align: center;
+}
+
+.textAlign-right {
+    text-align: right;
+}
+
+.textAlign-justify {
+    text-align: justify;
+}
+
+/* Text Transform */
+.textTransform-none {
+    text-transform: none;
+}
+
+.textTransform-capitalize {
+    text-transform: capitalize;
+}
+
+.textTransform-uppercase {
+    text-transform: uppercase;
+}
+
+.textTransform-lowercase {
+    text-transform: lowercase;
+}
+
+/* No Wrap */
+.noWrap {
+    white-space: nowrap;
+}
+
+
+/* Clickable */
+.clickable {
+    cursor: pointer;
+}
+
+/* Trim Text */
+.trim {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+}
+
+/* Word Break */
+.wordBreak-normal {
+    word-break: normal;
+}
+
+.wordBreak-break-all {
+    word-break: break-all;
+}
+
+.wordBreak-keep-all {
+    word-break: keep-all;
+}
+
+.wordBreak-break-word {
+    word-break: break-word;
+}
