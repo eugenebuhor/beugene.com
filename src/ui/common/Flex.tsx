@@ -1,8 +1,8 @@
-import React from 'react';
+import type { HTMLAttributes, CSSProperties, ElementType } from 'react';
 import clsx from 'clsx';
 import styles from './Flex.module.css';
 
-export interface FlexProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface FlexProps extends HTMLAttributes<HTMLElement> {
   display?: 'flex' | 'inline-flex';
   flexDirection?: 'row' | 'column';
   alignContent?:
@@ -17,11 +17,12 @@ export interface FlexProps extends React.HTMLAttributes<HTMLDivElement> {
   flexWrap?: 'nowrap' | 'wrap';
   gap?: string | number;
   flex?: string | number;
-  style?: React.CSSProperties;
-  component?: React.ElementType;
+  style?: CSSProperties;
+  component?: ElementType;
+  className?: string;
 }
 
-const Flex: React.FC<FlexProps> = ({
+function Flex({
   component: Component = 'div',
   display = 'flex',
   flexDirection = 'row',
@@ -35,32 +36,28 @@ const Flex: React.FC<FlexProps> = ({
   className,
   children,
   ...rest
-}) => {
+}: FlexProps) {
   const classes = clsx(
-    {
-      [styles[`display-${display}`]]: display,
-      [styles[`flexDirection-${flexDirection}`]]: flexDirection,
-      [styles[`flexWrap-${flexWrap}`]]: flexWrap,
-      [styles[`alignItems-${alignItems}`]]: alignItems,
-      [styles[`alignContent-${alignContent}`]]: alignContent,
-      [styles[`justifyContent-${justifyContent}`]]: justifyContent,
-    },
+    styles[`display-${display}`],
+    styles[`flexDirection-${flexDirection}`],
+    styles[`flexWrap-${flexWrap}`],
+    alignItems && styles[`alignItems-${alignItems}`],
+    alignContent && styles[`alignContent-${alignContent}`],
+    justifyContent && styles[`justifyContent-${justifyContent}`],
     className,
   );
 
-  if (gap || gap === 0) {
-    style.gap = gap;
-  }
-
-  if (flex || flex === 0) {
-    style.flex = gap;
-  }
+  const combinedStyle: CSSProperties = {
+    gap,
+    flex,
+    ...style,
+  };
 
   return (
-    <Component className={classes} style={style} {...rest}>
+    <Component className={classes} style={combinedStyle} {...rest}>
       {children}
     </Component>
   );
-};
+}
 
 export default Flex;

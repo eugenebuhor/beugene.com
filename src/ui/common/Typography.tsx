@@ -1,72 +1,73 @@
-import React from 'react';
-import type { HTMLAttributes } from 'react';
+import type { HTMLAttributes, ElementType, CSSProperties } from 'react';
 import clsx from 'clsx';
 import styles from './Typography.module.css';
-
-export type TypographyVariant =
-  | 'h1'
-  | 'h2'
-  | 'h3'
-  | 'h4'
-  | 'h5'
-  | 'h6'
-  | 'subtitle1'
-  | 'subtitle2'
-  | 'body1'
-  | 'body2'
-  | 'caption'
-  | 'overline';
-
-export type TypographyWeight = 'thin' | 'light' | 'regular' | 'medium' | 'bold' | 'black';
+import type {
+  ThemePaletteKey,
+  TypographyFamily,
+  TypographyVariant,
+  TypographyWeight,
+} from '@/ui/theme';
 
 export interface TypographyProps extends HTMLAttributes<HTMLElement> {
-  variant: TypographyVariant;
+  variant?: TypographyVariant;
   weight?: TypographyWeight;
+  fontFamily?: TypographyFamily;
+  color?: ThemePaletteKey;
   trim?: boolean | number;
   noWrap?: boolean;
   wordBreak?: 'normal' | 'break-all' | 'keep-all' | 'break-word';
   lineHeight?: string | number;
   textAlign?: 'left' | 'center' | 'right' | 'justify';
   textTransform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase';
-  component?: React.ElementType;
+  verticalAlign?: 'top' | 'middle' | 'baseline';
+  component?: ElementType;
+  className?: string;
 }
 
-const Typography: React.FC<TypographyProps> = ({
+function Typography({
   component: Component = 'span',
   variant = 'body1',
+  fontFamily = 'primary',
   weight,
-  color = 'inherit',
+  color,
   trim = false,
   noWrap,
-  wordBreak = 'normal',
+  wordBreak,
   lineHeight,
-  textAlign = 'left',
-  textTransform = 'none',
+  verticalAlign,
+  textAlign,
+  textTransform,
+  className = '',
   children,
   style = {},
-  onClick,
   ...rest
-}) => {
-  const classes = clsx({
-    [styles[variant]]: true,
-    [styles[`fontWeight-${weight}`]]: weight,
-    [styles[`textAlign-${textAlign}`]]: textAlign,
-    [styles[`textTransform-${textTransform}`]]: textTransform,
-    [styles.noWrap]: noWrap,
-    [styles.trim]: Boolean(trim),
-    [styles[`wordBreak-${wordBreak}`]]: wordBreak,
-    [styles.clickable]: Boolean(onClick),
-  });
+}: TypographyProps) {
+  const classes = clsx(
+    styles.typography, // Apply base typography styles
+    styles[variant],
+    weight && styles[`fontWeight-${weight}`],
+    fontFamily && styles[`fontFamily-${fontFamily}`],
+    textAlign && styles[`textAlign-${textAlign}`],
+    textTransform && styles[`textTransform-${textTransform}`],
+    verticalAlign && styles[`verticalAlign-${verticalAlign}`],
+    noWrap && styles.noWrap,
+    trim && styles.trim,
+    wordBreak && styles[`wordBreak-${wordBreak}`],
+    className,
+  );
 
-  if (trim) {
-    style.WebkitLineClamp = Number(trim);
-  }
+  const combinedStyle: CSSProperties = {
+    ...(trim ? { WebkitLineClamp: Number(trim) } : {}),
+    color: color ? `var(--${color})` : undefined,
+    lineHeight,
+    ...style,
+  };
 
   return (
-    <Component className={classes} style={style} {...rest}>
+    <Component className={classes} style={combinedStyle} {...rest}>
       {children}
     </Component>
   );
-};
+}
 
 export default Typography;
