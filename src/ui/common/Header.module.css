@@ -1,15 +1,16 @@
 .header {
+    /*
     position: fixed;
     top: 0;
     z-index: var(--z-index-header);
+    */
+    position: static;
     width: 100%;
-    height: var(--size-header-height);
+    min-height: var(--size-header-height);
     min-width: var(--size-min-width);
 }
 
 .layoutContent {
-    display: flex;
-    justify-content: space-between;
-    align-content: center;
-    flex-wrap: nowrap;
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: 25px;
 }

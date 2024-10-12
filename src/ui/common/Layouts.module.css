@@ -1,8 +1,7 @@
 .layoutMain {
     width: 100%;
     min-width: var(--size-min-width);
-    min-height: 100vh;
-    padding-top: var(--size-header-height);
+    min-height: calc(100vh - var(--size-header-height));
 }
 
 .layoutSection {}

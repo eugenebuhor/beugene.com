@@ -2,6 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import styles from '@/ui/common/Layouts.module.css';
 import Flex from '@/ui/common/Flex';
+import type { FlexProps } from '@/ui/common/Flex';
 
 /* LayoutMain */
 type LayoutMainProps = {
@@ -9,13 +10,18 @@ type LayoutMainProps = {
   className?: string;
 };
 
-export const LayoutMain: React.FC<LayoutMainProps> = ({ children, className }) => {
+export function LayoutMain({ children, className, ...rest }: LayoutMainProps & FlexProps) {
   return (
-    <Flex component="main" flexDirection="column" className={clsx(styles.layoutMain, className)}>
+    <Flex
+      component="main"
+      flexDirection="column"
+      className={clsx(styles.layoutMain, className)}
+      {...rest}
+    >
       {children}
     </Flex>
   );
-};
+}
 
 /* LayoutSection */
 type LayoutSectionProps = {
@@ -23,17 +29,18 @@ type LayoutSectionProps = {
   className?: string;
 };
 
-export const LayoutSection: React.FC<LayoutSectionProps> = ({ children, className }) => {
+export function LayoutSection({ children, className, ...rest }: LayoutSectionProps & FlexProps) {
   return (
     <Flex
       component="section"
       justifyContent="center"
       className={clsx(styles.layoutSection, className)}
+      {...rest}
     >
       {children}
     </Flex>
   );
-};
+}
 
 /* LayoutContent */
 type LayoutContentProps = {
@@ -41,15 +48,16 @@ type LayoutContentProps = {
   className?: string;
 };
 
-export const LayoutContent: React.FC<LayoutContentProps> = ({ children, className }) => {
+export function LayoutContent({ children, className, ...rest }: LayoutContentProps & FlexProps) {
   return (
     <Flex
       component="div"
       flexDirection="row"
       justifyContent="flex-start"
       className={clsx(styles.layoutContent, className)}
+      {...rest}
     >
       {children}
     </Flex>
   );
-};
+}

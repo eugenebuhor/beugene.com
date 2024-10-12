@@ -1,0 +1,22 @@
+.divider {
+    position: relative;
+    background-color: var(--text-primary);
+}
+
+.horizontal {
+    height: 1px;
+    width: 100%;
+}
+
+.vertical {
+    width: 1px;
+    height: 100%;
+}
+
+.dashed {
+    border-style: dashed;
+}
+
+.dotted {
+    border-style: dotted;
+}

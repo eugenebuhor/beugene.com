@@ -4,75 +4,83 @@
 
 /* Variants */
 .h1 {
-    font-size: 96px;
+    font-size: var(--font-size-h1);
     line-height: 1.2;
     font-weight: var(--font-weight-light);
 }
 
 .h2 {
-    font-size: 60px;
+    font-size: var(--font-size-h2);
     line-height: 1.2;
     font-weight: var(--font-weight-light);
 }
 
 .h3 {
-    font-size: 48px;
+    font-size: var(--font-size-h3);
     line-height: 1.2;
     font-weight: var(--font-weight-regular);
 }
 
 .h4 {
-    font-size: 34px;
+    font-size: var(--font-size-h4);
     line-height: 1.2;
     font-weight: var(--font-weight-regular);
 }
 
 .h5 {
-    font-size: 24px;
+    font-size: var(--font-size-h5);
     line-height: 1.2;
     font-weight: var(--font-weight-regular);
 }
 
 .h6 {
-    font-size: 20px;
+    font-size: var(--font-size-h6);
     line-height: 1.2;
     font-weight: var(--font-weight-medium);
 }
 
 .subtitle1 {
-    font-size: 16px;
+    font-size: var(--font-size-subtitle1);
     line-height: 1.5;
     font-weight: var(--font-weight-regular);
 }
 
 .subtitle2 {
-    font-size: 14px;
+    font-size: var(--font-size-subtitle2);
     line-height: 1.5;
     font-weight: var(--font-weight-medium);
 }
 
 .body1 {
-    font-size: 16px;
+    font-size: var(--font-size-body1);
     line-height: 1.5;
     font-weight: var(--font-weight-regular);
 }
 
 .body2 {
-    font-size: 14px;
+    font-size: var(--font-size-body2);
     line-height: 1.5;
     font-weight: var(--font-weight-regular);
 }
 
 .caption {
-    font-size: 12px;
+    font-size: var(--font-size-caption);
     line-height: 1.5;
     font-weight: var(--font-weight-regular);
 }
 
 .overline {
-    font-size: 10px;
+    font-size: var(--font-size-overline);
     line-height: 1.5;
     font-weight: var(--font-weight-regular);
+}
+
+/* Font Family */
+.fontFamily-primary {
+    font-family: var(--font-family-primary), sans-serif;
+}
+.fontFamily-secondary {
+    font-family:  var(--font-family-secondary), sans-serif;
 }
 
 /* Weights */
@@ -98,6 +106,19 @@
 
 .fontWeight-black {
     font-weight: var(--font-weight-black);
+}
+
+/* Vertical Align */
+.verticalAlign-top {
+    vertical-align: top;
+}
+
+.verticalAlign-middle {
+    vertical-align: middle;
+}
+
+.verticalAlign-baseline {
+    vertical-align: baseline;
 }
 
 /* Text Align */
@@ -137,12 +158,6 @@
 /* No Wrap */
 .noWrap {
     white-space: nowrap;
-}
-
-
-/* Clickable */
-.clickable {
-    cursor: pointer;
 }
 
 /* Trim Text */
