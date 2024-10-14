@@ -10,5 +10,4 @@
 
 .buttonGroup > *:not(.slider) {
     flex: 1;
-    transition: all 0.3s;
 }
