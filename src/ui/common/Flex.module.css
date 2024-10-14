@@ -7,10 +7,10 @@
 }
 
 /* flex-direction */
-.flexDirection-flex-row {
+.flexDirection-row {
     flex-direction: row;
 }
-.flexDirection-flex-column {
+.flexDirection-column {
     flex-direction: column;
 }
 

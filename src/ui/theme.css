@@ -97,6 +97,8 @@
     --size-min-width: 320px;
     --size-header-height: 80px;
     --size-footer-height: 50px;
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
 
     /* Paddings */
     --padding-layout: 15px;

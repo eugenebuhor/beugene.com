@@ -1,0 +1,14 @@
+.buttonGroup {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem;
+    height: fit-content;
+    width: fit-content;
+    border-radius: var(--border-radius-md);
+}
+
+.buttonGroup > *:not(.slider) {
+    flex: 1;
+    transition: all 0.3s;
+}

@@ -1,0 +1,22 @@
+.toggleButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .5rem;
+    background-color: transparent;
+    border-radius: var(--border-radius-md);
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.toggleButton:hover:not(:disabled) {
+    background-color: var(--composer-surface);
+}
+
+.toggleButton:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.toggleButton.selected {
+    background-color: var(--composer-surface);
+}

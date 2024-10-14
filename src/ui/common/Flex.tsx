@@ -1,4 +1,4 @@
-import type { HTMLAttributes, CSSProperties, ElementType } from 'react';
+import { HTMLAttributes, CSSProperties, ElementType, forwardRef } from 'react';
 import clsx from 'clsx';
 import styles from './Flex.module.css';
 
@@ -22,42 +22,47 @@ export interface FlexProps extends HTMLAttributes<HTMLElement> {
   className?: string;
 }
 
-function Flex({
-  component: Component = 'div',
-  display = 'flex',
-  flexDirection = 'row',
-  flexWrap = 'nowrap',
-  alignItems,
-  alignContent,
-  justifyContent,
-  gap,
-  flex,
-  style = {},
-  className,
-  children,
-  ...rest
-}: FlexProps) {
-  const classes = clsx(
-    styles[`display-${display}`],
-    styles[`flexDirection-${flexDirection}`],
-    styles[`flexWrap-${flexWrap}`],
-    alignItems && styles[`alignItems-${alignItems}`],
-    alignContent && styles[`alignContent-${alignContent}`],
-    justifyContent && styles[`justifyContent-${justifyContent}`],
-    className,
-  );
+const Flex = forwardRef<HTMLElement, FlexProps>(
+  (
+    {
+      component: Component = 'div',
+      display = 'flex',
+      flexDirection = 'row',
+      flexWrap,
+      alignItems,
+      alignContent,
+      justifyContent,
+      gap,
+      flex,
+      style = {},
+      className,
+      children,
+      ...rest
+    },
+    ref,
+  ) => {
+    const classes = clsx(
+      styles[`display-${display}`],
+      styles[`flexDirection-${flexDirection}`],
+      styles[`flexWrap-${flexWrap}`],
+      alignItems && styles[`alignItems-${alignItems}`],
+      alignContent && styles[`alignContent-${alignContent}`],
+      justifyContent && styles[`justifyContent-${justifyContent}`],
+      className,
+    );
 
-  const combinedStyle: CSSProperties = {
-    gap,
-    flex,
-    ...style,
-  };
+    const combinedStyle: CSSProperties = {
+      gap,
+      flex,
+      ...style,
+    };
 
-  return (
-    <Component className={classes} style={combinedStyle} {...rest}>
-      {children}
-    </Component>
-  );
-}
+    return (
+      <Component className={classes} style={combinedStyle} ref={ref} {...rest}>
+        {children}
+      </Component>
+    );
+  },
+);
 
 export default Flex;
