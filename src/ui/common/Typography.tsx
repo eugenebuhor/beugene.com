@@ -29,7 +29,7 @@ function Typography({
   variant = 'body1',
   fontFamily = 'primary',
   weight,
-  color,
+  color = 'text-primary',
   trim = false,
   noWrap,
   wordBreak,

@@ -38,11 +38,11 @@ function ThemeSwitch() {
           className={styles.toggleButton}
         >
           {themeOption === 'dark' ? (
-            <MdDarkMode />
+            <MdDarkMode color="var(--text-primary)" />
           ) : themeOption === 'light' ? (
-            <MdLightMode />
+            <MdLightMode color="var(--text-primary)" />
           ) : (
-            <MdMonitor />
+            <MdMonitor color="var(--text-primary)" />
           )}
         </ToggleButton>
       ))}
