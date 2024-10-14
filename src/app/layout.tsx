@@ -20,7 +20,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       className={`${fonts.lora.variable} ${fonts.inter.variable}`}
     >
       <body>
-        <NextThemeProvider>
+        <NextThemeProvider defaultTheme="system">
           <Header />
           <LayoutMain>{children}</LayoutMain>
           <Footer />
