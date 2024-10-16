@@ -1,8 +1,8 @@
 const getBaseUrl = () => {
   if (process.env.NODE_ENV === 'development') {
-    return `http://${process.env.URL}`;
+    return `http://${process.env.NEXT_PUBLIC_URL}`;
   } else {
-    return `https://${process.env.URL}`;
+    return `https://${process.env.NEXT_PUBLIC_URL}`;
   }
 };
 
