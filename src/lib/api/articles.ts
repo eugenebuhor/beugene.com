@@ -21,6 +21,8 @@ export async function getArticles(params?: {
     next: { revalidate: 300 }, // 5 minutes
   });
 
+  console.log('result', res);
+
   if (!res.ok) {
     const errorData = await res.json();
     throw new Error(errorData.error || 'Failed to fetch articles');
