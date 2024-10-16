@@ -1,8 +1,9 @@
+import { getArticles } from '@/lib/api/articles';
+
 export const revalidate = 300; // 5 minutes
 
 async function Home() {
-  const data = await fetch(`${process.env.API_URL}/articles`);
-  const articles = await data.json();
+  const articles = await getArticles();
 
   return null;
 }

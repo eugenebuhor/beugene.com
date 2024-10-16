@@ -1,11 +1,14 @@
 import type { Tag } from '@prisma/client';
+import getBaseUrl from '@/utils/getBaseUrl';
+
+const baseUrl = getBaseUrl();
 
 export async function getTags(q?: string): Promise<Tag[]> {
   const queryParams = new URLSearchParams();
 
   if (q) queryParams.append('q', q);
 
-  const res = await fetch(`/api/tags?${queryParams.toString()}`, {
+  const res = await fetch(`${baseUrl}/api/tags?${queryParams.toString()}`, {
     method: 'GET',
     next: { revalidate: 300 }, // 5 minutes
   });

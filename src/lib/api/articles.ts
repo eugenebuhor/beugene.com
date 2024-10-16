@@ -1,4 +1,7 @@
 import type { Article } from '@prisma/client';
+import getBaseUrl from '@/utils/getBaseUrl';
+
+const baseUrl = getBaseUrl();
 
 // Articles
 
@@ -13,7 +16,7 @@ export async function getArticles(params?: {
   if (params?.limit) queryParams.append('limit', params.limit.toString());
   if (params?.offset) queryParams.append('offset', params.offset.toString());
 
-  const res = await fetch(`/api/articles?${queryParams.toString()}`, {
+  const res = await fetch(`${baseUrl}/api/articles?${queryParams.toString()}`, {
     method: 'GET',
     next: { revalidate: 300 }, // 5 minutes
   });
@@ -29,7 +32,7 @@ export async function getArticles(params?: {
 // Article by Slug
 
 export async function getArticleBySlug(slug: string): Promise<Article> {
-  const res = await fetch(`/api/articles/${slug}`, {
+  const res = await fetch(`${baseUrl}/api/articles/${slug}`, {
     method: 'GET',
     next: { revalidate: 300 }, // 5 minutes
   });
@@ -45,7 +48,7 @@ export async function getArticleBySlug(slug: string): Promise<Article> {
 // Article Likes
 
 export async function getArticleLikes(slug: string): Promise<number> {
-  const res = await fetch(`/api/articles/${slug}/likes`, {
+  const res = await fetch(`${baseUrl}/api/articles/${slug}/likes`, {
     method: 'GET',
     cache: 'no-store',
   });
@@ -60,7 +63,7 @@ export async function getArticleLikes(slug: string): Promise<number> {
 }
 
 export async function incrementArticleLikes(slug: string): Promise<Article> {
-  const res = await fetch(`/api/articles/${slug}/likes`, {
+  const res = await fetch(`${baseUrl}/api/articles/${slug}/likes`, {
     method: 'POST',
     cache: 'no-cache',
     credentials: 'include',
@@ -77,7 +80,7 @@ export async function incrementArticleLikes(slug: string): Promise<Article> {
 // Article Views
 
 export async function getArticleViews(slug: string): Promise<number> {
-  const res = await fetch(`/api/articles/${slug}/views`, {
+  const res = await fetch(`${baseUrl}/api/articles/${slug}/views`, {
     method: 'GET',
     cache: 'no-store',
   });
@@ -92,7 +95,7 @@ export async function getArticleViews(slug: string): Promise<number> {
 }
 
 export async function incrementArticleViews(slug: string): Promise<Article> {
-  const res = await fetch(`/api/articles/${slug}/views`, {
+  const res = await fetch(`${baseUrl}/api/articles/${slug}/views`, {
     method: 'POST',
     cache: 'no-cache',
     credentials: 'include',
