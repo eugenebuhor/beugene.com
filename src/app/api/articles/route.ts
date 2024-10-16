@@ -92,7 +92,10 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    return NextResponse.json(articles);
+    const response = NextResponse.json(articles);
+    response.headers.set('Cache-Control', 'public, max-age=300, stale-while-revalidate=600'); // 5 minutes
+
+    return response;
   } catch (error) {
     return handleError(error);
   }

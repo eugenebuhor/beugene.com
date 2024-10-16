@@ -23,15 +23,10 @@ export async function GET(request: NextRequest, { params }: { params: { slug: st
       return NextResponse.json({ error: 'Article not found' }, { status: 404 });
     }
 
-    // Increment views
-    await prisma.article.update({
-      where: { id: article.id },
-      data: {
-        views: { increment: 1 },
-      },
-    });
+    const response = NextResponse.json(article);
+    response.headers.set('Cache-Control', 'public, max-age=300, stale-while-revalidate=600'); // 5 minutes
 
-    return NextResponse.json(article);
+    return response;
   } catch (error) {
     return handleError(error);
   }

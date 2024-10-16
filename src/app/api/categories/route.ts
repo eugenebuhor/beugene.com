@@ -37,7 +37,10 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    return NextResponse.json(categories);
+    const response = NextResponse.json(categories);
+    response.headers.set('Cache-Control', 'public, max-age=300'); // 5 minutes
+
+    return response;
   } catch (error) {
     return handleError(error);
   }
