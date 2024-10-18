@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description: 'Personal website of Yevhenii Buhor',
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   return (
     <html
       lang="en"
@@ -28,4 +28,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

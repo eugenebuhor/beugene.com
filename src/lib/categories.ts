@@ -9,6 +9,33 @@ const MAX_QUERY_LENGTH = 100;
 /* Get Categories */
 
 /**
+ * Public function to get categories array.
+ *
+ * @param q - Optional search query to filter categories.
+ * @returns Promise<Category[]> - An array of categories.
+ * @throws ValidationError if query validation fails.
+ * @throws NotFoundError if no categories found.
+ * @throws InternalError if database query fails.
+ */
+export async function getCategories(q?: string): Promise<Category[]> {
+  const searchQuery = q ? q.trim() : undefined;
+
+  if (searchQuery && searchQuery.length > MAX_QUERY_LENGTH) {
+    throw new ValidationError('Query parameter too long');
+  }
+
+  const categories = await _getCategories(searchQuery);
+
+  if (categories === null) {
+    throw new InternalError('Internal server error');
+  } else if (categories.length === 0) {
+    throw new NotFoundError('No categories found');
+  }
+
+  return categories;
+}
+
+/**
  * Internal function to fetch categories from the database with caching.
  *
  * cache key: get-categories
@@ -43,30 +70,3 @@ const _getCategories = unstable_cache(
   ['get-categories'],
   { revalidate: 300 },
 );
-
-/**
- * Public function to get categories array.
- *
- * @param q - Optional search query to filter categories.
- * @returns Promise<Category[]> - An array of categories.
- * @throws ValidationError if query validation fails.
- * @throws NotFoundError if no categories found.
- * @throws InternalError if database query fails.
- */
-export async function getCategories(q?: string): Promise<Category[]> {
-  const searchQuery = q ? q.trim() : undefined;
-
-  if (searchQuery && searchQuery.length > MAX_QUERY_LENGTH) {
-    throw new ValidationError('Query parameter too long');
-  }
-
-  const categories = await _getCategories(searchQuery);
-
-  if (categories === null) {
-    throw new InternalError('Internal server error');
-  } else if (categories.length === 0) {
-    throw new NotFoundError('No categories found');
-  }
-
-  return categories;
-}

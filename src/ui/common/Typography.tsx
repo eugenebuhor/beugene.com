@@ -24,7 +24,7 @@ export interface TypographyProps extends HTMLAttributes<HTMLElement> {
   className?: string;
 }
 
-function Typography({
+const Typography = ({
   component: Component = 'span',
   variant = 'body1',
   fontFamily = 'primary',
@@ -41,7 +41,7 @@ function Typography({
   children,
   style = {},
   ...rest
-}: TypographyProps) {
+}: TypographyProps) => {
   const classes = clsx(
     styles.typography, // Apply base typography styles
     styles[variant],
@@ -68,6 +68,6 @@ function Typography({
       {children}
     </Component>
   );
-}
+};
 
 export default Typography;

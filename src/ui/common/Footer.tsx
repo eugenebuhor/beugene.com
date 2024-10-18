@@ -1,5 +1,5 @@
 import { FaGithub, FaLinkedinIn } from 'react-icons/fa';
-import { LayoutContent } from '@/ui/common/Layouts';
+import { LayoutSectionContent } from '@/ui/common/Layouts';
 import Flex from '@/ui/common/Flex';
 import styles from '@/ui/common/Footer.module.css';
 import Typography from '@/ui/common/Typography';
@@ -7,10 +7,10 @@ import NavLink from '@/ui/common/NavLink';
 import ThemeSwitch from '@/ui/common/ThemeSwitch';
 import { LINKS } from '@/constants';
 
-function Footer() {
+const Footer = () => {
   return (
     <Flex component="footer" justifyContent="center" className={styles.footer}>
-      <LayoutContent flexDirection="column" gap={20} className={styles.layoutContent}>
+      <LayoutSectionContent gap={20} className={styles.layoutContent}>
         <Flex justifyContent="space-between" flexWrap="nowrap">
           <Flex component="nav" gap={15} alignItems="center">
             <NavLink href={LINKS.GITHUB} target="_blank">
@@ -36,9 +36,9 @@ function Footer() {
             </Typography>
           </NavLink>
         </Flex>
-      </LayoutContent>
+      </LayoutSectionContent>
     </Flex>
   );
-}
+};
 
 export default Footer;

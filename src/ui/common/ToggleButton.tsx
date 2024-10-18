@@ -11,7 +11,7 @@ export type ToggleButtonProps = {
   children: ReactNode;
 } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'value' | 'onChange' | 'disabled' | 'children'>;
 
-function ToggleButton({
+const ToggleButton = ({
   value,
   selected,
   onChange,
@@ -19,7 +19,7 @@ function ToggleButton({
   children,
   className = '',
   ...rest
-}: ToggleButtonProps) {
+}: ToggleButtonProps) => {
   const handleClick = () => {
     if (!disabled && onChange) {
       onChange(value);
@@ -38,6 +38,6 @@ function ToggleButton({
       {children}
     </button>
   );
-}
+};
 
 export default ToggleButton;

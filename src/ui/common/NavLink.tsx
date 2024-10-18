@@ -10,12 +10,12 @@ export interface NavLinkProps extends ComponentProps<typeof Link> {
   className?: string;
 }
 
-function NavLink({ children, className, ...rest }: NavLinkProps) {
+const NavLink = ({ children, className, ...rest }: NavLinkProps) => {
   return (
     <Link className={clsx(styles.link, className)} {...rest}>
       {children}
     </Link>
   );
-}
+};
 
 export default NavLink;

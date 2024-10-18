@@ -7,7 +7,7 @@ import ToggleButton from '@/ui/common/ToggleButton';
 import ToggleButtonGroup from '@/ui/common/ToggleButtonGroup';
 import styles from '@/ui/common/ThemeSwitch.module.css';
 
-function ThemeSwitch() {
+const ThemeSwitch = () => {
   const { setTheme, themes, theme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -48,6 +48,6 @@ function ThemeSwitch() {
       ))}
     </ToggleButtonGroup>
   );
-}
+};
 
 export default ThemeSwitch;

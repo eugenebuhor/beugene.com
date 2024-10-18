@@ -19,7 +19,7 @@ type ToggleButtonGroupProps = {
   style?: CSSProperties;
 } & Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'children'>;
 
-function ToggleButtonGroup({
+const ToggleButtonGroup = ({
   children,
   value,
   onChange,
@@ -27,7 +27,7 @@ function ToggleButtonGroup({
   disabled = false,
   className,
   ...rest
-}: ToggleButtonGroupProps) {
+}: ToggleButtonGroupProps) => {
   const groupRef = useRef<HTMLDivElement>(null);
 
   const handleChange = (childValue: string) => {
@@ -66,6 +66,6 @@ function ToggleButtonGroup({
       })}
     </div>
   );
-}
+};
 
 export default ToggleButtonGroup;
