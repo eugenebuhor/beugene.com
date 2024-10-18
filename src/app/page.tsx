@@ -1,4 +1,4 @@
-import { getArticles } from '@/lib/api/articles';
+import { getArticles } from '@/lib/articles';
 
 export const revalidate = 300; // 5 minutes
 
