@@ -21,6 +21,13 @@ type GetArticlesParams = {
   offset?: number;
 };
 
+type PaginatedArticles = {
+  data: Article[];
+  total: number;
+  limit: number;
+  offset: number;
+};
+
 /* Get Articles */
 
 /**
@@ -33,7 +40,7 @@ type GetArticlesParams = {
  * @returns Promise<Article[] | null> a promise of an array of articles or null if a database error occurs.
  */
 const _getArticles = unstable_cache(
-  async (params: GetArticlesParams): Promise<Article[] | null> => {
+  async (params: Required<GetArticlesParams>): Promise<PaginatedArticles | null> => {
     const { limit, offset, q: searchQuery } = params;
 
     let whereClause: Prisma.ArticleWhereInput = {
@@ -87,20 +94,30 @@ const _getArticles = unstable_cache(
     }
 
     try {
-      const articles = await prisma.article.findMany({
-        where: whereClause,
-        skip: offset,
-        take: limit,
-        include: {
-          categories: true,
-          tags: true,
-        },
-        orderBy: {
-          publishedAt: 'desc',
-        },
-      });
+      const [data, total] = await prisma.$transaction([
+        prisma.article.findMany({
+          where: whereClause,
+          skip: offset,
+          take: limit,
+          include: {
+            categories: true,
+            tags: true,
+          },
+          orderBy: {
+            publishedAt: 'desc',
+          },
+        }),
+        prisma.article.count({
+          where: whereClause,
+        }),
+      ]);
 
-      return articles;
+      return {
+        data,
+        total,
+        limit,
+        offset,
+      };
     } catch (error) {
       console.error('Database Error:', error);
       return null;
@@ -123,7 +140,7 @@ export async function getArticles(params?: {
   q?: string;
   limit?: number;
   offset?: number;
-}): Promise<Article[]> {
+}): Promise<PaginatedArticles> {
   const limit = params?.limit !== undefined ? params.limit : FALLBACK_LIMIT;
   const offset = params?.offset !== undefined ? params.offset : FALLBACK_OFFSET;
   const q = params?.q;
@@ -137,15 +154,15 @@ export async function getArticles(params?: {
     throw new ValidationError('Query parameter too long');
   }
 
-  const articles = await _getArticles({ limit, offset, q: searchQuery });
+  const result = await _getArticles({ limit, offset, q: searchQuery });
 
-  if (articles === null) {
+  if (result === null) {
     throw new InternalError('Internal server error');
-  } else if (articles.length === 0) {
+  } else if (result.total === 0) {
     throw new NotFoundError('No articles found');
   }
 
-  return articles;
+  return result;
 }
 
 /* Get Article by Slug*/
