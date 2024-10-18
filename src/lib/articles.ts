@@ -5,6 +5,11 @@ import { unstable_cache } from 'next/cache';
 import prisma from '@/lib/prisma';
 import { InternalError, NotFoundError, ValidationError } from '@/lib/errors';
 
+const GET_ARTICLES_CACHE_KEY = 'get-articles';
+const GET_ARTICLE_BY_SLUG_CACHE_KEY = 'get-article-by-slug';
+const GET_ARTICLES_CACHE_REVALIDATE = 300; // 5 minutes
+const GET_ARTICLE_BY_SLUG_CACHE_REVALIDATE = 300; // 5 minutes
+
 const FALLBACK_OFFSET = 0;
 const FALLBACK_LIMIT = 10;
 const MAX_LIMIT = 100;
@@ -101,8 +106,8 @@ const _getArticles = unstable_cache(
       return null;
     }
   },
-  ['get-articles'],
-  { revalidate: 300 }, // Cache for 5 minutes
+  [GET_ARTICLES_CACHE_KEY],
+  { revalidate: GET_ARTICLES_CACHE_REVALIDATE }, // Cache for 5 minutes
 );
 
 /**
@@ -178,8 +183,8 @@ const _getArticleBySlug = unstable_cache(
       return null;
     }
   },
-  ['get-article-by-slug'],
-  { revalidate: 300 },
+  [GET_ARTICLE_BY_SLUG_CACHE_KEY],
+  { revalidate: GET_ARTICLE_BY_SLUG_CACHE_REVALIDATE },
 );
 
 /**
@@ -190,6 +195,10 @@ const _getArticleBySlug = unstable_cache(
  * @throws NotFoundError if article is not found.
  */
 export async function getArticleBySlug(slug: string): Promise<Article> {
+  if (!slug) {
+    throw new ValidationError('Slug is required');
+  }
+
   const article = await _getArticleBySlug(slug);
 
   if (!article) {
