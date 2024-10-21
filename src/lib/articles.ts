@@ -22,7 +22,9 @@ type GetArticlesParams = {
 };
 
 type PaginatedArticles = {
-  data: Article[];
+  data: Prisma.ArticleGetPayload<{
+    include: { tags: true };
+  }>[];
   total: number;
   limit: number;
   offset: number;
