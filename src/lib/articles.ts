@@ -70,16 +70,6 @@ const _getArticles = unstable_cache(
             },
           },
           {
-            categories: {
-              some: {
-                name: {
-                  contains: searchQuery,
-                  mode: 'insensitive',
-                },
-              },
-            },
-          },
-          {
             tags: {
               some: {
                 name: {
@@ -100,7 +90,6 @@ const _getArticles = unstable_cache(
           skip: offset,
           take: limit,
           include: {
-            categories: true,
             tags: true,
           },
           orderBy: {
@@ -189,7 +178,6 @@ const _getArticleBySlug = unstable_cache(
           status: ArticleStatus.PUBLISHED,
         },
         include: {
-          categories: true,
           tags: true,
         },
       });
