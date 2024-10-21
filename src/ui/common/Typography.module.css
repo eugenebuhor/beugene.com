@@ -1,0 +1,186 @@
+.typography {
+    font-family: var(--font-family), sans-serif;
+}
+
+/* Variants */
+.h1 {
+    font-size: var(--font-size-h1);
+    line-height: 1.2;
+    font-weight: var(--font-weight-light);
+}
+
+.h2 {
+    font-size: var(--font-size-h2);
+    line-height: 1.2;
+    font-weight: var(--font-weight-light);
+}
+
+.h3 {
+    font-size: var(--font-size-h3);
+    line-height: 1.2;
+    font-weight: var(--font-weight-regular);
+}
+
+.h4 {
+    font-size: var(--font-size-h4);
+    line-height: 1.2;
+    font-weight: var(--font-weight-regular);
+}
+
+.h5 {
+    font-size: var(--font-size-h5);
+    line-height: 1.2;
+    font-weight: var(--font-weight-regular);
+}
+
+.h6 {
+    font-size: var(--font-size-h6);
+    line-height: 1.2;
+    font-weight: var(--font-weight-medium);
+}
+
+.subtitle1 {
+    font-size: var(--font-size-subtitle1);
+    line-height: 1.5;
+    font-weight: var(--font-weight-regular);
+}
+
+.subtitle2 {
+    font-size: var(--font-size-subtitle2);
+    line-height: 1.5;
+    font-weight: var(--font-weight-medium);
+}
+
+.body1 {
+    font-size: var(--font-size-body1);
+    line-height: 1.5;
+    font-weight: var(--font-weight-regular);
+}
+
+.body2 {
+    font-size: var(--font-size-body2);
+    line-height: 1.5;
+    font-weight: var(--font-weight-regular);
+}
+
+.caption {
+    font-size: var(--font-size-caption);
+    line-height: 1.5;
+    font-weight: var(--font-weight-regular);
+}
+
+.overline {
+    font-size: var(--font-size-overline);
+    line-height: 1.5;
+    font-weight: var(--font-weight-regular);
+}
+
+/* Font Family */
+.fontFamily-primary {
+    font-family: var(--font-family-primary), sans-serif;
+}
+.fontFamily-secondary {
+    font-family:  var(--font-family-secondary), sans-serif;
+}
+
+/* Weights */
+.fontWeight-thin {
+    font-weight: var(--font-weight-thin);
+}
+
+.fontWeight-light {
+    font-weight: var(--font-weight-light);
+}
+
+.fontWeight-regular {
+    font-weight: var(--font-weight-regular);
+}
+
+.fontWeight-medium {
+    font-weight: var(--font-weight-medium);
+}
+
+.fontWeight-bold {
+    font-weight: var(--font-weight-bold);
+}
+
+.fontWeight-black {
+    font-weight: var(--font-weight-black);
+}
+
+/* Vertical Align */
+.verticalAlign-top {
+    vertical-align: top;
+}
+
+.verticalAlign-middle {
+    vertical-align: middle;
+}
+
+.verticalAlign-baseline {
+    vertical-align: baseline;
+}
+
+/* Text Align */
+.textAlign-left {
+    text-align: left;
+}
+
+.textAlign-center {
+    text-align: center;
+}
+
+.textAlign-right {
+    text-align: right;
+}
+
+.textAlign-justify {
+    text-align: justify;
+}
+
+/* Text Transform */
+.textTransform-none {
+    text-transform: none;
+}
+
+.textTransform-capitalize {
+    text-transform: capitalize;
+}
+
+.textTransform-uppercase {
+    text-transform: uppercase;
+}
+
+.textTransform-lowercase {
+    text-transform: lowercase;
+}
+
+/* No Wrap */
+.noWrap {
+    white-space: nowrap;
+}
+
+/* Trim Text */
+.trim {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+}
+
+/* Word Break */
+.wordBreak-normal {
+    word-break: normal;
+}
+
+.wordBreak-break-all {
+    word-break: break-all;
+}
+
+.wordBreak-keep-all {
+    word-break: keep-all;
+}
+
+.wordBreak-break-word {
+    word-break: break-word;
+}

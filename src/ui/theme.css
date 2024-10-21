@@ -1,0 +1,165 @@
+/*
+==========================================================
+  🌐 Responsive Design Variables - Mobile First Approach
+==========================================================
+
+  📱 Base Styles (Mobile First):
+    - Applies to all viewports up to 767px.
+    - Define default CSS variables here.
+
+  📏 Breakpoints:
+    - Tablet:       min-width: 768px;
+    - Laptop:       min-width: 1024px;
+    - Desktop:      min-width: 1280px;
+    - Large Screen: min-width: 1920px;
+
+  🛠 Usage:
+    1. Define Variables in `:root` for mobile by default.
+    2. Override Variables within Media Queries for larger screens.
+
+  💡 Example (mobile):
+    :root {
+        --font-size: 14px;
+        --size-header-height: 80px;
+    }
+
+  💡 Example (others):
+    @media (min-width: 768px) {
+        :root {
+            --font-size: 16px;
+            --size-header-height: 120px;
+        }
+    }
+
+==========================================================
+*/
+
+:root {
+    /* Palette */
+    --white: #fff;
+    --black: #000;
+    --gray-50: #f9f9f9;
+    --gray-100: #ececec;
+    --gray-200: #e3e3e3;
+    --gray-300: #cdcdcd;
+    --gray-400: #b4b4b4;
+    --gray-500: #9b9b9b;
+    --gray-600: #676767;
+    --gray-700: #424242;
+    --gray-750: #2f2f2f;
+    --gray-800: #212121;
+    --gray-900: #171717;
+    --gray-950: #0d0d0d;
+    --red-500: #ef4444;
+    --red-700: #b91c1c;
+    --brand-purple: #ab68ff;
+    --tag-blue: #08f;
+    --tag-blue-light: #0af;
+    --hint-text: #08f;
+    --hint-bg: #b3dbff;
+    --icon-secondary: #676767;
+    --selection: #007aff;
+    --surface-error: rgb(249, 58, 55);
+    --text-error: #f93a37;
+    /* Service Colors */
+    --current-color: currentColor;
+    --inherit: inherit;
+    --initial: initial;
+    --unset: unset;
+    --none: none;
+    --transparent: transparent;
+
+    /* Typography */
+    --font-family-primary: var(--font-lora), sans-serif;
+    --font-family-secondary: var(--font-inter), sans-serif;
+    --font-weight-thin: 100;
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 700;
+    --font-weight-black: 800;
+    --font-size: 14px;
+    --font-size-h1: 6rem; /* 96px */
+    --font-size-h2: 3.75rem; /* 60px */
+    --font-size-h3: 3rem; /* 48px */
+    --font-size-h4: 2.125rem; /* 34px */
+    --font-size-h5: 1.5rem; /* 24px */
+    --font-size-h6: 1.25rem; /* 20px */
+    --font-size-subtitle1: 1rem; /* 16px */
+    --font-size-subtitle2: 0.875rem; /* 14px */
+    --font-size-body1: 1rem; /* 16px */
+    --font-size-body2: 0.875rem; /* 14px */
+    --font-size-caption: 0.75rem; /* 12px */
+    --font-size-overline: 0.625rem; /* 10px */
+
+    /* Sizes */
+    --size-max-width: 768px;
+    --size-min-width: 320px;
+    --size-header-height: 80px;
+    --size-footer-height: 50px;
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+
+    /* Paddings */
+    --padding-layout: 15px;
+
+    /* Z-Indexes */
+    /*--z-index-header: 10;*/
+}
+
+@media (min-width: 768px) {
+    :root {
+        --font-size: 16px;
+        --size-header-height: 120px;
+    }
+}
+
+html[data-theme='light'] {
+    --text-primary: var(--gray-950);
+    --text-secondary: #7d7d7d;
+    --text-tertiary: var(--gray-400);
+    --text-quaternary: var(--gray-300);
+    --text-placeholder: rgba(0, 0, 0, 0.7);
+    --border-x-light: rgba(0, 0, 0, 0.05);
+    --border-light: rgba(0, 0, 0, 0.1);
+    --border-medium: rgba(0, 0, 0, 0.15);
+    --border-heavy: rgba(0, 0, 0, 0.2);
+    --border-x-heavy: rgba(0, 0, 0, 0.25);
+    --border-sharp: rgba(0, 0, 0, 0.05);
+    --main-surface-background: hsla(0, 0%, 100%, 0.95);
+    --composer-surface: hsla(0, 0%, 94%, 0.9);
+    --dot-color: var(--black);
+    --main-surface-primary: var(--white);
+    --main-surface-secondary: var(--gray-50);
+    --main-surface-tertiary: var(--gray-100);
+    --sidebar-surface-primary: var(--gray-50);
+    --sidebar-surface-secondary: var(--gray-100);
+    --sidebar-surface-tertiary: var(--gray-200);
+    --link: #2964aa;
+    --link-hover: #749ac8;
+}
+
+html[data-theme='dark'] {
+    --text-primary: var(--gray-100);
+    --text-secondary: var(--gray-400);
+    --text-tertiary: var(--gray-500);
+    --text-quaternary: var(--gray-600);
+    --text-placeholder: hsla(0, 0%, 100%, 0.8);
+    --border-x-light: hsla(0, 0%, 100%, 0.05);
+    --border-light: hsla(0, 0%, 100%, 0.1);
+    --border-medium: hsla(0, 0%, 100%, 0.15);
+    --border-heavy: hsla(0, 0%, 100%, 0.2);
+    --border-x-heavy: hsla(0, 0%, 100%, 0.25);
+    --border-sharp: hsla(0, 0%, 100%, 0.05);
+    --main-surface-background: rgba(33, 33, 33, 0.9);
+    --composer-surface: rgba(50, 50, 50, 0.8);
+    --dot-color: var(--white);
+    --main-surface-primary: var(--gray-800);
+    --main-surface-secondary: var(--gray-750);
+    --main-surface-tertiary: var(--gray-700);
+    --sidebar-surface-primary: var(--gray-900);
+    --sidebar-surface-secondary: var(--gray-800);
+    --sidebar-surface-tertiary: var(--gray-750);
+    --link: #7ab7ff;
+    --link-hover: #5e83b3;
+}
