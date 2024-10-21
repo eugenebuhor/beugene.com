@@ -7,7 +7,7 @@ import ToggleButton from '@/ui/common/ToggleButton';
 import ToggleButtonGroup from '@/ui/common/ToggleButtonGroup';
 import styles from '@/ui/common/ThemeSwitch.module.css';
 
-function ThemeSwitch() {
+const ThemeSwitch = () => {
   const { setTheme, themes, theme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -27,7 +27,7 @@ function ThemeSwitch() {
     <ToggleButtonGroup
       value={theme || ''}
       onChange={onToggleTheme}
-      aria-label="theme switch"
+      aria-label="theme group switch"
       className={styles.toggleButtonGroup}
     >
       {themes.map((themeOption) => (
@@ -38,16 +38,16 @@ function ThemeSwitch() {
           className={styles.toggleButton}
         >
           {themeOption === 'dark' ? (
-            <MdDarkMode color="var(--text-primary)" />
+            <MdDarkMode color="var(--color-text-primary)" />
           ) : themeOption === 'light' ? (
-            <MdLightMode color="var(--text-primary)" />
+            <MdLightMode color="var(--color-text-primary)" />
           ) : (
-            <MdMonitor color="var(--text-primary)" />
+            <MdMonitor color="var(--color-text-primary)" />
           )}
         </ToggleButton>
       ))}
     </ToggleButtonGroup>
   );
-}
+};
 
 export default ThemeSwitch;

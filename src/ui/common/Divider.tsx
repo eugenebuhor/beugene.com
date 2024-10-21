@@ -14,7 +14,7 @@ type DividerProps = {
   variant?: 'solid' | 'dashed' | 'dotted';
 };
 
-function Divider({
+const Divider = ({
   orientation = 'horizontal',
   className,
   color = 'text-primary',
@@ -23,7 +23,7 @@ function Divider({
   length = '100%',
   style = {},
   variant = 'solid',
-}: DividerProps) {
+}: DividerProps) => {
   const classes = clsx(
     styles.divider,
     orientation === 'vertical' ? styles.vertical : styles.horizontal,
@@ -41,6 +41,6 @@ function Divider({
   };
 
   return <div className={classes} style={combinedStyle} aria-hidden="true" />;
-}
+};
 
 export default Divider;

@@ -13,9 +13,10 @@ body {
 }
 
 body {
-    font-family: var(--font-family-primary), sans-serif;
-    color: var(--text-primary);
-    background: var(--main-surface-background);
+    -webkit-font-smoothing: antialiased;
+    font-family: var(--font-family-text), sans-serif;
+    color: var(--color-text-primary);
+    background-color: var(--color-main-surface-primary);
 }
 
 *,
@@ -34,3 +35,14 @@ button {
 button:disabled {
     cursor: initial;
 }
+
+a {
+    text-decoration: none;
+    transition: opacity 0.15s ease-in-out;
+    color: var(--color-link);
+}
+
+a:hover {
+    opacity: 0.65;
+}
+

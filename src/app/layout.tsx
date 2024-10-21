@@ -12,12 +12,12 @@ export const metadata: Metadata = {
   description: 'Personal website of Yevhenii Buhor',
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   return (
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${fonts.lora.variable} ${fonts.inter.variable}`}
+      className={`${fonts.mediumContentSerif.variable} ${fonts.mediumContentSansSerif.variable}`}
     >
       <body>
         <NextThemeProvider defaultTheme="system">
@@ -28,4 +28,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

@@ -14,21 +14,65 @@ const FALLBACK_OFFSET = 0;
 const FALLBACK_LIMIT = 10;
 const MAX_LIMIT = 100;
 const MAX_QUERY_LENGTH = 100;
+const MAX_TAGS = 5;
 
-type GetArticlesParams = {
+export type GetArticlesParams = {
   q?: string;
   limit?: number;
   offset?: number;
+  tags?: string[];
 };
 
 type PaginatedArticles = {
-  data: Article[];
+  data: Prisma.ArticleGetPayload<{
+    include: { tags: true };
+  }>[];
   total: number;
   limit: number;
   offset: number;
 };
 
 /* Get Articles */
+
+/**
+ * Public function to get articles array.
+ *
+ * @param params - Optional parameters for querying articles.
+ * @returns An array of articles.
+ * @throws ValidationError if params validation fails.
+ * @throws NotFoundError if no article found.
+ * @throws InternalError if database query fails.
+ */
+export async function getArticles(params?: GetArticlesParams): Promise<PaginatedArticles> {
+  const limit = params?.limit !== undefined ? params.limit : FALLBACK_LIMIT;
+  const offset = params?.offset !== undefined ? params.offset : FALLBACK_OFFSET;
+  const q = params?.q;
+  const tags = params?.tags ?? [];
+
+  if (isNaN(limit) || isNaN(offset) || limit < 0 || offset < 0 || limit > MAX_LIMIT) {
+    throw new ValidationError('Invalid limit or offset');
+  }
+
+  const searchQuery = q ? q.trim() : '';
+
+  if (searchQuery && searchQuery.length > MAX_QUERY_LENGTH) {
+    throw new ValidationError('Query parameter too long');
+  }
+
+  if (tags.length > MAX_TAGS) {
+    throw new ValidationError(`Too many tags provided, maximum allowed is ${MAX_TAGS}`);
+  }
+
+  const result = await _getArticles({ limit, offset, q: searchQuery, tags });
+
+  if (result === null) {
+    throw new InternalError('Internal server error');
+  } else if (result.total === 0) {
+    throw new NotFoundError('No articles found');
+  }
+
+  return result;
+}
 
 /**
  * Internal function to fetch articles from the database with caching.
@@ -40,16 +84,30 @@ type PaginatedArticles = {
  * @returns Promise<Article[] | null> a promise of an array of articles or null if a database error occurs.
  */
 const _getArticles = unstable_cache(
-  async (params: Required<GetArticlesParams>): Promise<PaginatedArticles | null> => {
-    const { limit, offset, q: searchQuery } = params;
+  async (params: {
+    limit: number;
+    offset: number;
+    q: string;
+    tags: string[];
+  }): Promise<PaginatedArticles | null> => {
+    const { limit, offset, q: searchQuery, tags } = params;
 
-    let whereClause: Prisma.ArticleWhereInput = {
-      status: ArticleStatus.PUBLISHED,
-    };
+    const whereConditions: Prisma.ArticleWhereInput[] = [{ status: ArticleStatus.PUBLISHED }];
+
+    if (tags.length > 0) {
+      whereConditions.push({
+        tags: {
+          some: {
+            name: {
+              in: tags,
+            },
+          },
+        },
+      });
+    }
 
     if (searchQuery) {
-      whereClause = {
-        ...whereClause,
+      whereConditions.push({
         OR: [
           {
             title: {
@@ -80,8 +138,12 @@ const _getArticles = unstable_cache(
             },
           },
         ],
-      };
+      });
     }
+
+    const whereClause: Prisma.ArticleWhereInput = {
+      AND: whereConditions,
+    };
 
     try {
       const [data, total] = await prisma.$transaction([
@@ -113,48 +175,31 @@ const _getArticles = unstable_cache(
     }
   },
   [GET_ARTICLES_CACHE_KEY],
-  { revalidate: GET_ARTICLES_CACHE_REVALIDATE }, // Cache for 5 minutes
+  { revalidate: GET_ARTICLES_CACHE_REVALIDATE },
 );
 
-/**
- * Public function to get articles array.
- *
- * @param params - Optional parameters for querying articles.
- * @returns An array of articles.
- * @throws ValidationError if params validation fails.
- * @throws NotFoundError if no article found.
- * @throws InternalError if database query fails.
- */
-export async function getArticles(params?: {
-  q?: string;
-  limit?: number;
-  offset?: number;
-}): Promise<PaginatedArticles> {
-  const limit = params?.limit !== undefined ? params.limit : FALLBACK_LIMIT;
-  const offset = params?.offset !== undefined ? params.offset : FALLBACK_OFFSET;
-  const q = params?.q;
-
-  if (isNaN(limit) || isNaN(offset) || limit < 0 || offset < 0 || limit > MAX_LIMIT) {
-    throw new ValidationError('Invalid limit or offset');
-  }
-  const searchQuery = q ? q.trim() : '';
-
-  if (searchQuery && searchQuery.length > MAX_QUERY_LENGTH) {
-    throw new ValidationError('Query parameter too long');
-  }
-
-  const result = await _getArticles({ limit, offset, q: searchQuery });
-
-  if (result === null) {
-    throw new InternalError('Internal server error');
-  } else if (result.total === 0) {
-    throw new NotFoundError('No articles found');
-  }
-
-  return result;
-}
-
 /* Get Article by Slug*/
+
+/**
+ * Public function to get an article.
+ *
+ * @param slug - The slug of the article to  fetch.
+ * @returns Promise<Article> The article object.
+ * @throws NotFoundError if article is not found.
+ */
+export async function getArticleBySlug(slug: string): Promise<Article> {
+  if (!slug) {
+    throw new ValidationError('Slug is required');
+  }
+
+  const article = await _getArticleBySlug(slug);
+
+  if (!article) {
+    throw new NotFoundError('Article not found');
+  }
+
+  return article;
+}
 
 /**
  * Internal function to fetch an article by slug from the database with caching.
@@ -191,24 +236,3 @@ const _getArticleBySlug = unstable_cache(
   [GET_ARTICLE_BY_SLUG_CACHE_KEY],
   { revalidate: GET_ARTICLE_BY_SLUG_CACHE_REVALIDATE },
 );
-
-/**
- * Public function to get an article.
- *
- * @param slug - The slug of the article to  fetch.
- * @returns Promise<Article> The article object.
- * @throws NotFoundError if article is not found.
- */
-export async function getArticleBySlug(slug: string): Promise<Article> {
-  if (!slug) {
-    throw new ValidationError('Slug is required');
-  }
-
-  const article = await _getArticleBySlug(slug);
-
-  if (!article) {
-    throw new NotFoundError('Article not found');
-  }
-
-  return article;
-}
