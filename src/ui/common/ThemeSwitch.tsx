@@ -38,11 +38,11 @@ const ThemeSwitch = () => {
           className={styles.toggleButton}
         >
           {themeOption === 'dark' ? (
-            <MdDarkMode color="var(--text-primary)" />
+            <MdDarkMode color="var(--color-text-primary)" />
           ) : themeOption === 'light' ? (
-            <MdLightMode color="var(--text-primary)" />
+            <MdLightMode color="var(--color-text-primary)" />
           ) : (
-            <MdMonitor color="var(--text-primary)" />
+            <MdMonitor color="var(--color-text-primary)" />
           )}
         </ToggleButton>
       ))}

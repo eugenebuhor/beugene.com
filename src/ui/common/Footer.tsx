@@ -10,7 +10,7 @@ import { LINKS } from '@/constants';
 const Footer = () => {
   return (
     <Flex component="footer" justifyContent="center" className={styles.footer}>
-      <LayoutSectionContent gap={20} className={styles.layoutContent}>
+      <LayoutSectionContent gap={32} className={styles.layoutContent}>
         <Flex justifyContent="space-between" flexWrap="nowrap">
           <Flex component="nav" gap={15} alignItems="center">
             <NavLink href={LINKS.GITHUB} target="_blank">
@@ -26,7 +26,7 @@ const Footer = () => {
           </Flex>
           <ThemeSwitch />
         </Flex>
-        <Flex justifyContent="space-between" flexWrap="nowrap">
+        <Flex justifyContent="space-between" alignItems="baseline" flexWrap="nowrap">
           <Typography variant="caption" color="text-secondary" fontFamily="subtitle">
             Berlin, Germany
           </Typography>
