@@ -1,25 +1,33 @@
-import { Article } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import Flex from '@/ui/common/Flex';
 import Typography from '@/ui/common/Typography';
-import NavLink from '@/ui/common/NavLink';
 import ArticleMeta from '@/ui/articles/ArticleMeta';
+import ArticleActions from '@/ui/articles/ArticleActions';
 
-const ArticleCard = ({ article }: { article: Article }) => {
+type ArticleCardProps = {
+  article: Prisma.ArticleGetPayload<{ include: { tags: true } }>;
+};
+
+const ArticleCard = ({ article }: ArticleCardProps) => {
   return (
     <Flex flexDirection="column" component="article" gap={16}>
-      <Flex flexDirection="column" gap={8}>
-        <Typography variant="h4" weight="bold" fontFamily="title">
-          <NavLink href={`/${article.slug}`} color="text-primary">
-            {article.title}
-          </NavLink>
-        </Typography>
-
-        <ArticleMeta timeToRead={article.timeToRead} publishedAt={article.publishedAt} />
-      </Flex>
+      <ArticleMeta
+        title={article.title}
+        slug={article.slug}
+        timeToRead={article.timeToRead}
+        publishedAt={article.publishedAt}
+      />
 
       <Typography variant="h6" weight="light" component="p" lineHeight="1.5" fontFamily="text">
         {article.content}
       </Typography>
+
+      <ArticleActions
+        slug={article.slug}
+        likes={article.likes}
+        tags={article.tags}
+        views={article.views}
+      />
     </Flex>
   );
 };

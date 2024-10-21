@@ -1,9 +1,9 @@
+import Link from 'next/link';
 import Image from 'next/image';
 import { LayoutSectionContent } from '@/ui/common/Layouts';
 import Flex from '@/ui/common/Flex';
 import styles from '@/ui/common/Header.module.css';
 import Typography from '@/ui/common/Typography';
-import NavLink from '@/ui/common/NavLink';
 
 const Header = () => {
   return (
@@ -16,7 +16,7 @@ const Header = () => {
         className={styles.layoutContent}
         component="nav"
       >
-        <NavLink
+        <Link
           href="/"
           className={styles.nameLogoWrapper}
           rel="index"
@@ -24,12 +24,12 @@ const Header = () => {
           title="Yevhenii Buhor"
         >
           <Image src="/name-logo-24.svg" alt="Yevhenii Buhor" fill priority />
-        </NavLink>
-        <NavLink href="/about" aria-label="about">
+        </Link>
+        <Link href="/about" aria-label="about">
           <Typography variant="subtitle2" color="text-primary" fontFamily="subtitle">
             About Me
           </Typography>
-        </NavLink>
+        </Link>
       </LayoutSectionContent>
     </Flex>
   );

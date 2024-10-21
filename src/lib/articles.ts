@@ -14,11 +14,13 @@ const FALLBACK_OFFSET = 0;
 const FALLBACK_LIMIT = 10;
 const MAX_LIMIT = 100;
 const MAX_QUERY_LENGTH = 100;
+const MAX_TAGS = 5;
 
-type GetArticlesParams = {
+export type GetArticlesParams = {
   q?: string;
   limit?: number;
   offset?: number;
+  tags?: string[];
 };
 
 type PaginatedArticles = {
@@ -41,25 +43,27 @@ type PaginatedArticles = {
  * @throws NotFoundError if no article found.
  * @throws InternalError if database query fails.
  */
-export async function getArticles(params?: {
-  q?: string;
-  limit?: number;
-  offset?: number;
-}): Promise<PaginatedArticles> {
+export async function getArticles(params?: GetArticlesParams): Promise<PaginatedArticles> {
   const limit = params?.limit !== undefined ? params.limit : FALLBACK_LIMIT;
   const offset = params?.offset !== undefined ? params.offset : FALLBACK_OFFSET;
   const q = params?.q;
+  const tags = params?.tags ?? [];
 
   if (isNaN(limit) || isNaN(offset) || limit < 0 || offset < 0 || limit > MAX_LIMIT) {
     throw new ValidationError('Invalid limit or offset');
   }
+
   const searchQuery = q ? q.trim() : '';
 
   if (searchQuery && searchQuery.length > MAX_QUERY_LENGTH) {
     throw new ValidationError('Query parameter too long');
   }
 
-  const result = await _getArticles({ limit, offset, q: searchQuery });
+  if (tags.length > MAX_TAGS) {
+    throw new ValidationError(`Too many tags provided, maximum allowed is ${MAX_TAGS}`);
+  }
+
+  const result = await _getArticles({ limit, offset, q: searchQuery, tags });
 
   if (result === null) {
     throw new InternalError('Internal server error');
@@ -80,16 +84,30 @@ export async function getArticles(params?: {
  * @returns Promise<Article[] | null> a promise of an array of articles or null if a database error occurs.
  */
 const _getArticles = unstable_cache(
-  async (params: Required<GetArticlesParams>): Promise<PaginatedArticles | null> => {
-    const { limit, offset, q: searchQuery } = params;
+  async (params: {
+    limit: number;
+    offset: number;
+    q: string;
+    tags: string[];
+  }): Promise<PaginatedArticles | null> => {
+    const { limit, offset, q: searchQuery, tags } = params;
 
-    let whereClause: Prisma.ArticleWhereInput = {
-      status: ArticleStatus.PUBLISHED,
-    };
+    const whereConditions: Prisma.ArticleWhereInput[] = [{ status: ArticleStatus.PUBLISHED }];
+
+    if (tags.length > 0) {
+      whereConditions.push({
+        tags: {
+          some: {
+            name: {
+              in: tags,
+            },
+          },
+        },
+      });
+    }
 
     if (searchQuery) {
-      whereClause = {
-        ...whereClause,
+      whereConditions.push({
         OR: [
           {
             title: {
@@ -120,8 +138,12 @@ const _getArticles = unstable_cache(
             },
           },
         ],
-      };
+      });
     }
+
+    const whereClause: Prisma.ArticleWhereInput = {
+      AND: whereConditions,
+    };
 
     try {
       const [data, total] = await prisma.$transaction([
@@ -153,7 +175,7 @@ const _getArticles = unstable_cache(
     }
   },
   [GET_ARTICLES_CACHE_KEY],
-  { revalidate: GET_ARTICLES_CACHE_REVALIDATE }, // Cache for 5 minutes
+  { revalidate: GET_ARTICLES_CACHE_REVALIDATE },
 );
 
 /* Get Article by Slug*/

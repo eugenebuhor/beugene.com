@@ -1,13 +1,19 @@
+import { getArticles } from '@/lib/articles';
+import ArticleCardsList from '@/ui/articles/ArticleCardsList';
 import { LayoutSection, LayoutSectionContent } from '@/ui/common/Layouts';
-import ArticlesList from '@/ui/articles/ArticlesList';
 
 export const revalidate = 300; // 5 minutes
 
-const Home = () => {
+const Home = async () => {
+  const limit = 5;
+  const offset = 0;
+
+  const { data: articles } = await getArticles({ limit, offset });
+
   return (
     <LayoutSection>
       <LayoutSectionContent>
-        <ArticlesList page={1} limit={5} />
+        <ArticleCardsList articles={articles} />
       </LayoutSectionContent>
     </LayoutSection>
   );

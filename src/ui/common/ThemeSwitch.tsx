@@ -27,7 +27,7 @@ const ThemeSwitch = () => {
     <ToggleButtonGroup
       value={theme || ''}
       onChange={onToggleTheme}
-      aria-label="theme switch"
+      aria-label="theme group switch"
       className={styles.toggleButtonGroup}
     >
       {themes.map((themeOption) => (
