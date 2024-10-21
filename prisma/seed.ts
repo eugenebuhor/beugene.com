@@ -4,8 +4,8 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 async function main() {
-  // Seed Categories
-  const categories = [
+  // Seed Tags
+  const tags = [
     'Front-End Development',
     'Back-End Development',
     'Full-Stack Development',
@@ -27,18 +27,6 @@ async function main() {
     'Project Case Studies',
     'Hackathons',
     'Career Development',
-  ];
-
-  for (const name of categories) {
-    await prisma.category.upsert({
-      where: { name },
-      update: {},
-      create: { name },
-    });
-  }
-
-  // Seed Tags
-  const tags = [
     'JavaScript',
     'TypeScript',
     'React',
