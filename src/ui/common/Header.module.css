@@ -21,3 +21,7 @@
     height: 1.3125rem;
     user-select: none;
 }
+
+html[data-theme='dark'] .nameLogoWrapper {
+    filter: invert(1);
+}
