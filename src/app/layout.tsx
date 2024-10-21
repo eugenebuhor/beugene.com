@@ -17,7 +17,7 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${fonts.lora.variable} ${fonts.inter.variable}`}
+      className={`${fonts.mediumContentSerif.variable} ${fonts.mediumContentSansSerif.variable}`}
     >
       <body>
         <NextThemeProvider defaultTheme="system">

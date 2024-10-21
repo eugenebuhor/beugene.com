@@ -13,9 +13,10 @@ body {
 }
 
 body {
-    font-family: var(--font-family-primary), sans-serif;
-    color: var(--text-primary);
-    background: var(--main-surface-background);
+    -webkit-font-smoothing: antialiased;
+    font-family: var(--font-family-text), sans-serif;
+    color: var(--color-text-primary);
+    background-color: var(--color-main-surface-primary);
 }
 
 *,

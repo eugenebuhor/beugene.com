@@ -1,13 +1,32 @@
-import { Inter, Lora } from 'next/font/google';
+import localFont from 'next/font/local';
 
-export const lora = Lora({
-  subsets: ['latin'],
-  weight: ['400', '500', '700'],
-  variable: '--font-lora',
+const mediumContentSerif = localFont({
+  src: [
+    {
+      path: '../../public/fonts/medium-content-serif-400.otf',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
+  display: 'swap',
+  variable: '--font-medium-content-serif',
 });
 
-export const inter = Inter({
-  subsets: ['latin'],
-  weight: ['100', '300', '400', '500', '700', '800'],
-  variable: '--font-inter',
+const mediumContentSansSerif = localFont({
+  src: [
+    {
+      path: '../../public/fonts/medium-content-sans-serif-300.otf',
+      weight: '300',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/medium-content-sans-serif-700.otf',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
+  display: 'swap',
+  variable: '--font-medium-content-sans-serif',
 });
+
+export { mediumContentSerif, mediumContentSansSerif };

@@ -1,5 +1,11 @@
 .typography {
-    font-family: var(--font-family), sans-serif;
+    font-family: var(--font-family-text);
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    /* reset default heading styles */
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 /* Variants */
@@ -76,11 +82,14 @@
 }
 
 /* Font Family */
-.fontFamily-primary {
-    font-family: var(--font-family-primary), sans-serif;
+.fontFamily-title {
+    font-family: var(--font-family-title);
 }
-.fontFamily-secondary {
-    font-family:  var(--font-family-secondary), sans-serif;
+.fontFamily-subtitle {
+    font-family: var(--font-family-subtitle);
+}
+.fontFamily-text {
+    font-family: var(--font-family-text);
 }
 
 /* Weights */

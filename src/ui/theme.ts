@@ -76,7 +76,7 @@ export type TypographyWeight = 'thin' | 'light' | 'regular' | 'medium' | 'bold' 
  *
  * Represents the different font-family options.
  */
-export type TypographyFamily = 'primary' | 'secondary';
+export type TypographyFamily = 'title' | 'subtitle' | 'text';
 
 /**
  * TypographyVariant

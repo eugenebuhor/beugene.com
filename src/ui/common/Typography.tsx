@@ -27,7 +27,7 @@ export interface TypographyProps extends HTMLAttributes<HTMLElement> {
 const Typography = ({
   component: Component = 'span',
   variant = 'body1',
-  fontFamily = 'primary',
+  fontFamily,
   weight,
   color,
   trim = false,
@@ -42,6 +42,17 @@ const Typography = ({
   style = {},
   ...rest
 }: TypographyProps) => {
+  if (
+    variant === 'h1' ||
+    variant === 'h2' ||
+    variant === 'h3' ||
+    variant === 'h4' ||
+    variant === 'h5' ||
+    variant === 'h6'
+  ) {
+    Component = variant;
+  }
+
   const classes = clsx(
     styles.typography, // Apply base typography styles
     styles[variant],
@@ -58,7 +69,7 @@ const Typography = ({
 
   const combinedStyle: CSSProperties = {
     ...(trim ? { WebkitLineClamp: Number(trim) } : {}),
-    color: color ? `var(--${color})` : undefined,
+    color: color ? `var(--color-${color})` : undefined,
     lineHeight,
     ...style,
   };

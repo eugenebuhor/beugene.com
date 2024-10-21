@@ -27,11 +27,11 @@ const Footer = () => {
           <ThemeSwitch />
         </Flex>
         <Flex justifyContent="space-between" flexWrap="nowrap">
-          <Typography variant="caption" color="text-secondary">
+          <Typography variant="caption" color="text-secondary" fontFamily="subtitle">
             Berlin, Germany
           </Typography>
           <NavLink href="/license">
-            <Typography variant="caption" color="text-secondary">
+            <Typography variant="caption" color="text-secondary" fontFamily="subtitle">
               Copyright © 2024
             </Typography>
           </NavLink>
