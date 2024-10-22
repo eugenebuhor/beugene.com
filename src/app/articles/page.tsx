@@ -1,6 +1,6 @@
 import ArticleCardsList from '@/ui/articles/ArticleCardsList';
 import { LayoutSection, LayoutSectionContent } from '@/ui/common/Layouts';
-import { parseSearchParams } from '@/utils/query-string';
+import { parseSearchParams } from '@/utils/queryString';
 import { getArticles } from '@/lib/articles';
 
 type ArticlesPageProps = {

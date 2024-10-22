@@ -2,7 +2,8 @@ import { Prisma } from '@prisma/client';
 import Flex from '@/ui/common/Flex';
 import Typography from '@/ui/common/Typography';
 import ArticleMeta from '@/ui/articles/ArticleMeta';
-import ArticleActions from '@/ui/articles/ArticleActions';
+import ArticleTags from '@/ui/articles/ArticleTags';
+import ArticleEngage from '@/ui/articles/ArticleEngage';
 
 type ArticleCardProps = {
   article: Prisma.ArticleGetPayload<{ include: { tags: true } }>;
@@ -22,12 +23,10 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
         {article.content}
       </Typography>
 
-      <ArticleActions
-        slug={article.slug}
-        likes={article.likes}
-        tags={article.tags}
-        views={article.views}
-      />
+      <Flex flexDirection="column" gap={12}>
+        <ArticleTags tags={article.tags} />
+        <ArticleEngage slug={article.slug} likes={article.likes} />
+      </Flex>
     </Flex>
   );
 };

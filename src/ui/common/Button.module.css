@@ -1,11 +1,13 @@
 .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     font-weight: var(--font-weight-medium);
     padding: 0.5rem 1rem;
     width: fit-content;
     border-radius: var(--border-radius-md);
     transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
-    font-family: var(--font-family-subtitle);
 }
 
 .button:disabled {
@@ -48,38 +50,60 @@
     background-color: transparent;
     color: var(--color-text-primary);
     border: none;
-    padding: 0.25rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    padding: 0.15rem;
 }
 
-.icon:hover:not(:disabled) {
+.icon-outlined {
+    background-color: transparent;
+    color: var(--color-text-primary);
+    border: none;
+    border-radius: 50%;
+    padding: 0;
+}
+
+.icon-outlined:hover:not(:disabled) {
     background-color: var(--color-main-surface-tertiary);
 }
 
 /* Sizes */
 .small {
-    padding: 0.25rem 0.5rem;
+    padding: 0.35rem 0.65rem;
     font-size: var(--font-size-body2);
 }
 
 .medium {
-    padding: 0.5rem 1rem;
-    font-size: var(--font-size-body1);
+    padding: 0.65rem 1.15rem;
+    font-size: var(--font-size-subtitle2);
 }
 
 .large {
     padding: 0.75rem 1.5rem;
-    font-size: var(--font-size-h6);
+    font-size: var(--font-size-subtitle1);
+}
+
+.icon.small, .icon.medium, .icon.large {
+    padding: 0.15rem;
+}
+
+.icon-outlined.small {
+    width: 2.15rem;
+    height: 2.15rem;
+    padding: 0;
+}
+
+.icon-outlined.medium {
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+}
+
+.icon-outlined.large {
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
 }
 
 /* Additional Styles */
-.disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
-}
-
 .fullWidth {
     width: 100%;
 }
