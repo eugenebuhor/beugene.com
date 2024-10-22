@@ -22,12 +22,7 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
         {article.content}
       </Typography>
 
-      <ArticleActions
-        slug={article.slug}
-        likes={article.likes}
-        tags={article.tags}
-        views={article.views}
-      />
+      <ArticleActions slug={article.slug} likes={article.likes} tags={article.tags} />
     </Flex>
   );
 };

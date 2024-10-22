@@ -10,7 +10,6 @@ type ArticleDetailsProps = {
   slug: Article['slug'];
   tags: Tag[];
   likes: Article['likes'];
-  views: Article['views'];
 };
 
 const ArticleActions = ({ tags }: ArticleDetailsProps) => {

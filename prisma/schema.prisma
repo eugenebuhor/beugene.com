@@ -18,7 +18,6 @@ model Article {
   timeToRead      Int
   status          ArticleStatus @default(DRAFT)
   likes           Int           @default(0)
-  views           Int           @default(0)
   metaTitle       String?
   metaDescription String?
   publishedAt     DateTime?
