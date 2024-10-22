@@ -1,3 +1,5 @@
-export default function LicensePage() {
+const LicensePage = () => {
   return null;
-}
+};
+
+export default LicensePage;

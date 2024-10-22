@@ -11,6 +11,17 @@
 }
 
 .layoutContent {
-    border-bottom: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--color-border-light);
     padding-bottom: 25px;
+}
+
+.nameLogoWrapper {
+    position: relative;
+    width: 12.0625rem;
+    height: 1.3125rem;
+    user-select: none;
+}
+
+html[data-theme='dark'] .nameLogoWrapper {
+    filter: invert(1);
 }

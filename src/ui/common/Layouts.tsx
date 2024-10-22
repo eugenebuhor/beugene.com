@@ -10,7 +10,7 @@ type LayoutMainProps = {
   className?: string;
 };
 
-export function LayoutMain({ children, className, ...rest }: LayoutMainProps & FlexProps) {
+export const LayoutMain = ({ children, className, ...rest }: LayoutMainProps & FlexProps) => {
   return (
     <Flex
       component="main"
@@ -21,7 +21,7 @@ export function LayoutMain({ children, className, ...rest }: LayoutMainProps & F
       {children}
     </Flex>
   );
-}
+};
 
 /* LayoutSection */
 type LayoutSectionProps = {
@@ -29,7 +29,7 @@ type LayoutSectionProps = {
   className?: string;
 };
 
-export function LayoutSection({ children, className, ...rest }: LayoutSectionProps & FlexProps) {
+export const LayoutSection = ({ children, className, ...rest }: LayoutSectionProps & FlexProps) => {
   return (
     <Flex
       component="section"
@@ -40,7 +40,7 @@ export function LayoutSection({ children, className, ...rest }: LayoutSectionPro
       {children}
     </Flex>
   );
-}
+};
 
 /* LayoutContent */
 type LayoutContentProps = {
@@ -48,11 +48,15 @@ type LayoutContentProps = {
   className?: string;
 };
 
-export function LayoutContent({ children, className, ...rest }: LayoutContentProps & FlexProps) {
+export const LayoutSectionContent = ({
+  children,
+  className,
+  ...rest
+}: LayoutContentProps & FlexProps) => {
   return (
     <Flex
       component="div"
-      flexDirection="row"
+      flexDirection="column"
       justifyContent="flex-start"
       className={clsx(styles.layoutContent, className)}
       {...rest}
@@ -60,4 +64,4 @@ export function LayoutContent({ children, className, ...rest }: LayoutContentPro
       {children}
     </Flex>
   );
-}
+};

@@ -1,7 +1,9 @@
 .layoutMain {
+    --layout-main-margin-top: 30px;
     width: 100%;
     min-width: var(--size-min-width);
-    min-height: calc(100vh - var(--size-header-height));
+    min-height: calc(100vh - var(--size-header-height) - var(--layout-main-margin-top));
+    margin-top: var(--layout-main-margin-top);
 }
 
 .layoutSection {}
