@@ -3,6 +3,8 @@
 import prisma from '@/lib/prisma';
 import { cookies } from 'next/headers';
 import { ValidationError, NotFoundError /*, InternalError */ } from '@/lib/errors';
+import { revalidateTag } from 'next/cache';
+import { CacheTags } from '@/constants';
 
 const LIKED_ARTICLES_COOKIE_KEY = 'liked_articles';
 const MAX_LIKED_ARTICLES = 1000;
@@ -78,6 +80,10 @@ export async function toggleArticleLike(slug: string): Promise<void> {
       sameSite: 'lax',
       secure: true,
     });
+
+    // Revalidate related data queries
+    revalidateTag(CacheTags.ARTICLES);
+    revalidateTag(CacheTags.ARTICLE);
   } catch (error) {
     console.error('Error toggling article like:', error);
     // throw new InternalError('Failed to increment article likes');

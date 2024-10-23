@@ -81,8 +81,19 @@
     font-size: var(--font-size-subtitle1);
 }
 
-.icon.small, .icon.medium, .icon.large {
+.icon.small {
     padding: 0.15rem;
+    font-size: var(--font-size-body1);
+}
+
+.icon.medium {
+    padding: 0.15rem;
+    font-size: var(--font-size-subtitle1);
+}
+
+.icon.large {
+    padding: 0.15rem;
+    font-size: var(--font-size-h6);
 }
 
 .icon-outlined.small {

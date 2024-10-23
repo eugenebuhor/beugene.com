@@ -2,6 +2,7 @@
 
 import type { Article } from '@prisma/client';
 import { debounce } from 'lodash';
+import { useState } from 'react';
 import { IoHeartOutline, IoShareOutline } from 'react-icons/io5';
 import Flex from '@/ui/common/Flex';
 import Button from '@/ui/common/Button';
@@ -14,21 +15,24 @@ type ArticleEngageProps = {
   likes: Article['likes'];
 };
 
-const ArticleEngage = ({ likes, slug }: ArticleEngageProps) => {
+const ArticleEngage = ({ likes: initialLikes, slug }: ArticleEngageProps) => {
+  const [likes, setLikes] = useState(initialLikes);
+
   const onToggleArticleLike = debounce(async (articleSlug: string) => {
+    setLikes((prev) => prev + 1);
     await toggleArticleLike(articleSlug);
-  }, 500);
+  }, 50);
 
   const onShareArticle = debounce(async (articleSlug: string) => {
     const articleUrl = `${window.location.origin}/articles/${articleSlug}`;
     await copyToClipboard(articleUrl);
-  }, 500);
+  }, 50);
 
   return (
     <Flex justifyContent="space-between">
       <Flex alignItems="center">
         <Button
-          size="small"
+          size="medium"
           variant="icon"
           onClick={() => onToggleArticleLike(slug)}
           aria-label="like-article"
@@ -41,8 +45,8 @@ const ArticleEngage = ({ likes, slug }: ArticleEngageProps) => {
       </Flex>
 
       <Button
-        size="small"
-        variant="icon-outlined"
+        size="medium"
+        variant="icon"
         onClick={() => onShareArticle(slug)}
         aria-label="share-article"
       >
