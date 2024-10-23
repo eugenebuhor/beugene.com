@@ -3,17 +3,20 @@ import { LayoutSection, LayoutSectionContent } from '@/ui/common/Layouts';
 import { parseSearchParams } from '@/utils/query-string';
 import { getArticles } from '@/lib/articles';
 
-type ArticlesPageProps = {
-  searchParams: { [key: string]: string | string[] | undefined };
+type SearchParams = {
+  page?: string;
+  limit?: string;
+  q?: string;
+  tags?: string[];
 };
 
-const ArticlesPage = async ({ searchParams }: ArticlesPageProps) => {
-  const parsedParams = parseSearchParams<{
-    page?: string;
-    limit?: string;
-    q?: string;
-    tags?: string[];
-  }>(searchParams);
+type ArticlesPageProps = {
+  searchParams: Promise<SearchParams>;
+};
+
+const ArticlesPage = async (props: ArticlesPageProps) => {
+  const searchParams = await props.searchParams;
+  const parsedParams = parseSearchParams<SearchParams>(searchParams);
   const page = parseInt(parsedParams.page || '1', 10);
   const limit = parseInt(parsedParams.limit || '5', 10);
   const q = parsedParams.q || '';
