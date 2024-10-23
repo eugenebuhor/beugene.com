@@ -20,28 +20,15 @@ const COOKIE_MAX_AGE = 60 * 60 * 24 * 180; // 6 months
  // * @throws InternalError if database query fails.
  */
 export async function toggleArticleLike(slug: string): Promise<void> {
-  if (!slug) {
-    throw new ValidationError('Slug is required');
-  }
-
   const cookieStore = cookies();
-  const likedArticlesCookie = cookieStore.get(LIKED_ARTICLES_COOKIE_KEY);
-  let likedArticles: string[] = [];
-
-  if (likedArticlesCookie?.value) {
-    try {
-      likedArticles = JSON.parse(likedArticlesCookie.value) as string[];
-    } catch {
-      likedArticles = [];
-    }
-  }
+  let likedArticles = await getLikedArticles();
 
   const article = await prisma.article.findUnique({
     where: { slug },
   });
 
   if (!article) {
-    throw new NotFoundError('Article not found');
+    return;
   }
 
   try {
@@ -89,3 +76,19 @@ export async function toggleArticleLike(slug: string): Promise<void> {
     // throw new InternalError('Failed to increment article likes');
   }
 }
+
+export const getLikedArticles = async (): Promise<string[]> => {
+  const cookieStore = cookies();
+
+  const likedArticlesCookie = cookieStore.get(LIKED_ARTICLES_COOKIE_KEY);
+
+  if (likedArticlesCookie?.value) {
+    try {
+      return JSON.parse(likedArticlesCookie.value) as string[];
+    } catch {
+      return [];
+    }
+  }
+
+  return [];
+};

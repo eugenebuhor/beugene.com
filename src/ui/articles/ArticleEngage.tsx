@@ -13,13 +13,26 @@ import { copyToClipboard } from '@/utils/copyToClipboard';
 type ArticleEngageProps = {
   slug: Article['slug'];
   likes: Article['likes'];
+  isLiked: boolean;
 };
 
-const ArticleEngage = ({ likes: initialLikes, slug }: ArticleEngageProps) => {
+const ArticleEngage = ({
+  likes: initialLikes,
+  isLiked: initialIsLiked,
+  slug,
+}: ArticleEngageProps) => {
+  const [isLiked, setIsLiked] = useState(initialIsLiked);
   const [likes, setLikes] = useState(initialLikes);
 
   const onToggleArticleLike = debounce(async (articleSlug: string) => {
-    setLikes((prev) => prev + 1);
+    if (isLiked) {
+      setLikes((prev) => prev - 1);
+      setIsLiked(false);
+    } else {
+      setLikes((prev) => prev + 1);
+      setIsLiked(true);
+    }
+
     await toggleArticleLike(articleSlug);
   }, 50);
 
