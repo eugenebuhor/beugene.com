@@ -5,7 +5,7 @@ import Flex from '@/ui/common/Flex';
 import styles from '@/ui/common/Footer.module.css';
 import Typography from '@/ui/common/Typography';
 import ThemeSwitch from '@/ui/common/ThemeSwitch';
-import { LINKS } from '@/constants';
+import { Links } from '@/constants';
 
 const Footer = () => {
   return (
@@ -13,12 +13,12 @@ const Footer = () => {
       <LayoutSectionContent gap={32} className={styles.layoutContent}>
         <Flex justifyContent="space-between" flexWrap="nowrap">
           <Flex component="nav" gap={15} alignItems="center">
-            <Link href={LINKS.GITHUB} target="_blank">
+            <Link href={Links.GITHUB} target="_blank">
               <Typography variant="subtitle1" color="text-primary" verticalAlign="middle">
                 <FaGithub viewBox="0 0 496 496" />
               </Typography>
             </Link>
-            <Link href={LINKS.LINKED_IN} target="_blank">
+            <Link href={Links.LINKED_IN} target="_blank">
               <Typography variant="subtitle1" color="text-primary" verticalAlign="middle">
                 <FaLinkedinIn viewBox="0 0 448 448" />
               </Typography>

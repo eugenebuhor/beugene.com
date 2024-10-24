@@ -1,7 +1,8 @@
 import ArticleCardsList from '@/ui/articles/ArticleCardsList';
 import { LayoutSection, LayoutSectionContent } from '@/ui/common/Layouts';
-import { parseSearchParams } from '@/utils/query-string';
+import { parseSearchParams } from '@/utils/queryString';
 import { getArticles } from '@/lib/articles';
+import { getUserLikes, getUserUUID } from '@/lib/users';
 
 type ArticlesPageProps = {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -21,9 +22,9 @@ const ArticlesPage = async ({ searchParams }: ArticlesPageProps) => {
 
   const offset = (page - 1) * limit;
 
+  const userUUID = await getUserUUID();
+  const userLikes = await getUserLikes(userUUID!); // fixme: fix this
   const { data: articles, total } = await getArticles({ limit, offset, q, tags });
-
-  const totalPages = Math.ceil(total / limit);
 
   return (
     <LayoutSection>
@@ -31,8 +32,9 @@ const ArticlesPage = async ({ searchParams }: ArticlesPageProps) => {
         <ArticleCardsList
           articles={articles}
           withPagination
-          totalPages={totalPages}
+          totalPages={Math.ceil(total / limit)}
           currentPage={page}
+          userLikes={userLikes}
         />
       </LayoutSectionContent>
     </LayoutSection>

@@ -32,10 +32,11 @@ const ThemeSwitch = () => {
     >
       {themes.map((themeOption) => (
         <ToggleButton
+          variant="icon-outlined"
+          size="small"
           key={themeOption}
           value={themeOption}
           aria-label={`${themeOption} mode`}
-          className={styles.toggleButton}
         >
           {themeOption === 'dark' ? (
             <MdDarkMode color="var(--color-text-primary)" />

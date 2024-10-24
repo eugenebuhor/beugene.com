@@ -3,21 +3,13 @@ import prisma from '@/lib/prisma';
 // eslint-disable-next-line camelcase
 import { unstable_cache } from 'next/cache';
 import { ValidationError, InternalError, NotFoundError } from '@/lib/errors';
+import { CacheKeys, CacheTags } from '@/constants';
 
 const MAX_QUERY_LENGTH = 100;
 
 /* Get Tags */
 
-/**
- * Public function to get tags with proper error handling.
- *
- * @param q - Optional search query to filter tags.
- * @returns Promise<Tag[]> - An array of tags.
- * @throws ValidationError if query validation fails.
- * @throws NotFoundError if no tags found.
- * @throws InternalError if database query fails.
- */
-export async function getTags(q?: string): Promise<Tag[]> {
+export const getTags = async (q?: string): Promise<Tag[]> => {
   const searchQuery = q ? q.trim() : undefined;
 
   if (searchQuery && searchQuery.length > MAX_QUERY_LENGTH) {
@@ -33,21 +25,12 @@ export async function getTags(q?: string): Promise<Tag[]> {
   }
 
   return tags;
-}
+};
 
-/**
- * Internal function to fetch tags from the database with caching.
- *
- * cache key: get-tags
- * cache options: revalidate every 300 seconds (5 minutes)
- *
- * @param q - Validated search query.
- * @returns Promise<Tag[]> - an array of tags or null if a database error occurs.
- */
 const _getTags = unstable_cache(
   async (q?: string): Promise<Tag[] | null> => {
     try {
-      const tags = await prisma.tag.findMany({
+      return await prisma.tag.findMany({
         where: q
           ? {
               name: {
@@ -60,13 +43,14 @@ const _getTags = unstable_cache(
           name: 'asc',
         },
       });
-
-      return tags;
     } catch (error) {
       console.error('Database Error:', error);
       return null;
     }
   },
-  ['get-tags'],
-  { revalidate: 300 },
+  [CacheKeys.GET_TAGS],
+  {
+    revalidate: 300,
+    tags: [CacheTags.TAGS],
+  },
 );
