@@ -88,12 +88,12 @@
 
 .icon.medium {
     padding: 0.15rem;
-    font-size: var(--font-size-subtitle1);
+    font-size: var(--font-size-h6);
 }
 
 .icon.large {
     padding: 0.15rem;
-    font-size: var(--font-size-h6);
+    font-size: var(--font-size-h5);
 }
 
 .icon-outlined.small {

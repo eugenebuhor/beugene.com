@@ -3,12 +3,10 @@
 import type { Article } from '@prisma/client';
 import { debounce } from 'lodash';
 import { useState } from 'react';
-import { IoHeartOutline /* , IoShareOutline */ } from 'react-icons/io5';
 import Flex from '@/ui/common/Flex';
-import Button from '@/ui/common/Button';
 import Typography from '@/ui/common/Typography';
+import LikeButton from '@/ui/common/LikeButton';
 import { toggleArticleLike } from '@/app/actions/articles';
-/* import { copyToClipboard } from '@/utils/copyToClipboard'; */
 
 type ArticleEngageProps = {
   slug: Article['slug'];
@@ -24,7 +22,7 @@ const ArticleEngage = ({
   const [isLiked, setIsLiked] = useState(initialIsLiked);
   const [likes, setLikes] = useState(initialLikes);
 
-  const onToggleArticleLike = debounce(async (articleSlug: string) => {
+  const onToggleArticleLike = debounce(async () => {
     if (isLiked) {
       setLikes((prev) => prev - 1);
       setIsLiked(false);
@@ -33,38 +31,22 @@ const ArticleEngage = ({
       setIsLiked(true);
     }
 
-    await toggleArticleLike(articleSlug);
+    try {
+      await toggleArticleLike(slug);
+    } catch (error) {
+      setLikes(initialLikes);
+      setIsLiked(initialIsLiked);
+    }
   }, 50);
-
-  // const onShareArticle = debounce(async (articleSlug: string) => {
-  //   const articleUrl = `${window.location.origin}/articles/${articleSlug}`;
-  //   await copyToClipboard(articleUrl);
-  // }, 50);
 
   return (
     <Flex justifyContent="space-between">
       <Flex alignItems="center">
-        <Button
-          size="medium"
-          variant="icon"
-          onClick={() => onToggleArticleLike(slug)}
-          aria-label="like-article"
-        >
-          <IoHeartOutline color="var(--color-text-secondary)" />
-        </Button>
+        <LikeButton isLiked={isLiked} onClick={onToggleArticleLike} />
         <Typography variant="body1" color="text-secondary" fontFamily="subtitle">
           &nbsp;{likes}
         </Typography>
       </Flex>
-
-      {/*<Button*/}
-      {/*  size="medium"*/}
-      {/*  variant="icon"*/}
-      {/*  onClick={() => onShareArticle(slug)}*/}
-      {/*  aria-label="share-article"*/}
-      {/*>*/}
-      {/*  <IoShareOutline color="var(--color-text-secondary)" />*/}
-      {/*</Button>*/}
     </Flex>
   );
 };

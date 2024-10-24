@@ -24,10 +24,9 @@ const ArticleCard = async ({ article, isLiked }: ArticleCardProps) => {
         {article.content}
       </Typography>
 
-      <Flex flexDirection="column" gap={12}>
-        <ArticleTags tags={article.tags} />
-        <ArticleEngage slug={article.slug} likes={article.likes} isLiked={isLiked} />
-      </Flex>
+      <ArticleTags tags={article.tags} />
+
+      <ArticleEngage slug={article.slug} likes={article.likes} isLiked={isLiked} />
     </Flex>
   );
 };
