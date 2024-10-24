@@ -3,12 +3,12 @@
 import type { Article } from '@prisma/client';
 import { debounce } from 'lodash';
 import { useState } from 'react';
-import { IoHeartOutline, IoShareOutline } from 'react-icons/io5';
+import { IoHeartOutline /* , IoShareOutline */ } from 'react-icons/io5';
 import Flex from '@/ui/common/Flex';
 import Button from '@/ui/common/Button';
 import Typography from '@/ui/common/Typography';
 import { toggleArticleLike } from '@/app/actions/articles';
-import { copyToClipboard } from '@/utils/copyToClipboard';
+/* import { copyToClipboard } from '@/utils/copyToClipboard'; */
 
 type ArticleEngageProps = {
   slug: Article['slug'];
@@ -36,10 +36,10 @@ const ArticleEngage = ({
     await toggleArticleLike(articleSlug);
   }, 50);
 
-  const onShareArticle = debounce(async (articleSlug: string) => {
-    const articleUrl = `${window.location.origin}/articles/${articleSlug}`;
-    await copyToClipboard(articleUrl);
-  }, 50);
+  // const onShareArticle = debounce(async (articleSlug: string) => {
+  //   const articleUrl = `${window.location.origin}/articles/${articleSlug}`;
+  //   await copyToClipboard(articleUrl);
+  // }, 50);
 
   return (
     <Flex justifyContent="space-between">
@@ -57,14 +57,14 @@ const ArticleEngage = ({
         </Typography>
       </Flex>
 
-      <Button
-        size="medium"
-        variant="icon"
-        onClick={() => onShareArticle(slug)}
-        aria-label="share-article"
-      >
-        <IoShareOutline color="var(--color-text-secondary)" />
-      </Button>
+      {/*<Button*/}
+      {/*  size="medium"*/}
+      {/*  variant="icon"*/}
+      {/*  onClick={() => onShareArticle(slug)}*/}
+      {/*  aria-label="share-article"*/}
+      {/*>*/}
+      {/*  <IoShareOutline color="var(--color-text-secondary)" />*/}
+      {/*</Button>*/}
     </Flex>
   );
 };
