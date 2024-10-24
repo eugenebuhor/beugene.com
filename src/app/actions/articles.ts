@@ -22,7 +22,7 @@ export async function toggleArticleLike(slug: string): Promise<void> {
     throw new ValidationError('Slug is required');
   }
 
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const likedArticlesCookie = cookieStore.get(LIKED_ARTICLES_COOKIE_KEY);
   let likedArticles: string[] = [];
 
