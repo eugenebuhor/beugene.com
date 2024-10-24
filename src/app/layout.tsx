@@ -4,7 +4,7 @@ import { ThemeProvider as NextThemeProvider } from 'next-themes';
 import * as fonts from '@/ui/fonts';
 import Header from '@/ui/common/Header';
 import Footer from '@/ui/common/Footer';
-import { LayoutMain } from '@/ui/common/Layouts';
+import { LayoutMain, LayoutSection } from '@/ui/common/Layouts';
 import '@/ui/global.css';
 
 export const metadata: Metadata = {
@@ -22,7 +22,9 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
       <body>
         <NextThemeProvider defaultTheme="system">
           <Header />
-          <LayoutMain>{children}</LayoutMain>
+          <LayoutMain>
+            <LayoutSection>{children}</LayoutSection>
+          </LayoutMain>
           <Footer />
         </NextThemeProvider>
       </body>

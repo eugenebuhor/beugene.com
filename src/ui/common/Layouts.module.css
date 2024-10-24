@@ -6,11 +6,16 @@
     margin-top: var(--layout-main-margin-top);
 }
 
-.layoutSection {}
-
-.layoutContent {
+.layoutSection {
     width: 100%;
     max-width: var(--size-max-width);
     margin: 0 auto;
     padding: 0 var(--padding-layout);
 }
+
+/*.layoutContent {*/
+/*    width: 100%;*/
+/*    max-width: var(--size-max-width);*/
+/*    margin: 0 auto;*/
+/*    padding: 0 var(--padding-layout);*/
+/*}*/
