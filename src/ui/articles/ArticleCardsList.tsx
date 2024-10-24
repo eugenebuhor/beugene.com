@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client';
+import { Prisma, Like } from '@prisma/client';
 import PaginationControls from '@/ui/common/PaginationControls';
 import ArticleCard from './ArticleCard';
 import styles from './ArticleCardsList.module.css';
@@ -8,19 +8,24 @@ type ArticleCardsListProps = {
   withPagination?: boolean;
   totalPages?: number;
   currentPage?: number;
+  userLikes: Like[];
 };
 
-export default function ArticleCardsList({
+const ArticleCardsList = ({
   articles,
   withPagination = false,
   totalPages = 1,
   currentPage = 1,
-}: ArticleCardsListProps) {
+  userLikes = [],
+}: ArticleCardsListProps) => {
   return (
     <ul className={styles.articlesList}>
       {articles.map((article) => (
         <li key={article.id}>
-          <ArticleCard article={article} />
+          <ArticleCard
+            article={article}
+            isLiked={userLikes.some((like) => article.id === like.articleId)}
+          />
         </li>
       ))}
 
@@ -29,4 +34,6 @@ export default function ArticleCardsList({
       )}
     </ul>
   );
-}
+};
+
+export default ArticleCardsList;

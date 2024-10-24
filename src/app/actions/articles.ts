@@ -1,94 +1,71 @@
 'use server';
 
-import prisma from '@/lib/prisma';
-import { cookies } from 'next/headers';
-import { ValidationError, NotFoundError /*, InternalError */ } from '@/lib/errors';
 import { revalidateTag } from 'next/cache';
+import prisma from '@/lib/prisma';
 import { CacheTags } from '@/constants';
-
-const LIKED_ARTICLES_COOKIE_KEY = 'liked_articles';
-const MAX_LIKED_ARTICLES = 1000;
-const COOKIE_MAX_AGE = 60 * 60 * 24 * 180; // 6 months
+import { createUserIfNotExists } from '@/app/actions/users';
+/* import { InternalError } from '@/lib/errors'; */
 
 /**
- * Toggles the like status for an article and updates the cookies accordingly.
- *
- * @param slug - The slug of the article to like or unlike.
- * @returns Promise<void>
- * @throws ValidationError if slug validation fails.
- * @throws NotFoundError if no article found.
- // * @throws InternalError if database query fails.
+ * Toggles user's like for an article.
  */
-export async function toggleArticleLike(slug: string): Promise<void> {
-  const cookieStore = cookies();
-  let likedArticles = await getLikedArticles();
-
-  const article = await prisma.article.findUnique({
-    where: { slug },
-  });
-
-  if (!article) {
-    return;
-  }
-
+export const toggleArticleLike = async (slug: string): Promise<void> => {
   try {
-    if (likedArticles.includes(slug)) {
-      // Unlike the article
-      await prisma.article.update({
-        where: { slug },
-        data: {
-          likes: { decrement: 1 },
-        },
-      });
+    const user = await createUserIfNotExists();
 
-      likedArticles = likedArticles.filter((s) => s !== slug);
-    } else {
-      // Like the article
-      await prisma.article.update({
-        where: { slug },
-        data: {
-          likes: { increment: 1 },
-        },
-      });
-
-      likedArticles.push(slug);
-
-      // Limit the cookie value maximum size
-      if (likedArticles.length > MAX_LIKED_ARTICLES) {
-        likedArticles = likedArticles.slice(-MAX_LIKED_ARTICLES);
-      }
+    if (!user) {
+      return;
     }
 
-    // Update the cookie
-    cookieStore.set(LIKED_ARTICLES_COOKIE_KEY, JSON.stringify(likedArticles), {
-      httpOnly: true,
-      path: '/',
-      maxAge: COOKIE_MAX_AGE,
-      sameSite: 'lax',
-      secure: true,
+    const article = await prisma.article.findUnique({
+      where: { slug },
     });
 
-    // Revalidate related data queries
-    revalidateTag(CacheTags.ARTICLES);
-    revalidateTag(CacheTags.ARTICLE);
-  } catch (error) {
-    console.error('Error toggling article like:', error);
-    // throw new InternalError('Failed to increment article likes');
-  }
-}
-
-export const getLikedArticles = async (): Promise<string[]> => {
-  const cookieStore = cookies();
-
-  const likedArticlesCookie = cookieStore.get(LIKED_ARTICLES_COOKIE_KEY);
-
-  if (likedArticlesCookie?.value) {
-    try {
-      return JSON.parse(likedArticlesCookie.value) as string[];
-    } catch {
-      return [];
+    if (!article) {
+      return;
     }
-  }
 
-  return [];
+    const existingLike = await prisma.like.findUnique({
+      where: {
+        // eslint-disable-next-line camelcase
+        userId_articleId: {
+          userId: user.id,
+          articleId: article.id,
+        },
+      },
+    });
+
+    if (existingLike) {
+      // Unlike the article
+      await prisma.$transaction([
+        prisma.like.delete({
+          where: { id: existingLike.id },
+        }),
+        prisma.article.update({
+          where: { id: article.id },
+          data: { likes: { decrement: 1 } },
+        }),
+      ]);
+    } else {
+      // Like the article
+      await prisma.$transaction([
+        prisma.like.create({
+          data: {
+            userId: user.id,
+            articleId: article.id,
+          },
+        }),
+        prisma.article.update({
+          where: { id: article.id },
+          data: { likes: { increment: 1 } },
+        }),
+      ]);
+    }
+
+    // Revalidate related data queries
+    revalidateTag(CacheTags.USER_LIKES);
+  } catch (err) {
+    console.error('Database Error:', err);
+    // throw new InternalError('Internal server error');
+  }
 };

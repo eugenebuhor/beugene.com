@@ -1,7 +1,7 @@
-import { Prisma, ArticleStatus } from '@prisma/client';
-import type { Article } from '@prisma/client';
 // eslint-disable-next-line camelcase
 import { unstable_cache } from 'next/cache';
+import { ArticleStatus } from '@prisma/client';
+import type { Article, Prisma } from '@prisma/client';
 import prisma from '@/lib/prisma';
 import { InternalError, NotFoundError, ValidationError } from '@/lib/errors';
 import { CacheKeys, CacheTags } from '@/constants';
@@ -157,7 +157,7 @@ const _getArticles = unstable_cache(
 
 /* Get Article by Slug*/
 
-export async function getArticleBySlug(slug: string): Promise<Article> {
+export const getArticleBySlug = async (slug: string): Promise<Article> => {
   if (!slug) {
     throw new ValidationError('Slug is required');
   }
@@ -169,7 +169,7 @@ export async function getArticleBySlug(slug: string): Promise<Article> {
   }
 
   return article;
-}
+};
 
 const _getArticleBySlug = unstable_cache(
   async (slug: string): Promise<Article | null> => {

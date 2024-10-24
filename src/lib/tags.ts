@@ -9,7 +9,7 @@ const MAX_QUERY_LENGTH = 100;
 
 /* Get Tags */
 
-export async function getTags(q?: string): Promise<Tag[]> {
+export const getTags = async (q?: string): Promise<Tag[]> => {
   const searchQuery = q ? q.trim() : undefined;
 
   if (searchQuery && searchQuery.length > MAX_QUERY_LENGTH) {
@@ -25,7 +25,7 @@ export async function getTags(q?: string): Promise<Tag[]> {
   }
 
   return tags;
-}
+};
 
 const _getTags = unstable_cache(
   async (q?: string): Promise<Tag[] | null> => {
