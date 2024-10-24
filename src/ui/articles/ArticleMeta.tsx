@@ -16,7 +16,7 @@ type ArticleMetaProps = {
 const ArticleMeta = ({ slug, title, publishedAt, timeToRead }: ArticleMetaProps) => {
   return (
     <Flex flexDirection="column" gap={8}>
-      <Typography className={styles.title} variant="h4" weight="bold" fontFamily="title">
+      <Typography className={styles.title} variant="h4" weight="bold" fontFamily="title" trim={4}>
         <Link href={`/articles/${slug}`}>{title}</Link>
       </Typography>
       <Typography variant="body2" weight="light" color="text-secondary" fontFamily="subtitle">

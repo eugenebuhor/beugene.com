@@ -1,5 +1,4 @@
 import ArticleCardsList from '@/ui/articles/ArticleCardsList';
-import { LayoutSection, LayoutSectionContent } from '@/ui/common/Layouts';
 import { parseSearchParams } from '@/utils/queryString';
 import { getArticles } from '@/lib/articles';
 import { getUserLikes, getUserUUID } from '@/lib/users';
@@ -27,17 +26,13 @@ const ArticlesPage = async ({ searchParams }: ArticlesPageProps) => {
   const { data: articles, total } = await getArticles({ limit, offset, q, tags });
 
   return (
-    <LayoutSection>
-      <LayoutSectionContent>
-        <ArticleCardsList
-          articles={articles}
-          withPagination
-          totalPages={Math.ceil(total / limit)}
-          currentPage={page}
-          userLikes={userLikes}
-        />
-      </LayoutSectionContent>
-    </LayoutSection>
+    <ArticleCardsList
+      articles={articles}
+      withPagination
+      totalPages={Math.ceil(total / limit)}
+      currentPage={page}
+      userLikes={userLikes}
+    />
   );
 };
 

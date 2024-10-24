@@ -20,7 +20,14 @@ const ArticleCard = async ({ article, isLiked }: ArticleCardProps) => {
         publishedAt={article.publishedAt}
       />
 
-      <Typography variant="h6" weight="light" component="p" lineHeight="1.5" fontFamily="text">
+      <Typography
+        variant="h6"
+        weight="light"
+        component="p"
+        lineHeight="1.5"
+        fontFamily="text"
+        trim={5}
+      >
         {article.content}
       </Typography>
 

@@ -33,6 +33,7 @@ export const LayoutSection = ({ children, className, ...rest }: LayoutSectionPro
   return (
     <Flex
       component="section"
+      flexDirection="column"
       justifyContent="center"
       className={clsx(styles.layoutSection, className)}
       {...rest}
@@ -43,25 +44,25 @@ export const LayoutSection = ({ children, className, ...rest }: LayoutSectionPro
 };
 
 /* LayoutContent */
-type LayoutContentProps = {
-  children: React.ReactNode | React.ReactNode[];
-  className?: string;
-};
-
-export const LayoutSectionContent = ({
-  children,
-  className,
-  ...rest
-}: LayoutContentProps & FlexProps) => {
-  return (
-    <Flex
-      component="div"
-      flexDirection="column"
-      justifyContent="flex-start"
-      className={clsx(styles.layoutContent, className)}
-      {...rest}
-    >
-      {children}
-    </Flex>
-  );
-};
+// type LayoutContentProps = {
+//   children: React.ReactNode | React.ReactNode[];
+//   className?: string;
+// };
+//
+// export const LayoutSectionContent = ({
+//   children,
+//   className,
+//   ...rest
+// }: LayoutContentProps & FlexProps) => {
+//   return (
+//     <Flex
+//       component="div"
+//       flexDirection="column"
+//       justifyContent="flex-start"
+//       className={clsx(styles.layoutContent, className)}
+//       {...rest}
+//     >
+//       {children}
+//     </Flex>
+//   );
+// };

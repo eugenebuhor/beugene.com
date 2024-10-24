@@ -1,6 +1,5 @@
 import { getArticles } from '@/lib/articles';
 import ArticleCardsList from '@/ui/articles/ArticleCardsList';
-import { LayoutSection, LayoutSectionContent } from '@/ui/common/Layouts';
 import { getUserLikes, getUserUUID } from '@/lib/users';
 
 export const revalidate = 300; // 5 minutes
@@ -13,13 +12,7 @@ const Home = async () => {
   const userLikes = await getUserLikes(userUUID!); // fixme: fix this
   const { data: articles } = await getArticles({ limit, offset });
 
-  return (
-    <LayoutSection>
-      <LayoutSectionContent>
-        <ArticleCardsList articles={articles} userLikes={userLikes} />
-      </LayoutSectionContent>
-    </LayoutSection>
-  );
+  return <ArticleCardsList articles={articles} userLikes={userLikes} />;
 };
 
 export default Home;

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { LayoutSectionContent } from '@/ui/common/Layouts';
+import { LayoutSection } from '@/ui/common/Layouts';
 import Flex from '@/ui/common/Flex';
 import styles from '@/ui/common/Header.module.css';
 import Typography from '@/ui/common/Typography';
@@ -8,7 +8,7 @@ import Typography from '@/ui/common/Typography';
 const Header = () => {
   return (
     <Flex component="header" justifyContent="center" className={styles.header}>
-      <LayoutSectionContent
+      <LayoutSection
         justifyContent="space-between"
         flexDirection="row"
         alignItems="flex-end"
@@ -25,12 +25,12 @@ const Header = () => {
         >
           <Image src="/name-logo-24.svg" alt="Yevhenii Buhor" fill priority />
         </Link>
-        <Link href="/about" aria-label="about">
+        <Link href="/about">
           <Typography variant="subtitle2" color="text-primary" fontFamily="subtitle">
             About Me
           </Typography>
         </Link>
-      </LayoutSectionContent>
+      </LayoutSection>
     </Flex>
   );
 };
