@@ -80,12 +80,12 @@
     --font-weight-bold: 700;
     --font-weight-black: 800;
     --font-size: 14px;
-    --font-size-h1: 6rem; /* 96px */
-    --font-size-h2: 3.75rem; /* 60px */
-    --font-size-h3: 3rem; /* 48px */
-    --font-size-h4: 2.125rem; /* 34px */
-    --font-size-h5: 1.5rem; /* 24px */
-    --font-size-h6: 1.25rem; /* 20px */
+    --font-size-h1: 2rem; /* 32px */
+    --font-size-h2: 1.5rem; /* 24px */
+    --font-size-h3: 1.25rem; /* 20px */
+    --font-size-h4: 1.125rem; /* 18px */
+    --font-size-h5: 1rem; /* 16px */
+    --font-size-h6: 0.875rem; /* 14px */
     --font-size-subtitle1: 1rem; /* 16px */
     --font-size-subtitle2: 0.875rem; /* 14px */
     --font-size-body1: 1rem; /* 16px */

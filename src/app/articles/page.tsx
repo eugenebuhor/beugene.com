@@ -3,8 +3,15 @@ import { parseSearchParams } from '@/utils/queryString';
 import { getArticles } from '@/lib/articles';
 import { getUserLikes, getUserUUID } from '@/lib/users';
 
+type SearchParams = {
+  page?: string;
+  limit?: string;
+  q?: string;
+  tags?: string[];
+};
+
 type ArticlesPageProps = {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: SearchParams;
 };
 
 const ArticlesPage = async ({ searchParams }: ArticlesPageProps) => {
