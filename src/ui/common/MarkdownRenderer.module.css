@@ -26,7 +26,6 @@
 .heading .headingAnchor {
     display: inline-flex;
     margin-left: 0.75rem;
-    color: var(--color-text-secondary);
 }
 
 @media (min-width: 768px) {

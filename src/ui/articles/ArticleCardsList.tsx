@@ -1,6 +1,5 @@
 import { Prisma, Like } from '@prisma/client';
 import PaginationControls from '@/ui/common/PaginationControls';
-import Typography from '@/ui/common/Typography';
 import ArticleCard from './ArticleCard';
 import styles from './ArticleCardsList.module.css';
 
@@ -26,18 +25,7 @@ const ArticleCardsList = ({
           <ArticleCard
             article={article}
             isLiked={userLikes.some((like) => article.id === like.articleId)}
-          >
-            <Typography
-              variant="h4"
-              weight="light"
-              component="p"
-              lineHeight="1.5"
-              fontFamily="text"
-              trim={5}
-            >
-              {article.summary}
-            </Typography>
-          </ArticleCard>
+          />
         </li>
       ))}
 

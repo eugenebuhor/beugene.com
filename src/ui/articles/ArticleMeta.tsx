@@ -11,13 +11,20 @@ type ArticleMetaProps = {
   timeToRead: Article['timeToRead'];
   slug: Article['slug'];
   title: Article['title'];
+  titleAsLink?: boolean;
 };
 
-const ArticleMeta = ({ slug, title, publishedAt, timeToRead }: ArticleMetaProps) => {
+const ArticleMeta = ({
+  slug,
+  title,
+  publishedAt,
+  timeToRead,
+  titleAsLink = true,
+}: ArticleMetaProps) => {
   return (
     <Flex flexDirection="column" gap={8}>
       <Typography className={styles.title} variant="h1" weight="bold" fontFamily="title" trim={4}>
-        <Link href={`/articles/${slug}`}>{title}</Link>
+        {titleAsLink ? <Link href={`/articles/${slug}`}>{title}</Link> : title}
       </Typography>
       <Typography variant="body2" weight="light" color="text-secondary" fontFamily="subtitle">
         {publishedAt ? (

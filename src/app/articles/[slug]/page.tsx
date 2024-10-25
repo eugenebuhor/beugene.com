@@ -1,5 +1,4 @@
 import ArticleCard from '@/ui/articles/ArticleCard';
-import MarkdownRenderer from '@/ui/common/MarkdownRenderer';
 import { getArticleBySlug } from '@/lib/articles';
 import { getUserLikes, getUserUUID } from '@/lib/users';
 
@@ -17,11 +16,7 @@ const ArticlePage = async ({ params }: ArticlePageProps) => {
   const article = await getArticleBySlug(params.slug);
   const isLiked = userLikes.some((like) => article.id === like.articleId);
 
-  return (
-    <ArticleCard article={article} isLiked={isLiked}>
-      <MarkdownRenderer content={article.content} />
-    </ArticleCard>
-  );
+  return <ArticleCard article={article} isLiked={isLiked} withMarkdown titleAsLink={false} />;
 };
 
 export default ArticlePage;
