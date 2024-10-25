@@ -1,13 +1,41 @@
+import type { ReactNode } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Image from 'next/image';
 import Link from 'next/link';
-import Typography from '@/ui/common/Typography';
+import { IoLinkOutline } from 'react-icons/io5';
+import Typography, { type TypographyProps } from '@/ui/common/Typography';
 import SyntaxHighlighter from '@/ui/common/SyntaxHighlighter';
 import styles from './MarkdownRenderer.module.css';
 
 type MarkdownRendererProps = {
   content: string;
+};
+
+type HeadingProps = TypographyProps;
+
+const Heading = ({ children, ...rest }: HeadingProps) => {
+  const getAnchorLink = (str?: ReactNode): string => {
+    if (typeof str !== 'string') return '';
+    return str.trim().toLowerCase().replace(/\s+/g, '-');
+  };
+
+  const anchorLink = getAnchorLink(children);
+
+  return (
+    <div className={styles.heading} id={anchorLink}>
+      <Typography {...rest}>{children}</Typography>
+      <Link
+        href={'#' + anchorLink}
+        aria-label={`Permalink: ${children}`}
+        className={styles.headingAnchor}
+      >
+        <Typography variant="h3" component="span" lineHeight={0}>
+          <IoLinkOutline />
+        </Typography>
+      </Link>
+    </div>
+  );
 };
 
 const MarkdownRenderer = ({ content }: MarkdownRendererProps) => {
@@ -18,27 +46,28 @@ const MarkdownRenderer = ({ content }: MarkdownRendererProps) => {
         components={{
           h1: (props) => {
             const { color, node, ...rest } = props;
-            return <Typography variant="h1" component="h1" {...rest} />;
+            return <Heading variant="h1" component="h1" {...rest} />;
           },
           h2: (props) => {
             const { color, node, ...rest } = props;
-            return <Typography variant="h2" component="h2" {...rest} />;
+
+            return <Heading variant="h2" component="h2" {...rest} />;
           },
           h3: (props) => {
             const { color, node, ...rest } = props;
-            return <Typography variant="h3" component="h3" {...rest} />;
+            return <Heading variant="h3" component="h3" {...rest} />;
           },
           h4: (props) => {
             const { color, node, ...rest } = props;
-            return <Typography variant="h4" component="h4" {...rest} />;
+            return <Heading variant="h4" component="h4" {...rest} />;
           },
           h5: (props) => {
             const { color, node, ...rest } = props;
-            return <Typography variant="h5" component="h5" {...rest} />;
+            return <Heading variant="h5" component="h5" {...rest} />;
           },
           h6: (props) => {
             const { color, node, ...rest } = props;
-            return <Typography variant="h6" component="h6" {...rest} />;
+            return <Heading variant="h6" component="h6" {...rest} />;
           },
           p: (props) => {
             const { color, node, ...rest } = props;

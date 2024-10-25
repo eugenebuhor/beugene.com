@@ -5,7 +5,7 @@ import { useTheme } from 'next-themes';
 import { type SyntaxHighlighterProps as PrismProps, Prism } from 'react-syntax-highlighter';
 import { oneLight, oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-interface SyntaxHighlighterProps extends PrismProps {}
+export type SyntaxHighlighterProps = PrismProps;
 
 const SyntaxHighlighter = ({ className, children, language, ...rest }: SyntaxHighlighterProps) => {
   const { resolvedTheme } = useTheme();

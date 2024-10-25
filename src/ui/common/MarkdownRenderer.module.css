@@ -13,11 +13,37 @@
     background-color: var(--color-main-surface-secondary);
 }
 
-/* Lists */
-.list {
-    /*padding-left: 2.5rem;*/
-    /*margin-bottom: 1rem;*/
+/* Heading */
+.heading {
+    display: inline;
 }
+
+.heading > * {
+    display: inline;
+    vertical-align: middle;
+}
+
+.heading .headingAnchor {
+    display: inline-flex;
+    margin-left: 0.75rem;
+    color: var(--color-text-secondary);
+}
+
+@media (min-width: 768px) {
+    .heading .headingAnchor {
+        opacity: 0;
+    }
+
+    .heading:hover .headingAnchor,
+    .heading:focus .headingAnchor,
+    .headingAnchor:focus {
+        opacity: 1;
+    }
+}
+
+
+/* Lists */
+.list {}
 
 .listItrem {
     margin-bottom: 0.5rem;
