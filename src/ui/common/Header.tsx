@@ -23,7 +23,7 @@ const Header = () => {
           aria-label="homepage"
           title="Yevhenii Buhor"
         >
-          <Image src="/name-logo-24.svg" alt="Yevhenii Buhor" fill priority />
+          <Image draggable={false} src="/name-logo-24.svg" alt="Yevhenii Buhor" fill priority />
         </Link>
         <Link href="/about">
           <Typography variant="subtitle2" color="text-primary" fontFamily="subtitle">

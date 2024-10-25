@@ -64,6 +64,8 @@ export const toggleArticleLike = async (slug: string): Promise<void> => {
 
     // Revalidate related data queries
     revalidateTag(CacheTags.USER_LIKES);
+    revalidateTag(CacheTags.ARTICLE);
+    revalidateTag(CacheTags.ARTICLES);
   } catch (err) {
     console.error('Database Error:', err);
     // throw new InternalError('Internal server error');
