@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { type CSSProperties, useState, useEffect, useRef } from 'react';
 import { IoHeartOutline, IoHeart } from 'react-icons/io5';
 import Button from '@/ui/common/Button';
 import styles from './LikeButton.module.css';
@@ -12,13 +12,29 @@ type LikeButtonProps = {
 
 const LikeButton = ({ isLiked, onClick }: LikeButtonProps) => {
   const [animating, setAnimating] = useState(false);
+  const [showParticles, setShowParticles] = useState(false);
+  const prevIsLiked = useRef(isLiked);
+
+  useEffect(() => {
+    if (isLiked !== prevIsLiked.current) {
+      setAnimating(true);
+
+      if (isLiked) {
+        setShowParticles(true);
+      } else {
+        setShowParticles(false);
+      }
+
+      const timeout = setTimeout(() => {
+        setAnimating(false);
+      }, 600);
+
+      prevIsLiked.current = isLiked;
+      return () => clearTimeout(timeout);
+    }
+  }, [isLiked]);
 
   const handleClick = () => {
-    setAnimating(true);
-    setTimeout(() => {
-      setAnimating(false);
-    }, 300);
-
     onClick();
   };
 
@@ -26,15 +42,26 @@ const LikeButton = ({ isLiked, onClick }: LikeButtonProps) => {
     <Button
       variant="icon"
       size="medium"
-      className={animating ? styles.animateLike : ''}
+      className={`${styles.likeButton} ${animating ? styles.animateLike : ''}`}
       onClick={handleClick}
-      aria-label="like-button"
+      aria-label={isLiked ? 'Unlike' : 'Like'}
       aria-pressed={isLiked}
     >
       {isLiked ? (
         <IoHeart className={`${styles.likeIcon} ${styles.liked}`} />
       ) : (
         <IoHeartOutline className={styles.likeIcon} />
+      )}
+      {animating && showParticles && (
+        <span className={styles.particles}>
+          {[...Array(5)].map((_, i) => (
+            <span
+              key={i}
+              className={styles.particle}
+              style={{ '--angle': `${i * 72}deg` } as CSSProperties}
+            />
+          ))}
+        </span>
       )}
     </Button>
   );
