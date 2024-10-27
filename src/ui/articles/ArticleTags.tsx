@@ -1,5 +1,4 @@
 import type { Tag } from '@prisma/client';
-import Flex from '@/ui/common/Flex';
 import styles from '@/ui/articles/ArticleTags.module.css';
 import Button from '@/ui/common/Button';
 import Typography from '@/ui/common/Typography';
@@ -17,7 +16,7 @@ const ArticleTags = ({ tags }: ArticleTagsProps) => {
   };
 
   return (
-    <Flex gap={8} component="nav" flexWrap="wrap">
+    <nav className={styles.container}>
       {tags.map((tag) => (
         <Link key={tag.id} className={styles.link} href={getRedirectLink(tag.name)}>
           <Button size="small" tabIndex={-1}>
@@ -27,7 +26,7 @@ const ArticleTags = ({ tags }: ArticleTagsProps) => {
           </Button>
         </Link>
       ))}
-    </Flex>
+    </nav>
   );
 };
 

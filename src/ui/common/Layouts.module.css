@@ -1,5 +1,8 @@
 .layoutMain {
     --layout-main-margin-top: 40px;
+
+    display: flex;
+    flex-direction: column;
     width: 100%;
     min-width: var(--size-min-width);
     min-height: calc(100vh - var(--size-header-height) - var(--layout-main-margin-top));
@@ -7,6 +10,10 @@
 }
 
 .layoutSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
     width: 100%;
     max-width: var(--size-max-width);
     margin: 0 auto;

@@ -4,6 +4,9 @@
     top: 0;
     z-index: var(--z-index-header);
     */
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
     position: static;
     width: 100%;
     min-height: var(--size-header-height);
@@ -11,6 +14,17 @@
 }
 
 .layoutSection {
+    /*justifyContent="space-between"
+        flexDirection="row"
+        alignItems="flex-end"
+        flexWrap="nowrap"*/
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: nowrap;
+
     border-bottom: 1px solid var(--color-border-light);
     padding-bottom: 25px;
 }

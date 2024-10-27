@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import Flex from '@/ui/common/Flex';
+import styles from './PaginationControls.module.css';
 
 type PaginationControlsProps = {
   currentPage: number;
@@ -19,7 +19,7 @@ const PaginationControls = ({ currentPage, totalPages }: PaginationControlsProps
   };
 
   return (
-    <Flex component="nav" flexDirection="row" gap={5} alignItems="center" justifyContent="center">
+    <nav className={styles.container}>
       <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage <= 1}>
         Previous
       </button>
@@ -34,7 +34,7 @@ const PaginationControls = ({ currentPage, totalPages }: PaginationControlsProps
       >
         Next
       </button>
-    </Flex>
+    </nav>
   );
 };
 

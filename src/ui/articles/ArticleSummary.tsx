@@ -10,7 +10,7 @@ type ArticleSummaryProps = {
 
 const ArticleSummary = async ({ summary, slug }: ArticleSummaryProps) => {
   return (
-    <div className={styles.articleSummary}>
+    <div className={styles.container}>
       <Typography variant="h5" weight="light" component="p" lineHeight="1.5" fontFamily="text">
         {summary}
       </Typography>

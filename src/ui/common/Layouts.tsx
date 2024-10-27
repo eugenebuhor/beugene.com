@@ -1,45 +1,51 @@
-import React from 'react';
+import type { ElementType, ReactNode } from 'react';
 import clsx from 'clsx';
 import styles from '@/ui/common/Layouts.module.css';
-import Flex from '@/ui/common/Flex';
-import type { FlexProps } from '@/ui/common/Flex';
+import type { PolymorphicComponentProps } from '@/types/react';
 
 /* LayoutMain */
-type LayoutMainProps = {
-  children: React.ReactNode | React.ReactNode[];
-  className?: string;
-};
+type LayoutMainProps<C extends ElementType = 'main'> = PolymorphicComponentProps<
+  C,
+  {
+    children?: ReactNode | ReactNode[];
+    className?: string;
+  }
+>;
 
-export const LayoutMain = ({ children, className, ...rest }: LayoutMainProps & FlexProps) => {
+export const LayoutMain = ({
+  children,
+  className,
+  component: Component = 'main',
+  ...rest
+}: LayoutMainProps) => {
   return (
-    <Flex
-      component="main"
-      flexDirection="column"
-      className={clsx(styles.layoutMain, className)}
-      {...rest}
-    >
+    <Component className={clsx(styles.layoutMain, className)} {...rest}>
       {children}
-    </Flex>
+    </Component>
   );
 };
 
 /* LayoutSection */
-type LayoutSectionProps = {
-  children: React.ReactNode | React.ReactNode[];
-  className?: string;
-};
+type LayoutSectionProps<C extends ElementType = 'section'> = PolymorphicComponentProps<
+  C,
+  {
+    children?: ReactNode | ReactNode[];
+    className?: string;
+  }
+>;
 
-export const LayoutSection = ({ children, className, ...rest }: LayoutSectionProps & FlexProps) => {
+export const LayoutSection = <C extends ElementType = 'section'>({
+  children,
+  className,
+  component,
+  ...rest
+}: LayoutSectionProps<C>) => {
+  const Component = component || 'section';
+
   return (
-    <Flex
-      component="section"
-      flexDirection="column"
-      justifyContent="center"
-      className={clsx(styles.layoutSection, className)}
-      {...rest}
-    >
+    <Component className={clsx(styles.layoutSection, className)} {...rest}>
       {children}
-    </Flex>
+    </Component>
   );
 };
 

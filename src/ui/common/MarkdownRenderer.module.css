@@ -1,7 +1,7 @@
 .markdown {
     font-family: inherit;
     color: var(--color-text-primary);
-    line-height: 1.6;
+    /*line-height: 1.6;*/
 }
 
 /* Blockquote */
@@ -15,7 +15,7 @@
 
 /* Heading */
 .heading {
-    display: inline;
+    margin: 8px 0;
 }
 
 .heading > * {

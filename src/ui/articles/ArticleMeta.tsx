@@ -2,9 +2,8 @@ import Link from 'next/link';
 import { format } from 'date-fns/format';
 import { Article } from '@prisma/client';
 import Typography from '@/ui/common/Typography';
-import Flex from '@/ui/common/Flex';
 import { DATE_FORMAT } from '@/constants';
-import styles from '@/ui/articles/ArticleCard.module.css';
+import styles from '@/ui/articles/ArticleMeta.module.css';
 
 type ArticleMetaProps = {
   publishedAt: Article['publishedAt'];
@@ -22,7 +21,7 @@ const ArticleMeta = ({
   titleAsLink = true,
 }: ArticleMetaProps) => {
   return (
-    <Flex flexDirection="column" gap={4}>
+    <div className={styles.container}>
       <Typography className={styles.title} variant="h1" weight="bold" fontFamily="title" trim={4}>
         {titleAsLink ? <Link href={`/articles/${slug}`}>{title}</Link> : title}
       </Typography>
@@ -35,7 +34,7 @@ const ArticleMeta = ({
         &nbsp;·&nbsp;
         {timeToRead} min read
       </Typography>
-    </Flex>
+    </div>
   );
 };
 

@@ -1,10 +1,10 @@
 import { Prisma } from '@prisma/client';
-import Flex from '@/ui/common/Flex';
 import ArticleMeta from '@/ui/articles/ArticleMeta';
 import ArticleTags from '@/ui/articles/ArticleTags';
 import ArticleEngage from '@/ui/articles/ArticleEngage';
 import MarkdownRenderer from '@/ui/common/MarkdownRenderer';
 import ArticleSummary from '@/ui/articles/ArticleSummary';
+import styles from '@/ui/articles/ArticleCard.module.css';
 
 type ArticleCardProps = {
   article: Prisma.ArticleGetPayload<{ include: { tags: true } }>;
@@ -20,7 +20,7 @@ const ArticleCard = async ({
   isLiked,
 }: ArticleCardProps) => {
   return (
-    <Flex flexDirection="column" component="article" gap={24}>
+    <article className={styles.container}>
       <ArticleMeta
         title={article.title}
         slug={article.slug}
@@ -38,7 +38,7 @@ const ArticleCard = async ({
       <ArticleTags tags={article.tags} />
 
       <ArticleEngage slug={article.slug} likes={article.likes} isLiked={isLiked} />
-    </Flex>
+    </article>
   );
 };
 

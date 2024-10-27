@@ -1,5 +1,5 @@
-.articleSummary,
-.articleSummary > * {
+.container,
+.container > * {
   display: inline;
 }
 
