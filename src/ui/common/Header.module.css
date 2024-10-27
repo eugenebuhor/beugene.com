@@ -10,7 +10,7 @@
     min-width: var(--size-min-width);
 }
 
-.layoutContent {
+.layoutSection {
     border-bottom: 1px solid var(--color-border-light);
     padding-bottom: 25px;
 }

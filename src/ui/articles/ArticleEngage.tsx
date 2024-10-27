@@ -43,8 +43,8 @@ const ArticleEngage = ({
     <Flex justifyContent="space-between">
       <Flex alignItems="center">
         <LikeButton isLiked={isLiked} onClick={onToggleArticleLike} />
-        <Typography variant="body1" color="text-secondary" fontFamily="subtitle">
-          &nbsp;{likes}
+        <Typography variant="subtitle1" color="text-secondary" fontFamily="subtitle">
+          &nbsp;{likes || ''}
         </Typography>
       </Flex>
     </Flex>

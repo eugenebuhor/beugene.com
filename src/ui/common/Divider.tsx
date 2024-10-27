@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import { CSSProperties, HTMLAttributes } from 'react';
 import clsx from 'clsx';
 import styles from './Divider.module.css';
 import type { ThemePaletteKey } from '@/ui/theme';
@@ -12,17 +12,18 @@ type DividerProps = {
   length?: CSSProperties['width'];
   style?: CSSProperties;
   variant?: 'solid' | 'dashed' | 'dotted';
-};
+} & HTMLAttributes<HTMLElement>;
 
 const Divider = ({
   orientation = 'horizontal',
   className,
-  color = 'text-primary',
+  color = 'border-light',
   thickness = '1px',
-  margin = '0',
+  margin = '16px 0',
   length = '100%',
   style = {},
   variant = 'solid',
+  ...rest
 }: DividerProps) => {
   const classes = clsx(
     styles.divider,
@@ -32,7 +33,7 @@ const Divider = ({
   );
 
   const combinedStyle: CSSProperties = {
-    backgroundColor: color ? `var(--${color})` : undefined,
+    backgroundColor: color ? `var(--color-${color})` : undefined,
     ...(orientation === 'horizontal'
       ? { height: thickness, width: length }
       : { width: thickness, height: length }),
@@ -40,7 +41,7 @@ const Divider = ({
     ...style,
   };
 
-  return <div className={classes} style={combinedStyle} aria-hidden="true" />;
+  return <div className={classes} style={combinedStyle} aria-hidden="true" {...rest} />;
 };
 
 export default Divider;

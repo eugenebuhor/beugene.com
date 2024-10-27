@@ -51,7 +51,7 @@ const MarkdownRenderer = ({ content }: MarkdownRendererProps) => {
           h2: (props) => {
             const { color, node, ...rest } = props;
 
-            return <Heading variant="h2" component="h2" {...rest} />;
+            return <Heading variant="h4" weight="bold" component="h2" {...rest} />;
           },
           h3: (props) => {
             const { color, node, ...rest } = props;
@@ -71,15 +71,17 @@ const MarkdownRenderer = ({ content }: MarkdownRendererProps) => {
           },
           p: (props) => {
             const { color, node, ...rest } = props;
-            return <Typography variant="body1" component="p" {...rest} />;
+            return <Typography variant="h5" component="p" {...rest} />;
           },
           strong: (props) => {
             const { color, node, ...rest } = props;
-            return <Typography weight="bold" component="strong" {...rest} />;
+            return <Typography variant="h5" weight="bold" component="strong" {...rest} />;
           },
           em: (props) => {
             const { color, node, ...rest } = props;
-            return <Typography style={{ fontStyle: 'italic' }} component="em" {...rest} />;
+            return (
+              <Typography variant="h5" style={{ fontStyle: 'italic' }} component="em" {...rest} />
+            );
           },
           blockquote: (props) => {
             const { node, ...rest } = props;

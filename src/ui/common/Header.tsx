@@ -13,7 +13,7 @@ const Header = () => {
         flexDirection="row"
         alignItems="flex-end"
         flexWrap="nowrap"
-        className={styles.layoutContent}
+        className={styles.layoutSection}
         component="nav"
       >
         <Link

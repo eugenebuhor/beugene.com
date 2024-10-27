@@ -80,23 +80,23 @@
     --font-weight-bold: 700;
     --font-weight-black: 800;
     --font-size: 14px;
-    --font-size-h1: 2rem; /* 32px */
-    --font-size-h2: 1.5rem; /* 24px */
-    --font-size-h3: 1.25rem; /* 20px */
-    --font-size-h4: 1.125rem; /* 18px */
-    --font-size-h5: 1rem; /* 16px */
-    --font-size-h6: 0.875rem; /* 14px */
-    --font-size-subtitle1: 1rem; /* 16px */
-    --font-size-subtitle2: 0.875rem; /* 14px */
+    --font-size-h1: 2.5rem; /* 40px */
+    --font-size-h2: 2rem; /* 32px */
+    --font-size-h3: 1.75rem; /* 28px */
+    --font-size-h4: 1.5rem; /* 24px */
+    --font-size-h5: 1.25rem; /* 20px */
+    --font-size-h6: 1.125rem; /* 18px */
+    --font-size-subtitle1: 1.125rem; /* 18px */
+    --font-size-subtitle2: 1rem; /* 16px */
     --font-size-body1: 1rem; /* 16px */
     --font-size-body2: 0.875rem; /* 14px */
     --font-size-caption: 0.75rem; /* 12px */
-    --font-size-overline: 0.625rem; /* 10px */
+    --font-size-overline: 0.75rem; /* 12px */
 
     /* Sizes */
     --size-max-width: 768px;
     --size-min-width: 320px;
-    --size-header-height: 80px;
+    --size-header-height: 100px;
     --size-footer-height: 50px;
     --border-radius-sm: 4px;
     --border-radius-md: 8px;
@@ -111,7 +111,7 @@
 @media (min-width: 768px) {
     :root {
         --font-size: 16px;
-        --size-header-height: 120px;
+        --size-header-height: 140px;
     }
 }
 

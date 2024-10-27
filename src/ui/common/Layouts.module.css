@@ -1,5 +1,5 @@
 .layoutMain {
-    --layout-main-margin-top: 30px;
+    --layout-main-margin-top: 50px;
     width: 100%;
     min-width: var(--size-min-width);
     min-height: calc(100vh - var(--size-header-height) - var(--layout-main-margin-top));

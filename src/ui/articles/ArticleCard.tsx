@@ -33,12 +33,12 @@ const ArticleCard = async ({
         <MarkdownRenderer content={article.content} />
       ) : (
         <Typography
-          variant="h4"
+          variant="h5"
           weight="light"
           component="p"
           lineHeight="1.5"
           fontFamily="text"
-          trim={5}
+          trim={7}
         >
           {article.summary}
         </Typography>

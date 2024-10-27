@@ -14,12 +14,12 @@ const Footer = () => {
         <Flex justifyContent="space-between" flexWrap="nowrap">
           <Flex component="nav" gap={15} alignItems="center">
             <Link href={Links.GITHUB} target="_blank" aria-label="GitHub">
-              <Typography variant="subtitle1" color="text-primary" verticalAlign="middle">
+              <Typography variant="h6" color="text-primary" verticalAlign="middle">
                 <FaGithub viewBox="0 0 496 496" />
               </Typography>
             </Link>
             <Link href={Links.LINKED_IN} target="_blank" aria-label="LinkedIn">
-              <Typography variant="subtitle1" color="text-primary" verticalAlign="middle">
+              <Typography variant="h6" color="text-primary" verticalAlign="middle">
                 <FaLinkedinIn viewBox="0 0 448 448" />
               </Typography>
             </Link>

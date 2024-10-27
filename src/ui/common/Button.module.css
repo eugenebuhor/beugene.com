@@ -83,17 +83,17 @@
 
 .icon.small {
     padding: 0.15rem;
-    font-size: var(--font-size-body1);
+    font-size: var(--font-size-h5);
 }
 
 .icon.medium {
     padding: 0.15rem;
-    font-size: var(--font-size-h6);
+    font-size: var(--font-size-h4);
 }
 
 .icon.large {
     padding: 0.15rem;
-    font-size: var(--font-size-h5);
+    font-size: var(--font-size-h3);
 }
 
 .icon-outlined.small {

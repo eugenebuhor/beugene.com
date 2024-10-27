@@ -26,7 +26,7 @@ const ArticleMeta = ({
       <Typography className={styles.title} variant="h1" weight="bold" fontFamily="title" trim={4}>
         {titleAsLink ? <Link href={`/articles/${slug}`}>{title}</Link> : title}
       </Typography>
-      <Typography variant="body2" weight="light" color="text-secondary" fontFamily="subtitle">
+      <Typography variant="body1" weight="light" color="text-tertiary" fontFamily="subtitle">
         {publishedAt ? (
           <time dateTime={new Date(publishedAt).toISOString()}>
             {format(publishedAt, DATE_FORMAT)}

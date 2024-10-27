@@ -17,11 +17,11 @@ const ArticleTags = ({ tags }: ArticleTagsProps) => {
   };
 
   return (
-    <Flex gap={8} component="nav">
+    <Flex gap={8} component="nav" flexWrap="wrap">
       {tags.map((tag) => (
         <Link key={tag.id} className={styles.link} href={getRedirectLink(tag.name)}>
           <Button size="small" tabIndex={-1}>
-            <Typography variant="body2" color="text-secondary" fontFamily="subtitle">
+            <Typography variant="subtitle2" color="text-secondary" fontFamily="subtitle">
               {tag.name}
             </Typography>
           </Button>

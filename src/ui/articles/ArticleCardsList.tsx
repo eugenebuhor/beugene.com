@@ -2,6 +2,7 @@ import { Prisma, Like } from '@prisma/client';
 import PaginationControls from '@/ui/common/PaginationControls';
 import ArticleCard from './ArticleCard';
 import styles from './ArticleCardsList.module.css';
+import Divider from '@/ui/common/Divider';
 
 type ArticleCardsListProps = {
   articles: Prisma.ArticleGetPayload<{ include: { tags: true } }>[];
@@ -20,13 +21,16 @@ const ArticleCardsList = ({
 }: ArticleCardsListProps) => {
   return (
     <ul className={styles.articlesList}>
-      {articles.map((article) => (
-        <li key={article.id}>
-          <ArticleCard
-            article={article}
-            isLiked={userLikes.some((like) => article.id === like.articleId)}
-          />
-        </li>
+      {articles.map((article, index) => (
+        <>
+          <li key={article.id}>
+            <ArticleCard
+              article={article}
+              isLiked={userLikes.some((like) => article.id === like.articleId)}
+            />
+            {index === articles.length - 1 ? null : <Divider role="separator" margin={'40px 0'} />}
+          </li>
+        </>
       ))}
 
       {withPagination && totalPages > 1 && (
