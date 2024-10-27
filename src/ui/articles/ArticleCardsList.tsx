@@ -28,7 +28,7 @@ const ArticleCardsList = ({
               article={article}
               isLiked={userLikes.some((like) => article.id === like.articleId)}
             />
-            {index === articles.length - 1 ? null : <Divider role="separator" margin={'40px 0'} />}
+            {index === articles.length - 1 ? null : <Divider role="separator" margin={'32px 0'} />}
           </li>
         </>
       ))}

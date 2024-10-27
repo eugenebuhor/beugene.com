@@ -1,0 +1,8 @@
+.articleSummary,
+.articleSummary > * {
+  display: inline;
+}
+
+.readMore {
+  margin-left: 8px;
+}

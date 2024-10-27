@@ -4,7 +4,7 @@ import ArticleMeta from '@/ui/articles/ArticleMeta';
 import ArticleTags from '@/ui/articles/ArticleTags';
 import ArticleEngage from '@/ui/articles/ArticleEngage';
 import MarkdownRenderer from '@/ui/common/MarkdownRenderer';
-import Typography from '@/ui/common/Typography';
+import ArticleSummary from '@/ui/articles/ArticleSummary';
 
 type ArticleCardProps = {
   article: Prisma.ArticleGetPayload<{ include: { tags: true } }>;
@@ -20,7 +20,7 @@ const ArticleCard = async ({
   isLiked,
 }: ArticleCardProps) => {
   return (
-    <Flex flexDirection="column" component="article" gap={16}>
+    <Flex flexDirection="column" component="article" gap={24}>
       <ArticleMeta
         title={article.title}
         slug={article.slug}
@@ -32,16 +32,7 @@ const ArticleCard = async ({
       {withMarkdown ? (
         <MarkdownRenderer content={article.content} />
       ) : (
-        <Typography
-          variant="h5"
-          weight="light"
-          component="p"
-          lineHeight="1.5"
-          fontFamily="text"
-          trim={7}
-        >
-          {article.summary}
-        </Typography>
+        <ArticleSummary summary={article.summary} slug={article.slug} />
       )}
 
       <ArticleTags tags={article.tags} />

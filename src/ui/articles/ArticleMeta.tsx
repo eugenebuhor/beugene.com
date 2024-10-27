@@ -22,7 +22,7 @@ const ArticleMeta = ({
   titleAsLink = true,
 }: ArticleMetaProps) => {
   return (
-    <Flex flexDirection="column" gap={8}>
+    <Flex flexDirection="column" gap={4}>
       <Typography className={styles.title} variant="h1" weight="bold" fontFamily="title" trim={4}>
         {titleAsLink ? <Link href={`/articles/${slug}`}>{title}</Link> : title}
       </Typography>
