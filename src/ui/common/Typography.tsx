@@ -1,4 +1,4 @@
-import type { ElementType, CSSProperties } from 'react';
+import type { HTMLAttributes, ElementType, CSSProperties } from 'react';
 import clsx from 'clsx';
 import styles from './Typography.module.css';
 import type {
@@ -7,29 +7,24 @@ import type {
   TypographyVariant,
   TypographyWeight,
 } from '@/ui/theme';
-import type { PolymorphicComponentProps } from '@/types/react';
 
-export type TypographyProps<C extends ElementType = 'span'> = PolymorphicComponentProps<
-  C,
-  {
-    variant?: TypographyVariant;
-    weight?: TypographyWeight;
-    fontFamily?: TypographyFamily;
-    color?: ThemePaletteKey;
-    trim?: boolean | number;
-    noWrap?: boolean;
-    wordBreak?: 'normal' | 'break-all' | 'keep-all' | 'break-word';
-    lineHeight?: string | number;
-    textAlign?: 'left' | 'center' | 'right' | 'justify';
-    textTransform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase';
-    verticalAlign?: 'top' | 'middle' | 'baseline';
-    component?: ElementType;
-    className?: string;
-    style?: CSSProperties;
-  }
->;
+export interface TypographyProps extends HTMLAttributes<HTMLElement> {
+  variant?: TypographyVariant;
+  weight?: TypographyWeight;
+  fontFamily?: TypographyFamily;
+  color?: ThemePaletteKey;
+  trim?: boolean | number;
+  noWrap?: boolean;
+  wordBreak?: 'normal' | 'break-all' | 'keep-all' | 'break-word';
+  lineHeight?: string | number;
+  textAlign?: 'left' | 'center' | 'right' | 'justify';
+  textTransform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase';
+  verticalAlign?: 'top' | 'middle' | 'baseline';
+  component?: ElementType;
+  className?: string;
+}
 
-const Typography = <C extends ElementType = 'span'>({
+const Typography = ({
   component,
   variant = 'body1',
   fontFamily,
@@ -46,8 +41,8 @@ const Typography = <C extends ElementType = 'span'>({
   children,
   style = {},
   ...rest
-}: TypographyProps<C>) => {
-  let Component = component || ('span' as ElementType);
+}: TypographyProps) => {
+  let Component = component || 'span';
 
   if (
     variant === 'h1' ||
@@ -57,11 +52,11 @@ const Typography = <C extends ElementType = 'span'>({
     variant === 'h5' ||
     variant === 'h6'
   ) {
-    Component = (Component ?? variant) as ElementType;
+    Component = Component ?? variant;
   }
 
   const classes = clsx(
-    styles.typography,
+    styles.typography, // Apply base typography styles
     styles[variant],
     weight && styles[`fontWeight-${weight}`],
     fontFamily && styles[`fontFamily-${fontFamily}`],
