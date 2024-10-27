@@ -22,7 +22,14 @@ const ArticleMeta = ({
 }: ArticleMetaProps) => {
   return (
     <div className={styles.container}>
-      <Typography className={styles.title} variant="h1" weight="bold" fontFamily="title" trim={4}>
+      <Typography
+        variant="title"
+        component="h1"
+        className={styles.title}
+        weight="bold"
+        fontFamily="title"
+        trim={4}
+      >
         {titleAsLink ? <Link href={`/articles/${slug}`}>{title}</Link> : title}
       </Typography>
       <Typography variant="body1" weight="light" color="text-tertiary" fontFamily="subtitle">

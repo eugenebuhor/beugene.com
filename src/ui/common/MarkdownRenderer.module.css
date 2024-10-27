@@ -1,7 +1,9 @@
 .markdown {
     font-family: inherit;
     color: var(--color-text-primary);
-    /*line-height: 1.6;*/
+    line-height: 2rem;
+    font-size: var(--font-size-h6);
+    letter-spacing: -0.003em;
 }
 
 /* Blockquote */
@@ -15,7 +17,27 @@
 
 /* Heading */
 .heading {
-    margin: 8px 0;
+    margin-top: 2.75rem;
+    margin-bottom: 1.15rem;
+}
+
+.heading h1 {
+    font-size: var(--font-size-h1);
+}
+.heading h2 {
+    font-size: var(--font-size-h2);
+}
+.heading h3 {
+    font-size: var(--font-size-h3);
+}
+.heading h4 {
+    font-size: var(--font-size-h4);
+}
+.heading h5 {
+    font-size: var(--font-size-h5);
+}
+.heading h6 {
+    font-size: var(--font-size-h6);
 }
 
 .heading > * {
@@ -40,12 +62,9 @@
     }
 }
 
+/* paragraph */
+.paragraph {
 
-/* Lists */
-.list {}
-
-.listItrem {
-    margin-bottom: 0.5rem;
 }
 
 /* Image */
@@ -85,7 +104,7 @@
 /* Code block */
 .codeBlock {
     border-radius: var(--border-radius-sm) !important;
-    font-size: var(--font-size-body2);
+    font-size: var(--font-size-body1);
 }
 
 .codeBlock,
@@ -95,7 +114,7 @@
 
 /* Inline code */
 .inlineCode {
-    font-size: var(--font-size-body2);
+    font-size: var(--font-size-body1);
     padding: 0.2rem 0.4rem;
     border-radius: var(--border-radius-sm);
     background-color: var(--color-main-surface-secondary);

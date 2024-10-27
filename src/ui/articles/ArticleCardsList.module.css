@@ -5,5 +5,8 @@
 
 .container > li {
     list-style-type: none;
+}
+
+.container > li:not:last-child {
     margin-bottom: 40px;
 }

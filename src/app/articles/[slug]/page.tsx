@@ -16,7 +16,14 @@ const ArticlePage = async ({ params }: ArticlePageProps) => {
   const article = await getArticleBySlug(params.slug);
   const isLiked = userLikes.some((like) => article.id === like.articleId);
 
-  return <ArticleCard article={article} isLiked={isLiked} withMarkdown titleAsLink={false} />;
+  return (
+    <ArticleCard
+      article={article}
+      isLiked={isLiked}
+      markdown={article.content}
+      titleAsLink={false}
+    />
+  );
 };
 
 export default ArticlePage;

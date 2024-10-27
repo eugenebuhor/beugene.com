@@ -3,8 +3,8 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Image from 'next/image';
 import Link from 'next/link';
-import { IoLinkOutline } from 'react-icons/io5';
-import Typography, { type TypographyProps } from '@/ui/common/Typography';
+import { LuLink } from 'react-icons/lu';
+import Typography from '@/ui/common/Typography';
 import SyntaxHighlighter from '@/ui/common/SyntaxHighlighter';
 import styles from './MarkdownRenderer.module.css';
 
@@ -12,26 +12,30 @@ type MarkdownRendererProps = {
   content: string;
 };
 
-type HeadingProps = TypographyProps;
+type HeadingProps = {
+  content: ReactNode;
+  children: ReactNode | ReactNode[];
+};
 
-const Heading = ({ children, ...rest }: HeadingProps) => {
-  const getAnchorLink = (str?: ReactNode): string => {
-    if (typeof str !== 'string') return '';
-    return str.trim().toLowerCase().replace(/\s+/g, '-');
+const WithPermalink = ({ content, children }: HeadingProps) => {
+  const getAnchorLink = (content: ReactNode): string => {
+    if (typeof content !== 'string') return '';
+    return content.trim().toLowerCase().replace(/\s+/g, '-');
   };
 
-  const anchorLink = getAnchorLink(children);
+  const anchorLink = getAnchorLink(content);
 
   return (
     <div className={styles.heading} id={anchorLink}>
-      <Typography {...rest}>{children}</Typography>
+      {children}
+      &nbsp;
       <Link
         href={'#' + anchorLink}
-        aria-label={`Permalink: ${children}`}
+        aria-label={`Permalink: ${content}`}
         className={styles.headingAnchor}
       >
-        <Typography variant="h3" component="span" lineHeight={0}>
-          <IoLinkOutline />
+        <Typography variant="h5" color="text-primary" component="span" lineHeight={0}>
+          <LuLink />
         </Typography>
       </Link>
     </div>
@@ -46,42 +50,64 @@ const MarkdownRenderer = ({ content }: MarkdownRendererProps) => {
         components={{
           h1: (props) => {
             const { color, node, ...rest } = props;
-            return <Heading variant="h1" component="h1" {...rest} />;
+            return (
+              <WithPermalink content={rest.children}>
+                <h1 {...rest} />
+              </WithPermalink>
+            );
           },
           h2: (props) => {
             const { color, node, ...rest } = props;
 
-            return <Heading variant="h4" weight="bold" component="h2" {...rest} />;
+            return (
+              <WithPermalink content={rest.children}>
+                <h2 {...rest} />
+              </WithPermalink>
+            );
           },
           h3: (props) => {
             const { color, node, ...rest } = props;
-            return <Heading variant="h3" component="h3" {...rest} />;
+            return (
+              <WithPermalink content={rest.children}>
+                <h3 {...rest} />
+              </WithPermalink>
+            );
           },
           h4: (props) => {
             const { color, node, ...rest } = props;
-            return <Heading variant="h4" component="h4" {...rest} />;
+            return (
+              <WithPermalink content={rest.children}>
+                <h4 {...rest} />
+              </WithPermalink>
+            );
           },
           h5: (props) => {
             const { color, node, ...rest } = props;
-            return <Heading variant="h5" component="h5" {...rest} />;
+            return (
+              <WithPermalink content={rest.children}>
+                <h5 {...rest} />
+              </WithPermalink>
+            );
           },
           h6: (props) => {
             const { color, node, ...rest } = props;
-            return <Heading variant="h6" component="h6" {...rest} />;
+            return (
+              <WithPermalink content={rest.children}>
+                <h6 {...rest} />
+              </WithPermalink>
+            );
           },
           p: (props) => {
             const { color, node, ...rest } = props;
-            return <Typography variant="h5" component="p" {...rest} />;
+            return <p className={styles.paragraph} {...rest} />;
           },
           strong: (props) => {
             const { color, node, ...rest } = props;
-            return <Typography variant="h5" weight="bold" component="strong" {...rest} />;
+            return <strong {...rest} />;
           },
           em: (props) => {
             const { color, node, ...rest } = props;
-            return (
-              <Typography variant="h5" style={{ fontStyle: 'italic' }} component="em" {...rest} />
-            );
+            return <em {...rest} />;
           },
           blockquote: (props) => {
             const { node, ...rest } = props;

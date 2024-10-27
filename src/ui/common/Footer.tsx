@@ -13,12 +13,12 @@ const Footer = () => {
         <div className={styles.row}>
           <nav className={styles.socialLinks}>
             <Link href={Links.GITHUB} target="_blank" aria-label="GitHub">
-              <Typography variant="h6" color="text-primary" verticalAlign="middle">
+              <Typography variant="h6" component="h6" color="text-primary" verticalAlign="middle">
                 <FaGithub viewBox="0 0 496 496" />
               </Typography>
             </Link>
             <Link href={Links.LINKED_IN} target="_blank" aria-label="LinkedIn">
-              <Typography variant="h6" color="text-primary" verticalAlign="middle">
+              <Typography variant="h6" component="h6" color="text-primary" verticalAlign="middle">
                 <FaLinkedinIn viewBox="0 0 448 448" />
               </Typography>
             </Link>

@@ -84,6 +84,7 @@ export type TypographyFamily = 'title' | 'subtitle' | 'text';
  * Represents the different typography variants used in the application.
  */
 export type TypographyVariant =
+  | 'title'
   | 'h1'
   | 'h2'
   | 'h3'

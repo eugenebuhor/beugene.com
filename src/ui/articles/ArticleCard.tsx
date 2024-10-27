@@ -9,13 +9,13 @@ import styles from '@/ui/articles/ArticleCard.module.css';
 type ArticleCardProps = {
   article: Prisma.ArticleGetPayload<{ include: { tags: true } }>;
   isLiked: boolean;
-  withMarkdown?: boolean;
+  markdown?: string;
   titleAsLink?: boolean;
 };
 
 const ArticleCard = async ({
   titleAsLink = true,
-  withMarkdown = false,
+  markdown,
   article,
   isLiked,
 }: ArticleCardProps) => {
@@ -29,8 +29,8 @@ const ArticleCard = async ({
         titleAsLink={titleAsLink}
       />
 
-      {withMarkdown ? (
-        <MarkdownRenderer content={article.content} />
+      {markdown ? (
+        <MarkdownRenderer content={markdown} />
       ) : (
         <ArticleSummary summary={article.summary} slug={article.slug} />
       )}

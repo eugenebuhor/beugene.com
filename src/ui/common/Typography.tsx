@@ -25,7 +25,7 @@ export interface TypographyProps extends HTMLAttributes<HTMLElement> {
 }
 
 const Typography = ({
-  component,
+  component: Component = 'span',
   variant = 'body1',
   fontFamily,
   weight,
@@ -42,19 +42,6 @@ const Typography = ({
   style = {},
   ...rest
 }: TypographyProps) => {
-  let Component = component || 'span';
-
-  if (
-    variant === 'h1' ||
-    variant === 'h2' ||
-    variant === 'h3' ||
-    variant === 'h4' ||
-    variant === 'h5' ||
-    variant === 'h6'
-  ) {
-    Component = Component ?? variant;
-  }
-
   const classes = clsx(
     styles.typography, // Apply base typography styles
     styles[variant],

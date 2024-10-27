@@ -2,13 +2,19 @@
     font-family: var(--font-family-text);
 }
 
-.h1, .h2, .h3, .h4, .h5, .h6 {
+.title, .h1, .h2, .h3, .h4, .h5, .h6 {
     /* reset default heading styles */
     margin-top: 0;
     margin-bottom: 0;
 }
 
 /* Variants */
+.title {
+    font-size: var(--font-size-h1);
+    line-height: 1.2;
+    font-weight: var(--font-weight-light);
+}
+
 .h1 {
     font-size: var(--font-size-h1);
     line-height: 1.2;
