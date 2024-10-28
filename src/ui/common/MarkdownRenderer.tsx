@@ -53,7 +53,7 @@ const MarkdownRenderer = ({ content }: MarkdownRendererProps) => {
             const { color, node, ...rest } = props;
             return (
               <WithPermalink content={rest.children}>
-                <Typography {...rest} variant="h1" component="h1" />
+                <Typography {...rest} variant="h1" component="h1" fontFamily="subtitle" />
               </WithPermalink>
             );
           },
@@ -62,7 +62,7 @@ const MarkdownRenderer = ({ content }: MarkdownRendererProps) => {
 
             return (
               <WithPermalink content={rest.children}>
-                <Typography {...rest} variant="h2" component="h2" />
+                <Typography {...rest} variant="h2" component="h2" fontFamily="subtitle" />
               </WithPermalink>
             );
           },
@@ -70,7 +70,7 @@ const MarkdownRenderer = ({ content }: MarkdownRendererProps) => {
             const { color, node, ...rest } = props;
             return (
               <WithPermalink content={rest.children}>
-                <Typography {...rest} variant="h3" component="h3" />
+                <Typography {...rest} variant="h3" component="h3" fontFamily="subtitle" />
               </WithPermalink>
             );
           },
@@ -78,7 +78,7 @@ const MarkdownRenderer = ({ content }: MarkdownRendererProps) => {
             const { color, node, ...rest } = props;
             return (
               <WithPermalink content={rest.children}>
-                <Typography {...rest} variant="h4" component="h4" />
+                <Typography {...rest} variant="h4" component="h4" fontFamily="subtitle" />
               </WithPermalink>
             );
           },
@@ -86,7 +86,7 @@ const MarkdownRenderer = ({ content }: MarkdownRendererProps) => {
             const { color, node, ...rest } = props;
             return (
               <WithPermalink content={rest.children}>
-                <Typography {...rest} variant="h5" component="h5" />
+                <Typography {...rest} variant="h5" component="h5" fontFamily="subtitle" />
               </WithPermalink>
             );
           },
@@ -94,7 +94,7 @@ const MarkdownRenderer = ({ content }: MarkdownRendererProps) => {
             const { color, node, ...rest } = props;
             return (
               <WithPermalink content={rest.children}>
-                <Typography {...rest} variant="h6" component="h6" />
+                <Typography {...rest} variant="h6" component="h6" fontFamily="subtitle" />
               </WithPermalink>
             );
           },
