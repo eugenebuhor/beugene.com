@@ -25,7 +25,6 @@ const SyntaxHighlighter = ({ className, children, language, ...rest }: SyntaxHig
       language={language}
       PreTag="div"
       className={className}
-      showLineNumbers
       {...rest}
     >
       {children}

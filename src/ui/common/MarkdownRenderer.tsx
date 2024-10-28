@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import remarkGemoji from 'remark-gemoji';
 import Image from 'next/image';
 import Link from 'next/link';
 import { LuLink } from 'react-icons/lu';
@@ -34,7 +35,7 @@ const WithPermalink = ({ content, children }: HeadingProps) => {
         aria-label={`Permalink: ${content}`}
         className={styles.headingAnchor}
       >
-        <Typography variant="h5" color="text-primary" component="span" lineHeight={0}>
+        <Typography variant="body1" color="text-primary" component="span" lineHeight={0}>
           <LuLink />
         </Typography>
       </Link>
@@ -46,13 +47,13 @@ const MarkdownRenderer = ({ content }: MarkdownRendererProps) => {
   return (
     <div className={styles.markdown}>
       <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
+        remarkPlugins={[remarkGfm, remarkGemoji]}
         components={{
           h1: (props) => {
             const { color, node, ...rest } = props;
             return (
               <WithPermalink content={rest.children}>
-                <h1 {...rest} />
+                <Typography {...rest} variant="h1" component="h1" />
               </WithPermalink>
             );
           },
@@ -61,7 +62,7 @@ const MarkdownRenderer = ({ content }: MarkdownRendererProps) => {
 
             return (
               <WithPermalink content={rest.children}>
-                <h2 {...rest} />
+                <Typography {...rest} variant="h2" component="h2" />
               </WithPermalink>
             );
           },
@@ -69,7 +70,7 @@ const MarkdownRenderer = ({ content }: MarkdownRendererProps) => {
             const { color, node, ...rest } = props;
             return (
               <WithPermalink content={rest.children}>
-                <h3 {...rest} />
+                <Typography {...rest} variant="h3" component="h3" />
               </WithPermalink>
             );
           },
@@ -77,7 +78,7 @@ const MarkdownRenderer = ({ content }: MarkdownRendererProps) => {
             const { color, node, ...rest } = props;
             return (
               <WithPermalink content={rest.children}>
-                <h4 {...rest} />
+                <Typography {...rest} variant="h4" component="h4" />
               </WithPermalink>
             );
           },
@@ -85,7 +86,7 @@ const MarkdownRenderer = ({ content }: MarkdownRendererProps) => {
             const { color, node, ...rest } = props;
             return (
               <WithPermalink content={rest.children}>
-                <h5 {...rest} />
+                <Typography {...rest} variant="h5" component="h5" />
               </WithPermalink>
             );
           },
@@ -93,21 +94,21 @@ const MarkdownRenderer = ({ content }: MarkdownRendererProps) => {
             const { color, node, ...rest } = props;
             return (
               <WithPermalink content={rest.children}>
-                <h6 {...rest} />
+                <Typography {...rest} variant="h6" component="h6" />
               </WithPermalink>
             );
           },
           p: (props) => {
             const { color, node, ...rest } = props;
-            return <p className={styles.paragraph} {...rest} />;
+            return <Typography {...rest} variant="subtitle" component="p" />;
           },
           strong: (props) => {
             const { color, node, ...rest } = props;
-            return <strong {...rest} />;
+            return <Typography {...rest} variant="subtitle" component="strong" weight="bold" />;
           },
           em: (props) => {
             const { color, node, ...rest } = props;
-            return <em {...rest} />;
+            return <Typography {...rest} variant="subtitle" component="em" />;
           },
           blockquote: (props) => {
             const { node, ...rest } = props;
@@ -134,10 +135,14 @@ const MarkdownRenderer = ({ content }: MarkdownRendererProps) => {
                 {String(children).replace(/\n$/, '')}
               </SyntaxHighlighter>
             ) : (
-              <code className={styles.inlineCode} {...rest}>
+              <code className={styles.code} {...rest}>
                 {children}
               </code>
             );
+          },
+          pre: (props) => {
+            const { node, ...rest } = props;
+            return <pre className={styles.pre} {...rest} />;
           },
           a: (props) => {
             const { node, href, title, ...rest } = props;

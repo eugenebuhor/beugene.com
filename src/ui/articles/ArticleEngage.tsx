@@ -42,7 +42,7 @@ const ArticleEngage = ({
   return (
     <div className={styles.container}>
       <LikeButton isLiked={isLiked} onClick={onToggleArticleLike} />
-      <Typography variant="subtitle1" color="text-secondary" fontFamily="subtitle">
+      <Typography variant="subtitle" color="text-secondary" fontFamily="subtitle">
         &nbsp;{likes || ''}
       </Typography>
     </div>

@@ -23,7 +23,7 @@ const ArticleMeta = ({
   return (
     <div className={styles.container}>
       <Typography
-        variant="title"
+        variant="h1"
         component="h1"
         className={styles.title}
         weight="bold"
@@ -32,7 +32,7 @@ const ArticleMeta = ({
       >
         {titleAsLink ? <Link href={`/articles/${slug}`}>{title}</Link> : title}
       </Typography>
-      <Typography variant="body1" weight="light" color="text-tertiary" fontFamily="subtitle">
+      <Typography variant="body1" color="text-tertiary" fontFamily="subtitle">
         {publishedAt ? (
           <time dateTime={new Date(publishedAt).toISOString()}>
             {format(publishedAt, DATE_FORMAT)}

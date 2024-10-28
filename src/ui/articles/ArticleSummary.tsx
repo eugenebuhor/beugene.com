@@ -11,18 +11,12 @@ type ArticleSummaryProps = {
 const ArticleSummary = async ({ summary, slug }: ArticleSummaryProps) => {
   return (
     <div className={styles.container}>
-      <Typography variant="h6" weight="light" component="p" lineHeight="1.5" fontFamily="text">
+      <Typography variant="subtitle" component="p" fontFamily="text">
         {summary}
       </Typography>
 
       <Link href={`/articles/${slug}`}>
-        <Typography
-          variant="subtitle1"
-          component="span"
-          weight="light"
-          fontFamily="text"
-          className={styles.readMore}
-        >
+        <Typography variant="body1" component="span" fontFamily="text" className={styles.readMore}>
           Read&nbsp;more..
         </Typography>
       </Link>
