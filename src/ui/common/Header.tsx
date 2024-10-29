@@ -18,7 +18,7 @@ const Header = () => {
           <Image draggable={false} src="/name-logo-24.svg" alt="Yevhenii Buhor" fill priority />
         </Link>
         <Link href="/about">
-          <Typography variant="body1" color="text-primary" fontFamily="subtitle">
+          <Typography variant="body2" color="text-primary" fontFamily="subtitle">
             About Me
           </Typography>
         </Link>

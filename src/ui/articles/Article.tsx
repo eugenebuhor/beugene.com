@@ -35,7 +35,7 @@ const Article = ({ article, isLiked, asCard = false, searchParams = '' }: Articl
         title={article.title}
         timeToRead={article.timeToRead}
         publishedAt={article.publishedAt}
-        articleLink={articleLink}
+        articleLink={asCard ? articleLink : ''}
       />
 
       {asCard ? (

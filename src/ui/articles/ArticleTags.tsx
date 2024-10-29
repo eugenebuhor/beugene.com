@@ -1,9 +1,9 @@
+import Link from 'next/link';
 import type { Tag } from '@prisma/client';
-import styles from '@/ui/articles/ArticleTags.module.css';
 import Button from '@/ui/common/Button';
 import Typography from '@/ui/common/Typography';
-import Link from 'next/link';
 import { stringifyQueryString } from '@/utils/queryString';
+import styles from '@/ui/articles/ArticleTags.module.css';
 
 type ArticleTagsProps = {
   tags: Tag[];
@@ -20,7 +20,7 @@ const ArticleTags = ({ tags }: ArticleTagsProps) => {
       {tags.map((tag) => (
         <Link key={tag.id} className={styles.link} href={getRedirectLink(tag.name)}>
           <Button size="small" tabIndex={-1}>
-            <Typography variant="body1" color="text-secondary" fontFamily="subtitle">
+            <Typography variant="body2" color="text-secondary" fontFamily="subtitle">
               {tag.name}
             </Typography>
           </Button>
