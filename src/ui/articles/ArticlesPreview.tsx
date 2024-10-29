@@ -23,14 +23,20 @@ const ArticlesPreview = async ({ articleId }: ArticlesPreviewProps) => {
 
   return (
     <div className={styles.container}>
-      <Typography variant="h1" component="h1" fontStyle="italic" weight="bold" textAlign="center">
+      <Typography
+        variant="h1"
+        component="h1"
+        fontStyle="italic"
+        weight="regular"
+        textAlign="center"
+      >
         What to read next?
       </Typography>
       <nav className={styles.nav}>
         {articles.map((article) => (
           <Link key={article.slug} href={`/articles/${article.slug}`}>
             <div className={styles.preview}>
-              <Typography variant="h4" component="h4" weight="bold" fontFamily="title" trim={2}>
+              <Typography variant="h4" component="h4" fontFamily="title" trim={2}>
                 {article.title}
               </Typography>
 
