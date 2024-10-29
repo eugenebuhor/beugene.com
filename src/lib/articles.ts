@@ -15,11 +15,17 @@ const MAX_LIMIT = 100;
 const MAX_QUERY_LENGTH = 100;
 const MAX_TAGS = 5;
 
+type OrderBy = 'publishedAt' | 'likes' | 'title' | 'createdAt';
+type Order = 'asc' | 'desc';
+
 export type GetArticlesParams = {
   q?: string;
   limit?: number;
   offset?: number;
   tags?: string[];
+  orderBy?: OrderBy;
+  order?: Order;
+  exclude?: number[];
 };
 
 type PaginatedArticles = {
@@ -36,8 +42,14 @@ type PaginatedArticles = {
 export const getArticles = async (params?: GetArticlesParams): Promise<PaginatedArticles> => {
   const limit = params?.limit !== undefined ? params.limit : FALLBACK_LIMIT;
   const offset = params?.offset !== undefined ? params.offset : FALLBACK_OFFSET;
-  const searchQuery = params?.q ? params?.q.trim() : '';
+  const searchQuery = params?.q ? params.q.trim() : '';
   const tags = params?.tags ?? [];
+  const orderBy: OrderBy = params?.orderBy ?? 'publishedAt';
+  const order: Order = params?.order ?? 'desc';
+  const exclude = params?.exclude ?? [];
+
+  const allowedOrderBy: OrderBy[] = ['publishedAt', 'likes', 'title', 'createdAt'];
+  const allowedOrder: Order[] = ['asc', 'desc'];
 
   if (isNaN(limit) || isNaN(offset) || limit < 0 || offset < 0 || limit > MAX_LIMIT) {
     throw new ValidationError('Invalid limit or offset');
@@ -51,7 +63,23 @@ export const getArticles = async (params?: GetArticlesParams): Promise<Paginated
     throw new ValidationError(`Too many tags provided, maximum allowed is ${MAX_TAGS}`);
   }
 
-  const result = await _getArticles({ limit, offset, q: searchQuery, tags });
+  if (!allowedOrderBy.includes(orderBy)) {
+    throw new ValidationError(`Invalid sort key. Allowed values are: ${allowedOrderBy.join(', ')}`);
+  }
+
+  if (!allowedOrder.includes(order)) {
+    throw new ValidationError('Invalid sort direction. Allowed values are "asc" and "desc"');
+  }
+
+  const result = await _getArticles({
+    limit,
+    offset,
+    q: searchQuery,
+    tags,
+    orderBy,
+    order,
+    exclude,
+  });
 
   if (result === null) {
     throw new InternalError('Internal server error');
@@ -64,7 +92,7 @@ export const getArticles = async (params?: GetArticlesParams): Promise<Paginated
 
 const _getArticles = unstable_cache(
   async (params: Required<GetArticlesParams>): Promise<PaginatedArticles | null> => {
-    const { limit, offset, q: searchQuery, tags } = params;
+    const { limit, offset, q: searchQuery, tags, orderBy, order, exclude } = params;
 
     const whereConditions: Prisma.ArticleWhereInput[] = [{ status: ArticleStatus.PUBLISHED }];
 
@@ -115,6 +143,14 @@ const _getArticles = unstable_cache(
       });
     }
 
+    if (exclude.length > 0) {
+      whereConditions.push({
+        id: {
+          notIn: exclude,
+        },
+      });
+    }
+
     const whereClause: Prisma.ArticleWhereInput = {
       AND: whereConditions,
     };
@@ -129,7 +165,7 @@ const _getArticles = unstable_cache(
             tags: true,
           },
           orderBy: {
-            publishedAt: 'desc',
+            [orderBy]: order,
           },
         }),
         prisma.article.count({

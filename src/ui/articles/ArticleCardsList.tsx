@@ -1,6 +1,6 @@
 import { Prisma, Like } from '@prisma/client';
 import PaginationControls from '@/ui/common/PaginationControls';
-import ArticleCard from './ArticleCard';
+import Article from './Article';
 import styles from './ArticleCardsList.module.css';
 import Divider from '@/ui/common/Divider';
 
@@ -23,7 +23,8 @@ const ArticleCardsList = ({
     <ul className={styles.container}>
       {articles.map((article, index) => (
         <li key={article.id}>
-          <ArticleCard
+          <Article
+            asCard
             article={article}
             isLiked={userLikes.some((like) => article.id === like.articleId)}
           />

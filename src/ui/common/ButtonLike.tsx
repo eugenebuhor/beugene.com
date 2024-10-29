@@ -3,14 +3,14 @@
 import { type CSSProperties, useState, useEffect, useRef } from 'react';
 import { IoHeartOutline, IoHeart } from 'react-icons/io5';
 import Button from '@/ui/common/Button';
-import styles from './LikeButton.module.css';
+import styles from './ButtonLike.module.css';
 
-type LikeButtonProps = {
+type ButtonLikeProps = {
   isLiked: boolean;
   onClick: () => void;
 };
 
-const LikeButton = ({ isLiked, onClick }: LikeButtonProps) => {
+const ButtonLike = ({ isLiked, onClick }: ButtonLikeProps) => {
   const [animating, setAnimating] = useState(false);
   const [showParticles, setShowParticles] = useState(false);
   const prevIsLiked = useRef(isLiked);
@@ -67,4 +67,4 @@ const LikeButton = ({ isLiked, onClick }: LikeButtonProps) => {
   );
 };
 
-export default LikeButton;
+export default ButtonLike;

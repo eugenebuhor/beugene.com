@@ -18,6 +18,7 @@ export interface TypographyProps extends HTMLAttributes<HTMLElement> {
   wordBreak?: 'normal' | 'break-all' | 'keep-all' | 'break-word';
   lineHeight?: string | number;
   textAlign?: 'left' | 'center' | 'right' | 'justify';
+  fontStyle?: 'normal' | 'italic';
   textTransform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase';
   verticalAlign?: 'top' | 'middle' | 'baseline';
   component?: ElementType;
@@ -36,6 +37,7 @@ const Typography = forwardRef<HTMLElement, TypographyProps>(
       noWrap,
       wordBreak,
       lineHeight,
+      fontStyle,
       verticalAlign,
       textAlign,
       textTransform,
@@ -57,6 +59,7 @@ const Typography = forwardRef<HTMLElement, TypographyProps>(
       noWrap && styles.noWrap,
       trim && styles.trim,
       wordBreak && styles[`wordBreak-${wordBreak}`],
+      fontStyle && styles[`fontStyle-${fontStyle}`],
       className,
     );
 

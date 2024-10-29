@@ -1,24 +1,20 @@
-import { Prisma } from '@prisma/client';
+import type { Prisma } from '@prisma/client';
 import ArticleMeta from '@/ui/articles/ArticleMeta';
 import ArticleTags from '@/ui/articles/ArticleTags';
 import ArticleEngage from '@/ui/articles/ArticleEngage';
-import MarkdownRenderer from '@/ui/common/MarkdownRenderer';
 import ArticleSummary from '@/ui/articles/ArticleSummary';
-import styles from '@/ui/articles/ArticleCard.module.css';
+import ArticlesPreview from '@/ui/articles/ArticlesPreview';
+import MarkdownRenderer from '@/ui/common/MarkdownRenderer';
+import styles from '@/ui/articles/Article.module.css';
 
 type ArticleCardProps = {
   article: Prisma.ArticleGetPayload<{ include: { tags: true } }>;
+  previews?: Prisma.ArticleGetPayload<{ include: { tags: true } }>[];
   isLiked: boolean;
-  markdown?: string;
-  titleAsLink?: boolean;
+  asCard?: boolean;
 };
 
-const ArticleCard = async ({
-  titleAsLink = true,
-  markdown,
-  article,
-  isLiked,
-}: ArticleCardProps) => {
+const Article = async ({ asCard = false, article, isLiked }: ArticleCardProps) => {
   return (
     <article className={styles.container}>
       <ArticleMeta
@@ -26,20 +22,22 @@ const ArticleCard = async ({
         slug={article.slug}
         timeToRead={article.timeToRead}
         publishedAt={article.publishedAt}
-        titleAsLink={titleAsLink}
+        titleAsLink={asCard}
       />
 
-      {markdown ? (
-        <MarkdownRenderer content={markdown} />
-      ) : (
+      {asCard ? (
         <ArticleSummary summary={article.summary} slug={article.slug} />
+      ) : (
+        <MarkdownRenderer content={article.content} />
       )}
 
       <ArticleTags tags={article.tags} />
 
       <ArticleEngage slug={article.slug} likes={article.likes} isLiked={isLiked} />
+
+      {!asCard && <ArticlesPreview articleId={article.id} />}
     </article>
   );
 };
 
-export default ArticleCard;
+export default Article;

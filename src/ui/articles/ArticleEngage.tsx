@@ -4,7 +4,7 @@ import type { Article } from '@prisma/client';
 import { debounce } from 'lodash';
 import { useState } from 'react';
 import Typography from '@/ui/common/Typography';
-import LikeButton from '@/ui/common/LikeButton';
+import ButtonLike from '@/ui/common/ButtonLike';
 import { toggleArticleLike } from '@/app/actions/articles';
 import styles from './ArticleEngage.module.css';
 
@@ -41,7 +41,7 @@ const ArticleEngage = ({
 
   return (
     <div className={styles.container}>
-      <LikeButton isLiked={isLiked} onClick={onToggleArticleLike} />
+      <ButtonLike isLiked={isLiked} onClick={onToggleArticleLike} />
       <Typography variant="subtitle" color="text-secondary" fontFamily="subtitle">
         &nbsp;{likes || ''}
       </Typography>

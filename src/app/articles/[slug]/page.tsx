@@ -1,4 +1,4 @@
-import ArticleCard from '@/ui/articles/ArticleCard';
+import Article from '@/ui/articles/Article';
 import { getArticleBySlug } from '@/lib/articles';
 import { getUserLikes, getUserUUID } from '@/lib/users';
 
@@ -16,14 +16,7 @@ const ArticlePage = async ({ params }: ArticlePageProps) => {
   const article = await getArticleBySlug(params.slug);
   const isLiked = userLikes.some((like) => article.id === like.articleId);
 
-  return (
-    <ArticleCard
-      article={article}
-      isLiked={isLiked}
-      markdown={article.content}
-      titleAsLink={false}
-    />
-  );
+  return <Article article={article} isLiked={isLiked} />;
 };
 
 export default ArticlePage;

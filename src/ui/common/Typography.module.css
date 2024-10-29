@@ -179,3 +179,12 @@
 .wordBreak-break-word {
     word-break: break-word;
 }
+
+/* Font Style */
+.fontStyle-normal {
+    font-style: normal;
+}
+
+.fontStyle-italic {
+    font-style: italic;
+}

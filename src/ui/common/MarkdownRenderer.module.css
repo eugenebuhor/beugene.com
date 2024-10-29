@@ -1,4 +1,5 @@
 .markdown {
+    margin-top: 1.25rem;
     font-family: inherit;
     color: var(--color-text-primary);
     line-height: 2rem;
