@@ -1,10 +1,17 @@
 import ArticleCardsList from '@/ui/articles/ArticleCardsList';
-import { parseSearchParams } from '@/utils/queryString';
+import { parseSearchParams, stringifyQueryString } from '@/utils/queryString';
 import { getArticles } from '@/lib/articles';
 import { getUserLikes, getUserUUID } from '@/lib/users';
 
+export type SearchParams = {
+  page?: string;
+  limit?: string;
+  q?: string;
+  tags?: string[];
+};
+
 type ArticlesPageProps = {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: SearchParams;
 };
 
 const ArticlesPage = async ({ searchParams }: ArticlesPageProps) => {
@@ -32,6 +39,7 @@ const ArticlesPage = async ({ searchParams }: ArticlesPageProps) => {
       totalPages={Math.ceil(total / limit)}
       currentPage={page}
       userLikes={userLikes}
+      searchParams={stringifyQueryString(parsedParams)}
     />
   );
 };

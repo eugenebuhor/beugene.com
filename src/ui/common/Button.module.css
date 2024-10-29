@@ -73,27 +73,27 @@
 
 .medium {
     padding: 0.65rem 1.15rem;
-    font-size: var(--font-size-subtitle2);
+    font-size: var(--font-size-body1);
 }
 
 .large {
     padding: 0.75rem 1.5rem;
-    font-size: var(--font-size-subtitle1);
+    font-size: var(--font-size-subtitle);
 }
 
 .icon.small {
     padding: 0.15rem;
-    font-size: var(--font-size-body1);
+    font-size: var(--font-size-h5);
 }
 
 .icon.medium {
     padding: 0.15rem;
-    font-size: var(--font-size-h6);
+    font-size: var(--font-size-h4);
 }
 
 .icon.large {
     padding: 0.15rem;
-    font-size: var(--font-size-h5);
+    font-size: var(--font-size-h3);
 }
 
 .icon-outlined.small {

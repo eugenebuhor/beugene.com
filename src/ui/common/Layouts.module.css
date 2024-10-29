@@ -1,12 +1,21 @@
 .layoutMain {
-    --layout-main-margin-top: 30px;
+    --layout-main-margin-top: 40px;
+    --layout-main-margin-bottom: 40px;
+
+    display: flex;
+    flex-direction: column;
     width: 100%;
     min-width: var(--size-min-width);
-    min-height: calc(100vh - var(--size-header-height) - var(--layout-main-margin-top));
+    min-height: calc(100vh - var(--size-header-height) - var(--layout-main-margin-top) - var(--layout-main-margin-bottom));
     margin-top: var(--layout-main-margin-top);
+    margin-bottom: var(--layout-main-margin-bottom);
 }
 
 .layoutSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
     width: 100%;
     max-width: var(--size-max-width);
     margin: 0 auto;

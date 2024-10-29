@@ -3,10 +3,10 @@
 import type { Article } from '@prisma/client';
 import { debounce } from 'lodash';
 import { useState } from 'react';
-import Flex from '@/ui/common/Flex';
 import Typography from '@/ui/common/Typography';
-import LikeButton from '@/ui/common/LikeButton';
+import ButtonLike from '@/ui/common/ButtonLike';
 import { toggleArticleLike } from '@/app/actions/articles';
+import styles from './ArticleEngage.module.css';
 
 type ArticleEngageProps = {
   slug: Article['slug'];
@@ -40,14 +40,12 @@ const ArticleEngage = ({
   }, 50);
 
   return (
-    <Flex justifyContent="space-between">
-      <Flex alignItems="center">
-        <LikeButton isLiked={isLiked} onClick={onToggleArticleLike} />
-        <Typography variant="body1" color="text-secondary" fontFamily="subtitle">
-          &nbsp;{likes}
-        </Typography>
-      </Flex>
-    </Flex>
+    <div className={styles.container}>
+      <ButtonLike isLiked={isLiked} onClick={onToggleArticleLike} />
+      <Typography variant="body1" color="text-secondary" fontFamily="subtitle">
+        &nbsp;{likes || ''}
+      </Typography>
+    </div>
   );
 };
 

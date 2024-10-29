@@ -1,0 +1,8 @@
+.container,
+.container > * {
+  display: inline;
+}
+
+.readMore {
+  margin-left: 8px;
+}

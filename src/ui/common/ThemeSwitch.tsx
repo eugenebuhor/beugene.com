@@ -33,7 +33,7 @@ const ThemeSwitch = () => {
       {themes.map((themeOption) => (
         <ToggleButton
           variant="icon-outlined"
-          size="small"
+          size="medium"
           key={themeOption}
           value={themeOption}
           aria-label={`${themeOption} mode`}
