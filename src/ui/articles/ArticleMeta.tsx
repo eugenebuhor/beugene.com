@@ -8,18 +8,11 @@ import styles from '@/ui/articles/ArticleMeta.module.css';
 type ArticleMetaProps = {
   publishedAt: Article['publishedAt'];
   timeToRead: Article['timeToRead'];
-  slug: Article['slug'];
   title: Article['title'];
-  titleAsLink?: boolean;
+  articleLink?: string;
 };
 
-const ArticleMeta = ({
-  slug,
-  title,
-  publishedAt,
-  timeToRead,
-  titleAsLink = true,
-}: ArticleMetaProps) => {
+const ArticleMeta = ({ title, publishedAt, timeToRead, articleLink = '' }: ArticleMetaProps) => {
   return (
     <div className={styles.container}>
       <Typography
@@ -30,7 +23,7 @@ const ArticleMeta = ({
         fontFamily="title"
         trim={4}
       >
-        {titleAsLink ? <Link href={`/articles/${slug}`}>{title}</Link> : title}
+        {articleLink ? <Link href={articleLink}>{title}</Link> : title}
       </Typography>
       <Typography variant="body1" color="text-tertiary" fontFamily="subtitle">
         {publishedAt ? (

@@ -3,3 +3,7 @@
     flex-direction: column;
     gap: 24px;
 }
+
+.backLink {
+    margin-bottom: 0.5rem;
+}
