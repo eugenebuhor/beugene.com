@@ -13,7 +13,7 @@ const AboutPage = () => {
 
       <Typography variant="subtitle" component="p">
         I build web applications that work harder for your business. With a background across
-        various of industries, including fintech, e-commerce, martech, and blockchain - I bring a
+        various of industries, including fintech, e-commerce, martech, and blockchain – I bring a
         fresh, strategic approach to every project, focusing on solutions that not only meet
         today&apos;s needs but also drive sustainable growth.
       </Typography>
@@ -26,12 +26,17 @@ const AboutPage = () => {
 
       <Typography variant="subtitle" component="p">
         Let&apos;s connect and make something exceptional. Feel free to reach out at{' '}
-        <Link href={`mailto:${Links.EMAIL} `}>{Links.EMAIL}</Link> or connect with me on{' '}
+        <Link href={`mailto:${Links.EMAIL} `}>
+          <b>{Links.EMAIL}</b>
+        </Link>{' '}
+        or connect with me on{' '}
         <Link href={Links.LINKED_IN} target="_blank">
-          LinkedIn
+          <b>LinkedIn</b>
         </Link>
         .
       </Typography>
+
+      <br />
 
       <Link href="/articles">
         <Typography color="text-secondary">←&nbsp;&nbsp;&nbsp;Back to Articles</Typography>
