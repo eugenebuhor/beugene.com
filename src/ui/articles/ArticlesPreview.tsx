@@ -5,16 +5,17 @@ import { getArticles } from '@/lib/articles';
 import styles from '@/ui/articles/ArticlesPreview.module.css';
 
 type ArticlesPreviewProps = {
-  articleId: Article['id'];
+  limit?: number;
+  articleId?: Article['id'];
 };
 
-const ArticlesPreview = async ({ articleId }: ArticlesPreviewProps) => {
+const ArticlesPreview = async ({ articleId, limit = 3 }: ArticlesPreviewProps) => {
   const { data: articles } = await getArticles({
-    limit: 3,
+    limit: limit,
     offset: 0,
     orderBy: 'likes',
     order: 'desc',
-    exclude: [articleId],
+    exclude: articleId ? [articleId] : [],
   });
 
   if (!articles.length) {
