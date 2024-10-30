@@ -1,19 +1,31 @@
 'use client';
 
-import { useLayoutEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 
 export default function ScrollHandler() {
   const pathname = usePathname();
+  const isFirstLoad = useRef(true);
+  const isPopState = useRef(false);
 
-  useLayoutEffect(() => {
-    if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
-      const navigationEntry = performance.getEntriesByType('navigation')[0];
-      const isReload =
-        navigationEntry && (navigationEntry as PerformanceNavigationTiming).type === 'reload';
+  useEffect(() => {
+    const handlePopState = () => {
+      isPopState.current = true;
+    };
 
-      if (isReload) {
-        const hash = window.location.hash;
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash;
+
+      if (isFirstLoad.current) {
+        isFirstLoad.current = false;
 
         if (hash) {
           window.history.scrollRestoration = 'manual';
@@ -21,8 +33,19 @@ export default function ScrollHandler() {
           window.history.scrollRestoration = 'manual';
           window.scrollTo(0, 0);
         }
-      } else {
+      } else if (isPopState.current) {
+        isPopState.current = false;
         window.history.scrollRestoration = 'auto';
+      } else {
+        if (hash) {
+          const element = document.querySelector(hash);
+          if (element) {
+            element.scrollIntoView();
+          }
+        } else {
+          window.scrollTo(0, 0);
+        }
+        window.history.scrollRestoration = 'manual';
       }
     }
   }, [pathname]);
