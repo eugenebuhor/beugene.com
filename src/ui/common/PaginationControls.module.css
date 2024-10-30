@@ -1,7 +1,55 @@
 .container {
     display: flex;
     flex-direction: row;
-    gap: 5px;
-    align-items: center;
     justify-content: center;
+    margin: 1rem 0;
+}
+
+.paginationList {
+    list-style: none;
+    display: flex;
+    gap: 0.5rem;
+    padding: 0;
+    margin: 0;
+
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-body2);
+    font-family: var(--font-family-subtitle);
+}
+
+.navButton,
+.pageLink {
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+    border-radius: var(--border-radius-sm);
+    user-select: none;
+    color: var(--color-text-secondary);
+    opacity: 1;
+}
+
+.navButton:hover,
+.pageLink:hover {
+    background-color: var(--color-main-surface-tertiary);
+    opacity: 1;
+}
+
+.navButton.disabled,
+.navButton[aria-disabled='true'],
+.pageLink.disabled,
+.pageLink[aria-disabled='true'] {
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.pageLink.active,
+.pageLink[aria-current='page'] {
+    cursor: default;
+    background-color: var(--color-main-surface-tertiary)
+}
+
+.ellipsis {
+    display: flex;
+    align-items: center;
+    padding: 0.15rem 0.75rem;
+    user-select: none;
 }
