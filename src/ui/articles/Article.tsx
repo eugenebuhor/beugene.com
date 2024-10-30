@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import Link from 'next/link';
 import type { Prisma } from '@prisma/client';
 import ArticleMeta from '@/ui/articles/ArticleMeta';
@@ -50,7 +51,11 @@ const Article = ({ article, isLiked, asCard = false, searchParams = '' }: Articl
 
       <ArticleEngage slug={article.slug} likes={article.likes} isLiked={isLiked} />
 
-      {!asCard && <ArticlesPreview articleId={article.id} />}
+      {!asCard && (
+        <Suspense fallback={<div>loading..</div>}>
+          <ArticlesPreview articleId={article.id} />
+        </Suspense>
+      )}
     </article>
   );
 };
