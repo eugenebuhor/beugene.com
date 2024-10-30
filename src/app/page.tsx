@@ -1,6 +1,8 @@
 import { getArticles } from '@/lib/articles';
-import ArticleCardsList from '@/ui/articles/ArticleCardsList';
 import { getUserLikes, getUserUUID } from '@/lib/users';
+import Article from '@/ui/articles/Article';
+import Divider from '@/ui/common/Divider';
+import styles from '@/app/page.module.css';
 
 export const revalidate = 300; // 5 minutes
 
@@ -12,7 +14,20 @@ const Home = async () => {
   const userLikes = await getUserLikes(userUUID!); // fixme: fix this
   const { data: articles } = await getArticles({ limit, offset });
 
-  return <ArticleCardsList articles={articles} userLikes={userLikes} />;
+  return (
+    <ul className={styles.container}>
+      {articles.map((article, index) => (
+        <li key={article.id}>
+          <Article
+            asCard
+            article={article}
+            isLiked={userLikes.some((like) => article.id === like.articleId)}
+          />
+          {index === articles.length - 1 ? null : <Divider role="separator" margin="32px 0" />}
+        </li>
+      ))}
+    </ul>
+  );
 };
 
 export default Home;

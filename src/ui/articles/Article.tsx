@@ -21,7 +21,9 @@ const Article = ({ article, isLiked, asCard = false, searchParams = '' }: Articl
   const articleLink = searchParams
     ? `/articles/${article.slug}?${searchParams}`
     : `/articles/${article.slug}`;
-  const backToArticlesLink = searchParams ? `/articles/?${searchParams}` : `/articles`;
+  const backToArticlesLink = searchParams
+    ? `/articles?${searchParams}#${article.slug}`
+    : `/articles#${article.slug}`;
 
   return (
     <article className={styles.container}>

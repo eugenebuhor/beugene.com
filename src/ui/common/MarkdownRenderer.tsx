@@ -5,6 +5,7 @@ import remarkGemoji from 'remark-gemoji';
 import Image from 'next/image';
 import Link from 'next/link';
 import { LuLink } from 'react-icons/lu';
+import { slugify } from '@/utils/parseString';
 import Typography from '@/ui/common/Typography';
 import SyntaxHighlighter from '@/ui/common/SyntaxHighlighter';
 import styles from './MarkdownRenderer.module.css';
@@ -19,22 +20,13 @@ type HeadingProps = {
 };
 
 const WithPermalink = ({ content, children }: HeadingProps) => {
-  const getAnchorLink = (content: ReactNode): string => {
-    if (typeof content !== 'string') return '';
-    return content.trim().toLowerCase().replace(/\s+/g, '-');
-  };
-
-  const anchorLink = getAnchorLink(content);
+  const slug = typeof content !== 'string' ? '' : slugify(content);
 
   return (
-    <div className={styles.heading} id={anchorLink}>
+    <div className={styles.heading} id={slug}>
       {children}
       &nbsp;
-      <Link
-        href={'#' + anchorLink}
-        aria-label={`Permalink: ${content}`}
-        className={styles.headingAnchor}
-      >
+      <Link href={'#' + slug} aria-label={`Permalink: ${content}`} className={styles.headingAnchor}>
         <Typography variant="body1" color="text-primary" component="span" lineHeight={0}>
           <LuLink />
         </Typography>
