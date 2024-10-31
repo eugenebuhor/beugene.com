@@ -5,6 +5,7 @@ import { MdMonitor, MdDarkMode, MdLightMode } from 'react-icons/md';
 import { useTheme } from 'next-themes';
 import ToggleButton from '@/ui/common/ToggleButton';
 import ToggleButtonGroup from '@/ui/common/ToggleButtonGroup';
+import Skeleton from '@/ui/common/Skeleton';
 import styles from '@/ui/common/ThemeSwitch.module.css';
 
 const ThemeSwitch = () => {
@@ -20,7 +21,13 @@ const ThemeSwitch = () => {
   };
 
   if (!mounted) {
-    return null; // todo: add skilleton
+    return (
+      <div className={styles.skeletonContainer}>
+        <Skeleton variant="circle" animation="pulse" width="2.5rem" height="2.5rem" />
+        <Skeleton variant="circle" animation="pulse" width="2.5rem" height="2.5rem" />
+        <Skeleton variant="circle" animation="pulse" width="2.5rem" height="2.5rem" />
+      </div>
+    );
   }
 
   return (
