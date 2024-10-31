@@ -30,7 +30,7 @@ const Article = ({ article, isLiked, asCard = false, searchParams = '' }: Articl
   return (
     <article className={styles.container}>
       {!asCard && (
-        <Link href={backToArticlesLink} className={styles.backLink}>
+        <Link href={backToArticlesLink} className={styles.backLink} prefetch>
           <Typography color="text-secondary">←&nbsp;&nbsp;&nbsp;Back to Articles</Typography>
         </Link>
       )}
