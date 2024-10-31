@@ -1,9 +1,11 @@
+import { notFound, redirect } from 'next/navigation';
 import { parseSearchParams, stringifyQueryString } from '@/utils/queryString';
 import { getArticles } from '@/lib/articles';
 import { getUserLikes, getUserUUID } from '@/lib/users';
 import Article from '@/ui/articles/Article';
 import Divider from '@/ui/common/Divider';
 import PaginationControls from '@/ui/common/PaginationControls';
+import { NotFoundError } from '@/lib/errors';
 import styles from '@/app/articles/page.module.css';
 
 export type SearchParams = {
@@ -28,12 +30,24 @@ const ArticlesPage = async ({ searchParams }: ArticlesPageProps) => {
   const limit = parseInt(parsedParams.limit || '5', 10);
   const q = parsedParams.q || '';
   const tags = parsedParams.tags || [];
-
   const offset = (page - 1) * limit;
+  let articles = [];
+  let total = 0;
+  let userLikes = [];
 
-  const userUUID = await getUserUUID();
-  const userLikes = await getUserLikes(userUUID!); // fixme: fix this
-  const { data: articles, total } = await getArticles({ limit, offset, q, tags });
+  try {
+    const userUUID = await getUserUUID();
+    userLikes = await getUserLikes(userUUID!);
+    const res = await getArticles({ limit, offset, q, tags });
+    articles = res.data;
+    total = res.total;
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      notFound();
+    } else {
+      redirect('/articles');
+    }
+  }
 
   const totalPages = Math.ceil(total / limit);
 
