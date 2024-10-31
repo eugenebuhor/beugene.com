@@ -1,7 +1,9 @@
+import { notFound, redirect } from 'next/navigation';
 import { getArticles } from '@/lib/articles';
 import { getUserLikes, getUserUUID } from '@/lib/users';
 import Article from '@/ui/articles/Article';
 import Divider from '@/ui/common/Divider';
+import { NotFoundError } from '@/lib/errors';
 import styles from '@/app/page.module.css';
 
 export const revalidate = 300; // 5 minutes
@@ -9,13 +11,24 @@ export const revalidate = 300; // 5 minutes
 const Home = async () => {
   const limit = 5;
   const offset = 0;
+  let userLikes = [];
+  let articles = [];
 
-  const userUUID = await getUserUUID();
-  const userLikes = await getUserLikes(userUUID!); // fixme: fix this
-  const { data: articles } = await getArticles({ limit, offset });
+  try {
+    const userUUID = await getUserUUID();
+    userLikes = await getUserLikes(userUUID!);
+    const { data } = await getArticles({ limit, offset });
+    articles = data;
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      notFound();
+    } else {
+      redirect('/articles');
+    }
+  }
 
   return (
-    <ul className={styles.container}>
+    <ul className={styles.rootPageContainer}>
       {articles.map((article, index) => (
         <li key={article.id}>
           <Article

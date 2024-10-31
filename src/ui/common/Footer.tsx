@@ -29,11 +29,10 @@ const Footer = () => {
           <Typography variant="caption" color="text-secondary" fontFamily="subtitle">
             Berlin, Germany
           </Typography>
-          <Link href="/license">
-            <Typography variant="caption" color="text-secondary" fontFamily="subtitle">
-              Copyright © 2024
-            </Typography>
-          </Link>
+
+          <Typography variant="caption" color="text-secondary" fontFamily="subtitle">
+            © 2024 Yevhenii Buhor. All rights reserved.
+          </Typography>
         </div>
       </LayoutSection>
     </footer>
