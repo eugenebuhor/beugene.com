@@ -11,6 +11,20 @@ import '@/ui/global.css';
 export const metadata: Metadata = {
   title: 'Yevhenii Buhor',
   description: 'Personal website of Yevhenii Buhor',
+  icons: {
+    icon: [
+      {
+        rel: 'icon',
+        url: '/favicon-dark.png',
+        media: '(prefers-color-scheme: dark)',
+      },
+      {
+        rel: 'icon',
+        url: '/favicon-light.png',
+        media: '(prefers-color-scheme: light)',
+      },
+    ],
+  },
 };
 
 const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
