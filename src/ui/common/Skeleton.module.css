@@ -1,5 +1,5 @@
 .skeleton {
-    background-color: var(--color-border-light);
+    background-color: var(--skeleton-background-color);
     position: relative;
     overflow: hidden;
 }
@@ -28,7 +28,7 @@
     background: linear-gradient(
             to right,
             transparent 0%,
-            rgba(255, 255, 255, 0.4) 50%,
+            var(--skeleton-wave-color) 50%,
             transparent 100%
     );
     animation: wave 1.6s infinite;

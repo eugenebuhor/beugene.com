@@ -33,7 +33,7 @@ const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
         aria-busy="true"
         aria-live="polite"
         {...rest}
-      />
+      ></div>
     );
   },
 );

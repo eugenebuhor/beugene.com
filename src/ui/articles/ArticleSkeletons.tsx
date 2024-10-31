@@ -20,10 +20,11 @@ const ArticleBackLinkSkeleton = () => {
 const ArticleTagsSkeleton = () => {
   return (
     <div className={styles.articleTagsSkeleton}>
-      <Skeleton width="10%" height="1.5rem" />
-      <Skeleton width="10%" height="1.5rem" />
-      <Skeleton width="10%" height="1.5rem" />
-      <Skeleton width="10%" height="1.5rem" />
+      <Skeleton width="6rem" height="1.5rem" />
+      <Skeleton width="4rem" height="1.5rem" />
+      <Skeleton width="4rem" height="1.5rem" />
+      <Skeleton width="6rem" height="1.5rem" />
+      <Skeleton width="4rem" height="1.5rem" />
     </div>
   );
 };
@@ -34,6 +35,8 @@ const ArticleCardSkeleton = () => {
       <ArticleMetaSkeleton />
 
       {/* Summary text */}
+      <Skeleton width="100%" height="1.25rem" />
+      <Skeleton width="100%" height="1.25rem" />
       <Skeleton width="100%" height="1.25rem" />
       <Skeleton width="100%" height="1.25rem" />
       <Skeleton width="80%" height="1.25rem" />
