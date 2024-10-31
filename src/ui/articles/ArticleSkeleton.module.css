@@ -1,0 +1,77 @@
+/* ArticleSkeleton.module.css */
+
+.articlePageContentContainer {
+    margin-top: 4rem;
+}
+
+.articleCardSkeleton {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.articleTagsSkeleton {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.articleBackLinkSkeleton {
+    margin-bottom: 1.5rem;
+}
+
+.articleMetaTitle {
+    margin-bottom: 0.5rem;
+}
+
+.articleMetaInfo {
+    margin-bottom: 1.5rem;
+}
+
+.articleContentSkeleton {
+    margin-bottom: 1rem;
+}
+
+.articleContentSkeleton:last-child {
+    margin-bottom: 2rem;
+}
+
+.articleContentListSkeleton {
+    padding-left: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.articleContentListItemSkeleton {
+    margin-bottom: 0.75rem;
+}
+
+.articlesPreviewSkeleton {
+    margin-top: 3rem;
+}
+
+.centeredTitle {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2rem;
+}
+
+.previewArticlesContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.previewArticleSkeleton {
+    display: flex;
+    flex-direction: column;
+}
+
+.previewArticleTitle {
+    margin-bottom: 1rem;
+}
+
+.previewArticleSummary {
+    margin-bottom: 0.75rem;
+}

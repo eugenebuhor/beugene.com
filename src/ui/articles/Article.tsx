@@ -8,6 +8,7 @@ import ArticleSummary from '@/ui/articles/ArticleSummary';
 import ArticlesPreview from '@/ui/articles/ArticlesPreview';
 import MarkdownRenderer from '@/ui/common/MarkdownRenderer';
 import Typography from '@/ui/common/Typography';
+import { ArticlesPreviewSkeleton } from '@/ui/articles/ArticleSkeletons';
 import styles from '@/ui/articles/Article.module.css';
 
 type ArticleCardProps = {
@@ -52,7 +53,7 @@ const Article = ({ article, isLiked, asCard = false, searchParams = '' }: Articl
       <ArticleEngage slug={article.slug} likes={article.likes} isLiked={isLiked} />
 
       {!asCard && (
-        <Suspense fallback={<div>loading..</div>}>
+        <Suspense fallback={<ArticlesPreviewSkeleton />}>
           <ArticlesPreview articleId={article.id} />
         </Suspense>
       )}
