@@ -20,9 +20,13 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
       suppressHydrationWarning
       className={`${fonts.mediumContentSerif.variable} ${fonts.mediumContentSansSerif.variable}`}
     >
+      <head>
+        <link rel="preload" href="/logo-dark.svg" as="image" />
+        <link rel="preload" href="/logo-light.svg" as="image" />
+      </head>
       <body>
         <ScrollHandler />
-        <NextThemeProvider defaultTheme="system">
+        <NextThemeProvider defaultTheme="system" disableTransitionOnChange enableColorScheme>
           <Header />
           <LayoutMain>
             <LayoutSection>{children}</LayoutSection>
