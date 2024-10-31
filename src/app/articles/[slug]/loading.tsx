@@ -1,5 +1,7 @@
+import { ArticlePageSkeleton } from '@/ui/articles/ArticleSkeletons';
+
 const Loading = () => {
-  return <div>Loading...</div>;
+  return <ArticlePageSkeleton />;
 };
 
 export default Loading;

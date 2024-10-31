@@ -134,6 +134,8 @@ html[data-theme='light'] {
     --color-sidebar-surface-tertiary: var(--color-gray-200);
     --color-link: #2964aa;
     --color-link-hover: #749ac8;
+    --skeleton-background-color: rgba(0, 0, 0, 0.08);
+    --skeleton-wave-color: rgba(255, 255, 255, 0.5);
 }
 
 html[data-theme='dark'] {
@@ -159,4 +161,6 @@ html[data-theme='dark'] {
     --color-sidebar-surface-tertiary: var(--color-gray-750);
     --color-link: #7ab7ff;
     --color-link-hover: #5e83b3;
+    --skeleton-background-color: hsla(0, 0%, 100%, 0.1);
+    --skeleton-wave-color: rgba(255, 255, 255, 0.1);
 }

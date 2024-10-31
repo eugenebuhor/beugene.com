@@ -1,3 +1,9 @@
 .toggleButtonGroup {
     padding: 0;
 }
+
+.skeletonContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 0.25rem;
+}
