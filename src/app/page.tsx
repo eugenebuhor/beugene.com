@@ -8,7 +8,7 @@ import styles from '@/app/page.module.css';
 
 export const revalidate = 300; // 5 minutes
 
-const Home = async () => {
+const HomePage = async () => {
   const limit = 5;
   const offset = 0;
   let userLikes = [];
@@ -43,4 +43,4 @@ const Home = async () => {
   );
 };
 
-export default Home;
+export default HomePage;

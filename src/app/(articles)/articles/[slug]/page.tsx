@@ -4,20 +4,20 @@ import { getArticleBySlug } from '@/lib/articles';
 import { getUserLikes, getUserUUID } from '@/lib/users';
 import { parseSearchParams, stringifyQueryString } from '@/utils/queryString';
 import { NotFoundError } from '@/lib/errors';
-import type { SearchParams as ArticlesPageSearchParams } from '@/app/articles/page';
+import type { SearchParams as ArticlePageSearchParams } from '@/app/(articles)/articles/page';
 
 type Params = {
   slug: string;
 };
 
-type SearchParams = ArticlesPageSearchParams;
+type SearchParams = ArticlePageSearchParams;
 
-type ArticlePageProps = {
+type ArticleSlugPageProps = {
   params: Params;
   searchParams: SearchParams;
 };
 
-const ArticlePage = async ({ params, searchParams }: ArticlePageProps) => {
+const ArticleSlugPage = async ({ params, searchParams }: ArticleSlugPageProps) => {
   let article = null;
   let isLiked = false;
 
@@ -43,4 +43,4 @@ const ArticlePage = async ({ params, searchParams }: ArticlePageProps) => {
   );
 };
 
-export default ArticlePage;
+export default ArticleSlugPage;

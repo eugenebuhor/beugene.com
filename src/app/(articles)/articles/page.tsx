@@ -6,7 +6,7 @@ import Article from '@/ui/articles/Article';
 import Divider from '@/ui/common/Divider';
 import PaginationControls from '@/ui/common/PaginationControls';
 import { NotFoundError } from '@/lib/errors';
-import styles from '@/app/articles/page.module.css';
+import styles from '@/app/(articles)/articles/page.module.css';
 
 export type SearchParams = {
   page?: string;

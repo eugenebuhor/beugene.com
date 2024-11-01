@@ -35,7 +35,7 @@ const ArticlesPreview = async ({ articleId, limit = 3 }: ArticlesPreviewProps) =
       </Typography>
       <nav className={styles.nav}>
         {articles.map((article) => (
-          <Link key={article.slug} href={`/articles/${article.slug}`}>
+          <Link key={article.slug} href={`/src/app/(articles)/articles/${article.slug}`}>
             <div className={styles.preview}>
               <Typography variant="h4" component="h4" fontFamily="title" trim={2}>
                 {article.title}
