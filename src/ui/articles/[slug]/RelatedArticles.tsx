@@ -23,6 +23,11 @@ const RelatedArticlesAsync = async ({ slug, limit = 3 }: RelatedArticlesProps) =
       orderBy: 'likes',
       order: 'desc',
       exclude: slug ? [slug] : [],
+      select: {
+        slug: true,
+        title: true,
+        summary: true,
+      },
     });
 
     articles = data;

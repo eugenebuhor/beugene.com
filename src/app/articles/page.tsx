@@ -6,6 +6,8 @@ import Divider from '@/ui/common/Divider';
 import PaginationControls from '@/ui/common/PaginationControls';
 import styles from '@/app/articles/page.module.css';
 
+export const revalidate = 300; // 5 minutes
+
 export type SearchParams = {
   page?: string;
   limit?: string;

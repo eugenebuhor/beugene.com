@@ -35,7 +35,7 @@ const ArticleEngage = ({ articleId, slug }: ArticleEngageProps) => {
 export const ArticleEngageSkeleton = () => {
   return (
     <div className={styles.skeleton}>
-      <Skeleton width="3rem" height="1.5rem" />
+      <Skeleton width="3rem" height="1.65rem" />
     </div>
   );
 };

@@ -7,7 +7,7 @@ import { InternalError, ValidationError } from '@/lib/errors';
 import { CacheKeys, CacheTags } from '@/constants';
 
 const GET_ARTICLES_REVALIDATE_TIMEOUT = 300; // 5 minutes
-const GET_ARTICLE_BY_SLUG_REVALIDATE_TIMEOUT = 300; // 5 minutes
+const GET_ARTICLE_BY_SLUG_REVALIDATE_TIMEOUT = 60; // 1 minutes
 
 const FALLBACK_OFFSET = 0;
 const FALLBACK_LIMIT = 10;

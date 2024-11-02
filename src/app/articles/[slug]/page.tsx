@@ -8,6 +8,8 @@ import RelatedArticles from '@/ui/articles/[slug]/RelatedArticles';
 import type { SearchParams as ArticlePageSearchParams } from '@/app/articles/page';
 import styles from '@/ui/articles/[slug]/Article.module.css';
 
+export const revalidate = 60; // 1 minute
+
 type Params = {
   slug: string;
 };
