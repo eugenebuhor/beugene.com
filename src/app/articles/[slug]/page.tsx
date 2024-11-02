@@ -45,10 +45,11 @@ const ArticleSlugPage = async ({ params, searchParams }: ArticleSlugPageProps) =
     : `/articles#${params.slug}`;
 
   return (
-    <div>
+    <>
       <Link href={backToArticlesLink} className={styles.backLink} prefetch>
         <Typography color="text-secondary">←&nbsp;&nbsp;&nbsp;Back to Articles</Typography>
       </Link>
+      <br />
       <Article
         id={article.id}
         title={article.title}
@@ -59,7 +60,7 @@ const ArticleSlugPage = async ({ params, searchParams }: ArticleSlugPageProps) =
         slug={params.slug}
       />
       <RelatedArticles slug={params.slug} />
-    </div>
+    </>
   );
 };
 

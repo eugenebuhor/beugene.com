@@ -17,7 +17,7 @@ const Loading = () => {
       <Skeleton width="100%" height="1rem" style={{ marginBottom: '0.5rem' }} />
       <Skeleton width="75%" height="1rem" style={{ marginBottom: '2.5rem' }} />
 
-      <Skeleton width="25%" height="1.5rem" />
+      <Skeleton width="20%" height="1.5rem" />
     </>
   );
 };

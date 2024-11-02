@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Typography from '@/ui/common/Typography';
 import { Links } from '@/constants';
 
-export const revalidate = false; // static page
+export const revalidate = 86400; // 24 hours
 
 export const metadata = {
   title: 'About | Yevhenii Buhor',
