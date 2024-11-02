@@ -3,7 +3,7 @@ import { unstable_cache } from 'next/cache';
 import { ArticleStatus } from '@prisma/client';
 import type { Prisma } from '@prisma/client';
 import prisma from '@/lib/prisma';
-import { InternalError, NotFoundError, ValidationError } from '@/lib/errors';
+import { InternalError, ValidationError } from '@/lib/errors';
 import { CacheKeys, CacheTags } from '@/constants';
 
 const GET_ARTICLES_REVALIDATE_TIMEOUT = 300; // 5 minutes
@@ -25,10 +25,10 @@ export type GetArticlesParams = {
   tags?: string[];
   orderBy?: OrderBy;
   order?: Order;
-  exclude?: number[];
+  exclude?: string[];
 };
 
-type PaginatedArticles = {
+export type PaginatedArticles = {
   data: Prisma.ArticleGetPayload<{
     include: { tags: true };
   }>[];
@@ -83,8 +83,6 @@ export const getArticles = async (params?: GetArticlesParams): Promise<Paginated
 
   if (result === null) {
     throw new InternalError('Internal server error');
-  } else if (result.total === 0) {
-    throw new NotFoundError('No articles found');
   }
 
   return result;
@@ -145,7 +143,7 @@ const _getArticles = unstable_cache(
 
     if (exclude.length > 0) {
       whereConditions.push({
-        id: {
+        slug: {
           notIn: exclude,
         },
       });
@@ -195,22 +193,14 @@ const _getArticles = unstable_cache(
 
 export const getArticleBySlug = async (
   slug: string,
-): Promise<
-  Prisma.ArticleGetPayload<{
-    include: { tags: true };
-  }>
-> => {
+): Promise<Prisma.ArticleGetPayload<{
+  include: { tags: true };
+}> | null> => {
   if (!slug) {
     throw new ValidationError('Slug is required');
   }
 
-  const article = await _getArticleBySlug(slug);
-
-  if (!article) {
-    throw new NotFoundError('Article not found');
-  }
-
-  return article;
+  return await _getArticleBySlug(slug);
 };
 
 const _getArticleBySlug = unstable_cache(
@@ -244,3 +234,17 @@ const _getArticleBySlug = unstable_cache(
     tags: [CacheTags.ARTICLE],
   },
 );
+
+/* Get Article Likes */
+
+export const getArticleLikes = async (id: number): Promise<{ total: number }> => {
+  const likesCount = await prisma.like.count({
+    where: {
+      articleId: id,
+    },
+  });
+
+  return {
+    total: likesCount,
+  };
+};

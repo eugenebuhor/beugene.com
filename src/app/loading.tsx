@@ -1,4 +1,4 @@
-import { ArticleCardSkeleton } from '@/ui/articles/ArticleSkeletons';
+import { ArticleCardSkeleton } from '@/ui/articles/ArticleCard';
 import Divider from '@/ui/common/Divider';
 
 const HomePageLoading = () => {

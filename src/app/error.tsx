@@ -1,19 +1,15 @@
-import type { Metadata } from 'next';
+'use client';
+
 import Typography from '@/ui/common/Typography';
 import styles from '@/app/page.module.css';
 
-export const metadata: Metadata = {
-  title: 'Page Not Found | Yevhenii Buhor',
-  description: 'This page could not be found.',
-};
-
-export default function NotFound() {
+export default function Error({ error }: { error: Error }) {
   return (
     <>
       <a href="/articles">
         <Typography color="text-secondary">←&nbsp;&nbsp;&nbsp;Back to Articles</Typography>
       </a>
-      <div className={styles.rootNotFound}>
+      <div className={styles.rootError}>
         <Typography
           className={styles.codeError}
           variant="h1"
@@ -21,10 +17,10 @@ export default function NotFound() {
           weight="regular"
           fontFamily="subtitle"
         >
-          404
+          Error
         </Typography>
         <Typography variant="body1" component="p" fontFamily="subtitle">
-          This page could not be found.
+          Something went wrong.
         </Typography>
       </div>
     </>

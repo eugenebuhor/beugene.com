@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import clsx from 'clsx';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkGemoji from 'remark-gemoji';
@@ -11,7 +12,8 @@ import SyntaxHighlighter from '@/ui/common/SyntaxHighlighter';
 import styles from './MarkdownRenderer.module.css';
 
 type MarkdownRendererProps = {
-  content: string;
+  markdown: string;
+  className?: string;
 };
 
 type HeadingProps = {
@@ -35,9 +37,9 @@ const WithPermalink = ({ content, children }: HeadingProps) => {
   );
 };
 
-const MarkdownRenderer = ({ content }: MarkdownRendererProps) => {
+const MarkdownRenderer = ({ markdown, className }: MarkdownRendererProps) => {
   return (
-    <div className={styles.markdown}>
+    <div className={clsx(styles.markdown, className)}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkGemoji]}
         components={{
@@ -180,7 +182,7 @@ const MarkdownRenderer = ({ content }: MarkdownRendererProps) => {
           },
         }}
       >
-        {content}
+        {markdown}
       </ReactMarkdown>
     </div>
   );

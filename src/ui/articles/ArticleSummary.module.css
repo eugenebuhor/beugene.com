@@ -6,3 +6,9 @@
 .readMore {
   margin-left: 8px;
 }
+
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}

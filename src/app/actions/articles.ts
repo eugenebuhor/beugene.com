@@ -1,10 +1,8 @@
 'use server';
 
-import { revalidateTag } from 'next/cache';
 import prisma from '@/lib/prisma';
-import { CacheTags } from '@/constants';
 import { createUserIfNotExists } from '@/app/actions/users';
-/* import { InternalError } from '@/lib/errors'; */
+import { InternalError } from '@/lib/errors';
 
 /**
  * Toggles user's like for an article.
@@ -61,13 +59,8 @@ export const toggleArticleLike = async (slug: string): Promise<void> => {
         }),
       ]);
     }
-
-    // Revalidate related data queries
-    revalidateTag(CacheTags.USER_LIKES);
-    revalidateTag(CacheTags.ARTICLE);
-    revalidateTag(CacheTags.ARTICLES);
   } catch (err) {
     console.error('Database Error:', err);
-    // throw new InternalError('Internal server error');
+    throw new InternalError('Internal server error');
   }
 };
