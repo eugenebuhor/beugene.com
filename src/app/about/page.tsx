@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Typography from '@/ui/common/Typography';
 import { Links } from '@/constants';
 
-export const revalidate = false; // static page
+export const revalidate = 86400; // 24 hours
 
 export const metadata = {
   title: 'About | Yevhenii Buhor',
@@ -32,13 +32,13 @@ const AboutPage = () => {
       </Typography>
 
       <Typography variant="subtitle" component="p">
-        Let&apos;s connect and make something exceptional. Feel free to reach out at{' '}
-        <Link href={`mailto:${Links.EMAIL} `}>
-          <b>{Links.EMAIL}</b>
-        </Link>{' '}
-        or connect with me on{' '}
+        Let&apos;s connect and make something exceptional. Feel free to connect with me on{' '}
         <Link href={Links.LINKED_IN} target="_blank">
           <b>LinkedIn</b>
+        </Link>{' '}
+        or reach out at{' '}
+        <Link href={`mailto:${Links.EMAIL} `}>
+          <b>{Links.EMAIL}</b>
         </Link>
         .
       </Typography>

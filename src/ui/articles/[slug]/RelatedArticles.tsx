@@ -58,7 +58,7 @@ const RelatedArticlesAsync = async ({ slug, limit = 3 }: RelatedArticlesProps) =
 
 const RelatedArticles = ({ slug, limit = 3 }: RelatedArticlesProps) => {
   return (
-    <div className={styles.container}>
+    <section className={styles.container}>
       <Typography
         variant="h1"
         component="h1"
@@ -72,7 +72,7 @@ const RelatedArticles = ({ slug, limit = 3 }: RelatedArticlesProps) => {
       <Suspense fallback={<RelatedArticlesSkeleton />}>
         <RelatedArticlesAsync slug={slug} limit={limit} />
       </Suspense>
-    </div>
+    </section>
   );
 };
 
