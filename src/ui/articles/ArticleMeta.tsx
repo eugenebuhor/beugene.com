@@ -4,6 +4,7 @@ import { Article } from '@prisma/client';
 import Typography from '@/ui/common/Typography';
 import { DATE_FORMAT } from '@/constants';
 import styles from '@/ui/articles/ArticleMeta.module.css';
+import Skeleton from '@/ui/common/Skeleton';
 
 type ArticleMetaProps = {
   publishedAt: Article['publishedAt'];
@@ -34,6 +35,17 @@ const ArticleMeta = ({ title, publishedAt, timeToRead, articleLink = '' }: Artic
         &nbsp;·&nbsp;
         {timeToRead} min read
       </Typography>
+    </div>
+  );
+};
+
+export const ArticleMetaSkeleton = () => {
+  return (
+    <div className={styles.skeleton}>
+      {/* Title */}
+      <Skeleton width="100%" height="3rem" />
+      {/* Publishing date and time to read */}
+      <Skeleton width="30%" height="1.5rem" />
     </div>
   );
 };

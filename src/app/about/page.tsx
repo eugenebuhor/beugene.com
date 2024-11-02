@@ -2,6 +2,13 @@ import Link from 'next/link';
 import Typography from '@/ui/common/Typography';
 import { Links } from '@/constants';
 
+export const revalidate = false; // static page
+
+export const metadata = {
+  title: 'About | Yevhenii Buhor',
+  description: 'Learn more about Yevhenii Buhor, a software engineer based in Berlin, Germany.',
+};
+
 const AboutPage = () => {
   return (
     <article>

@@ -1,50 +1,41 @@
-'use client';
-
+import { Suspense } from 'react';
 import type { Article } from '@prisma/client';
-import { debounce } from 'lodash';
-import { useState } from 'react';
-import Typography from '@/ui/common/Typography';
-import ButtonLike from '@/ui/common/ButtonLike';
-import { toggleArticleLike } from '@/app/actions/articles';
-import styles from './ArticleEngage.module.css';
+import styles from '@/ui/articles/ArticleEngage.module.css';
+import ArticleLikes from '@/ui/articles/ArticleLikes';
+import { getUserLikes, getUserUUID } from '@/lib/users';
+import { getArticleLikes } from '@/lib/articles';
+import Skeleton from '@/ui/common/Skeleton';
 
 type ArticleEngageProps = {
+  articleId: Article['id'];
   slug: Article['slug'];
-  likes: Article['likes'];
-  isLiked: boolean;
 };
 
-const ArticleEngage = ({
-  likes: initialLikes,
-  isLiked: initialIsLiked,
-  slug,
-}: ArticleEngageProps) => {
-  const [isLiked, setIsLiked] = useState(initialIsLiked);
-  const [likes, setLikes] = useState(initialLikes);
-
-  const onToggleArticleLike = debounce(async () => {
-    if (isLiked) {
-      setLikes((prev) => prev - 1);
-      setIsLiked(false);
-    } else {
-      setLikes((prev) => prev + 1);
-      setIsLiked(true);
-    }
-
-    try {
-      await toggleArticleLike(slug);
-    } catch (error) {
-      setLikes(initialLikes);
-      setIsLiked(initialIsLiked);
-    }
-  }, 50);
+const ArticleEngageAsync = async ({ articleId, slug }: ArticleEngageProps) => {
+  const userUUID = await getUserUUID();
+  const userLikes = await getUserLikes(userUUID!);
+  const { total: articleLikes } = await getArticleLikes(articleId);
+  const isLiked = userLikes.some((like) => articleId === like.articleId);
 
   return (
     <div className={styles.container}>
-      <ButtonLike isLiked={isLiked} onClick={onToggleArticleLike} />
-      <Typography variant="body1" color="text-secondary" fontFamily="subtitle">
-        &nbsp;{likes || ''}
-      </Typography>
+      <ArticleLikes slug={slug} likes={articleLikes} isLiked={isLiked} />
+    </div>
+  );
+};
+
+const ArticleEngage = ({ articleId, slug }: ArticleEngageProps) => {
+  return (
+    <Suspense fallback={<ArticleEngageSkeleton />}>
+      <ArticleEngageAsync articleId={articleId} slug={slug} />
+    </Suspense>
+  );
+};
+
+export const ArticleEngageSkeleton = () => {
+  return (
+    <div className={styles.skeleton}>
+      <Skeleton width="3rem" height="1.65rem" />
     </div>
   );
 };

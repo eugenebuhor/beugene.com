@@ -1,46 +1,66 @@
-import { notFound, redirect } from 'next/navigation';
-import Article from '@/ui/articles/Article';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import { getArticleBySlug } from '@/lib/articles';
-import { getUserLikes, getUserUUID } from '@/lib/users';
 import { parseSearchParams, stringifyQueryString } from '@/utils/queryString';
-import { NotFoundError } from '@/lib/errors';
-import type { SearchParams as ArticlesPageSearchParams } from '@/app/articles/page';
+import Article from '@/ui/articles/[slug]/Article';
+import Typography from '@/ui/common/Typography';
+import RelatedArticles from '@/ui/articles/[slug]/RelatedArticles';
+import type { SearchParams as ArticlePageSearchParams } from '@/app/articles/page';
+import styles from '@/ui/articles/[slug]/Article.module.css';
+
+export const revalidate = 60; // 1 minute
 
 type Params = {
   slug: string;
 };
 
-type SearchParams = ArticlesPageSearchParams;
+type SearchParams = ArticlePageSearchParams;
 
-type ArticlePageProps = {
+type ArticleSlugPageProps = {
   params: Params;
   searchParams: SearchParams;
 };
 
-const ArticlePage = async ({ params, searchParams }: ArticlePageProps) => {
-  let article = null;
-  let isLiked = false;
+const ArticleSlugPage = async ({ params, searchParams }: ArticleSlugPageProps) => {
+  const article = await getArticleBySlug({
+    slug: params.slug,
+    select: {
+      id: true,
+      title: true,
+      content: true,
+      timeToRead: true,
+      publishedAt: true,
+      tags: true,
+    },
+  });
 
-  try {
-    const userUUID = await getUserUUID();
-    const userLikes = await getUserLikes(userUUID!);
-    article = await getArticleBySlug(params.slug);
-    isLiked = userLikes.some((like) => article!.id === like.articleId);
-  } catch (error) {
-    if (error instanceof NotFoundError) {
-      notFound();
-    } else {
-      redirect('/articles');
-    }
+  if (!article) {
+    notFound();
   }
 
+  const stringSearchParams = stringifyQueryString(parseSearchParams(searchParams));
+
+  const backToArticlesLink = stringSearchParams
+    ? `/articles?${stringSearchParams}#${params.slug}`
+    : `/articles#${params.slug}`;
+
   return (
-    <Article
-      article={article}
-      isLiked={isLiked}
-      searchParams={stringifyQueryString(parseSearchParams(searchParams))}
-    />
+    <div>
+      <Link href={backToArticlesLink} className={styles.backLink} prefetch>
+        <Typography color="text-secondary">←&nbsp;&nbsp;&nbsp;Back to Articles</Typography>
+      </Link>
+      <Article
+        id={article.id}
+        title={article.title}
+        content={article.content}
+        timeToRead={article.timeToRead}
+        publishedAt={article.publishedAt}
+        tags={article.tags}
+        slug={params.slug}
+      />
+      <RelatedArticles slug={params.slug} />
+    </div>
   );
 };
 
-export default ArticlePage;
+export default ArticleSlugPage;

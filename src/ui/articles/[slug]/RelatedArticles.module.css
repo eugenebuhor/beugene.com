@@ -5,13 +5,14 @@
     margin-top: 5rem;
 }
 
+.skeleton,
 .container .nav {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
 }
 
-.preview {
+.article {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -21,6 +22,6 @@
     color: var(--color-text-primary);
 }
 
-.preview p {
+.article p {
     margin: 0;
 }

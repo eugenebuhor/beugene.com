@@ -1,0 +1,21 @@
+.skeleton,
+.container {
+    margin-top: 1.25rem;
+}
+
+.skeletonItem {
+    margin-bottom: 1rem;
+}
+
+.skeletonItem:last-child {
+    margin-bottom: 2rem;
+}
+
+.skeletonList {
+    padding-left: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.skeletonListItem {
+    margin-bottom: 0.75rem;
+}

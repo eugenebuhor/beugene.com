@@ -1,10 +1,10 @@
-.title > a {
-    color: inherit;
-}
-
 .skeleton,
 .container {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 24px;
+}
+
+.backLink {
+    margin-bottom: 0.5rem;
 }

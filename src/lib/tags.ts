@@ -2,7 +2,7 @@ import type { Tag } from '@prisma/client';
 import prisma from '@/lib/prisma';
 // eslint-disable-next-line camelcase
 import { unstable_cache } from 'next/cache';
-import { ValidationError, InternalError, NotFoundError } from '@/lib/errors';
+import { ValidationError, InternalError } from '@/lib/errors';
 import { CacheKeys, CacheTags } from '@/constants';
 
 const MAX_QUERY_LENGTH = 100;
@@ -20,8 +20,6 @@ export const getTags = async (q?: string): Promise<Tag[]> => {
 
   if (tags === null) {
     throw new InternalError('Internal server error');
-  } else if (tags.length === 0) {
-    throw new NotFoundError('No tags found');
   }
 
   return tags;

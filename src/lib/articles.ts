@@ -1,13 +1,13 @@
 // eslint-disable-next-line camelcase
 import { unstable_cache } from 'next/cache';
-import { ArticleStatus } from '@prisma/client';
+import { type Article, type Tag, ArticleStatus } from '@prisma/client';
 import type { Prisma } from '@prisma/client';
 import prisma from '@/lib/prisma';
-import { InternalError, NotFoundError, ValidationError } from '@/lib/errors';
+import { InternalError, ValidationError } from '@/lib/errors';
 import { CacheKeys, CacheTags } from '@/constants';
 
 const GET_ARTICLES_REVALIDATE_TIMEOUT = 300; // 5 minutes
-const GET_ARTICLE_BY_SLUG_REVALIDATE_TIMEOUT = 300; // 5 minutes
+const GET_ARTICLE_BY_SLUG_REVALIDATE_TIMEOUT = 60; // 1 minutes
 
 const FALLBACK_OFFSET = 0;
 const FALLBACK_LIMIT = 10;
@@ -18,17 +18,46 @@ const MAX_TAGS = 5;
 type OrderBy = 'publishedAt' | 'likes' | 'title' | 'createdAt';
 type Order = 'asc' | 'desc';
 
+const DEFAULT_ARTICLE_SELECT: Prisma.ArticleSelect = {
+  id: true,
+  title: true,
+  slug: true,
+  summary: true,
+  content: true,
+  coverImageUrl: true,
+  timeToRead: true,
+  status: true,
+  likes: true,
+  metaTitle: true,
+  metaDescription: true,
+  publishedAt: true,
+  createdAt: true,
+  updatedAt: true,
+  tags: {
+    select: {
+      id: true,
+      name: true,
+    },
+  },
+};
+
+export type GetArticleBySlugParams = {
+  select?: Prisma.ArticleSelect;
+  slug: Article['slug'];
+};
+
 export type GetArticlesParams = {
   q?: string;
   limit?: number;
   offset?: number;
-  tags?: string[];
+  tags?: Tag['name'][];
   orderBy?: OrderBy;
   order?: Order;
-  exclude?: number[];
+  exclude?: Article['slug'][];
+  select?: Prisma.ArticleSelect;
 };
 
-type PaginatedArticles = {
+export type PaginatedArticles = {
   data: Prisma.ArticleGetPayload<{
     include: { tags: true };
   }>[];
@@ -47,6 +76,7 @@ export const getArticles = async (params?: GetArticlesParams): Promise<Paginated
   const orderBy: OrderBy = params?.orderBy ?? 'publishedAt';
   const order: Order = params?.order ?? 'desc';
   const exclude = params?.exclude ?? [];
+  const select = params?.select ?? DEFAULT_ARTICLE_SELECT;
 
   const allowedOrderBy: OrderBy[] = ['publishedAt', 'likes', 'title', 'createdAt'];
   const allowedOrder: Order[] = ['asc', 'desc'];
@@ -79,12 +109,11 @@ export const getArticles = async (params?: GetArticlesParams): Promise<Paginated
     orderBy,
     order,
     exclude,
+    select,
   });
 
   if (result === null) {
     throw new InternalError('Internal server error');
-  } else if (result.total === 0) {
-    throw new NotFoundError('No articles found');
   }
 
   return result;
@@ -92,7 +121,7 @@ export const getArticles = async (params?: GetArticlesParams): Promise<Paginated
 
 const _getArticles = unstable_cache(
   async (params: Required<GetArticlesParams>): Promise<PaginatedArticles | null> => {
-    const { limit, offset, q: searchQuery, tags, orderBy, order, exclude } = params;
+    const { limit, offset, q: searchQuery, tags, orderBy, order, exclude, select } = params;
 
     const whereConditions: Prisma.ArticleWhereInput[] = [{ status: ArticleStatus.PUBLISHED }];
 
@@ -145,7 +174,7 @@ const _getArticles = unstable_cache(
 
     if (exclude.length > 0) {
       whereConditions.push({
-        id: {
+        slug: {
           notIn: exclude,
         },
       });
@@ -161,9 +190,7 @@ const _getArticles = unstable_cache(
           where: whereClause,
           skip: offset,
           take: limit,
-          include: {
-            tags: true,
-          },
+          select: select || DEFAULT_ARTICLE_SELECT,
           orderBy: {
             [orderBy]: order,
           },
@@ -194,34 +221,26 @@ const _getArticles = unstable_cache(
 /* Get Article by Slug*/
 
 export const getArticleBySlug = async (
-  slug: string,
-): Promise<
-  Prisma.ArticleGetPayload<{
-    include: { tags: true };
-  }>
-> => {
-  if (!slug) {
+  params: GetArticleBySlugParams,
+): Promise<Prisma.ArticleGetPayload<{
+  include: { tags: true };
+}> | null> => {
+  if (!params.slug) {
     throw new ValidationError('Slug is required');
   }
 
-  const article = await _getArticleBySlug(slug);
-
-  if (!article) {
-    throw new NotFoundError('Article not found');
-  }
-
-  return article;
+  return await _getArticleBySlug(params);
 };
 
 const _getArticleBySlug = unstable_cache(
   async (
-    slug: string,
+    params: GetArticleBySlugParams,
   ): Promise<Prisma.ArticleGetPayload<{
     include: { tags: true };
   }> | null> => {
-    if (!slug) {
-      return null;
-    }
+    const { slug, select } = params;
+
+    if (!slug) return null;
 
     try {
       return await prisma.article.findFirst({
@@ -229,9 +248,7 @@ const _getArticleBySlug = unstable_cache(
           slug,
           status: ArticleStatus.PUBLISHED,
         },
-        include: {
-          tags: true,
-        },
+        select: select || DEFAULT_ARTICLE_SELECT,
       });
     } catch (error) {
       console.error('Database Error:', error);
@@ -244,3 +261,17 @@ const _getArticleBySlug = unstable_cache(
     tags: [CacheTags.ARTICLE],
   },
 );
+
+/* Get Article Likes */
+
+export const getArticleLikes = async (id: number): Promise<{ total: number }> => {
+  const likesCount = await prisma.like.count({
+    where: {
+      articleId: id,
+    },
+  });
+
+  return {
+    total: likesCount,
+  };
+};

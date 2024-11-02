@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Article } from '@prisma/client';
 import Typography from '@/ui/common/Typography';
 import styles from './ArticleSummary.module.css';
+import Skeleton from '@/ui/common/Skeleton';
 
 type ArticleSummaryProps = {
   articleLink: string;
@@ -20,6 +21,18 @@ const ArticleSummary = async ({ summary, articleLink }: ArticleSummaryProps) => 
           Read&nbsp;more..
         </Typography>
       </Link>
+    </div>
+  );
+};
+
+export const ArticleSummarySkeleton = () => {
+  return (
+    <div className={styles.skeleton}>
+      <Skeleton width="100%" height="1.25rem" />
+      <Skeleton width="100%" height="1.25rem" />
+      <Skeleton width="100%" height="1.25rem" />
+      <Skeleton width="100%" height="1.25rem" />
+      <Skeleton width="80%" height="1.25rem" />
     </div>
   );
 };

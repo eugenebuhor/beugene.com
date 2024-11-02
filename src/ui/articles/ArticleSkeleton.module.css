@@ -47,17 +47,15 @@
     margin-bottom: 0.75rem;
 }
 
-.articlesPreviewSkeleton {
-    margin-top: 3rem;
-}
-
 .centeredTitle {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 2rem;
 }
 
-.previewArticlesContainer {
+.relatedArticlesSkeleton {
+    margin-top: 3rem;
+
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
