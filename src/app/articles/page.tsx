@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import { parseSearchParams, stringifyQueryString } from '@/utils/queryString';
 import { getArticles } from '@/lib/articles';
 import ArticleCard from '@/ui/articles/ArticleCard';
@@ -29,7 +30,25 @@ const ArticlesPage = async ({ searchParams }: ArticlesPageProps) => {
   const tags = parsedParams.tags || [];
   const offset = (page - 1) * limit;
 
-  const { data: articles, total } = await getArticles({ limit, offset, q, tags });
+  const { data: articles, total } = await getArticles({
+    limit,
+    offset,
+    q,
+    tags,
+    select: {
+      id: true,
+      slug: true,
+      title: true,
+      summary: true,
+      timeToRead: true,
+      publishedAt: true,
+      tags: true,
+    },
+  });
+
+  if (total === 0 || articles.length === 0) {
+    notFound();
+  }
 
   const totalPages = Math.ceil(total / limit);
 
@@ -38,7 +57,13 @@ const ArticlesPage = async ({ searchParams }: ArticlesPageProps) => {
       {articles.map((article, index) => (
         <li key={article.id} id={article.slug}>
           <ArticleCard
-            article={article}
+            id={article.id}
+            slug={article.slug}
+            title={article.title}
+            summary={article.summary}
+            timeToRead={article.timeToRead}
+            publishedAt={article.publishedAt}
+            tags={article.tags}
             articleLink={`/articles/${article.slug}?${stringifyQueryString(parsedParams) || '\u0020'}`}
           />
           {index === articles.length - 1 ? null : <Divider role="separator" margin="32px 0" />}

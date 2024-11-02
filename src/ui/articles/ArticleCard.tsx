@@ -1,4 +1,4 @@
-import type { Prisma } from '@prisma/client';
+import type { Article, Tag } from '@prisma/client';
 import ArticleMeta, { ArticleMetaSkeleton } from '@/ui/articles/ArticleMeta';
 import ArticleSummary, { ArticleSummarySkeleton } from '@/ui/articles/ArticleSummary';
 import ArticleTags, { ArticleTagsSkeleton } from '@/ui/articles/ArticleTags';
@@ -6,22 +6,37 @@ import ArticleEngage, { ArticleEngageSkeleton } from '@/ui/articles/ArticleEngag
 import styles from '@/ui/articles/ArticleCard.module.css';
 
 type ArticleCardProps = {
-  article: Prisma.ArticleGetPayload<{ include: { tags: true } }>;
+  title: Article['title'];
+  summary: Article['summary'];
+  timeToRead: Article['timeToRead'];
+  publishedAt: Article['publishedAt'];
+  slug: Article['slug'];
+  id: Article['id'];
+  tags: Tag[];
   articleLink: string;
 };
 
-const ArticleCard = ({ article, articleLink }: ArticleCardProps) => {
+const ArticleCard = ({
+  id,
+  slug,
+  title,
+  summary,
+  timeToRead,
+  publishedAt,
+  tags,
+  articleLink,
+}: ArticleCardProps) => {
   return (
     <article className={styles.container}>
       <ArticleMeta
-        title={article.title}
-        timeToRead={article.timeToRead}
-        publishedAt={article.publishedAt}
+        title={title}
+        timeToRead={timeToRead}
+        publishedAt={publishedAt}
         articleLink={articleLink}
       />
-      <ArticleSummary summary={article.summary} articleLink={articleLink} />
-      <ArticleTags tags={article.tags} />
-      <ArticleEngage slug={article.slug} articleId={article.id} />
+      <ArticleSummary summary={summary} articleLink={articleLink} />
+      <ArticleTags tags={tags} />
+      <ArticleEngage slug={slug} articleId={id} />
     </article>
   );
 };

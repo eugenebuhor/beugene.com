@@ -1,6 +1,8 @@
 import Link from 'next/link';
-import Article from '@/ui/articles/[slug]/Article';
+import { notFound } from 'next/navigation';
+import { getArticleBySlug } from '@/lib/articles';
 import { parseSearchParams, stringifyQueryString } from '@/utils/queryString';
+import Article from '@/ui/articles/[slug]/Article';
 import Typography from '@/ui/common/Typography';
 import RelatedArticles from '@/ui/articles/[slug]/RelatedArticles';
 import type { SearchParams as ArticlePageSearchParams } from '@/app/articles/page';
@@ -18,6 +20,22 @@ type ArticleSlugPageProps = {
 };
 
 const ArticleSlugPage = async ({ params, searchParams }: ArticleSlugPageProps) => {
+  const article = await getArticleBySlug({
+    slug: params.slug,
+    select: {
+      id: true,
+      title: true,
+      content: true,
+      timeToRead: true,
+      publishedAt: true,
+      tags: true,
+    },
+  });
+
+  if (!article) {
+    notFound();
+  }
+
   const stringSearchParams = stringifyQueryString(parseSearchParams(searchParams));
 
   const backToArticlesLink = stringSearchParams
@@ -29,7 +47,15 @@ const ArticleSlugPage = async ({ params, searchParams }: ArticleSlugPageProps) =
       <Link href={backToArticlesLink} className={styles.backLink} prefetch>
         <Typography color="text-secondary">←&nbsp;&nbsp;&nbsp;Back to Articles</Typography>
       </Link>
-      <Article slug={params.slug} />
+      <Article
+        id={article.id}
+        title={article.title}
+        content={article.content}
+        timeToRead={article.timeToRead}
+        publishedAt={article.publishedAt}
+        tags={article.tags}
+        slug={params.slug}
+      />
       <RelatedArticles slug={params.slug} />
     </div>
   );

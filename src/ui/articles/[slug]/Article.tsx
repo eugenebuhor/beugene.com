@@ -1,32 +1,35 @@
-import { notFound } from 'next/navigation';
+import type { Article as ArticlePrisma, Tag } from '@prisma/client';
 import ArticleMeta, { ArticleMetaSkeleton } from '@/ui/articles/ArticleMeta';
 import ArticleTags, { ArticleTagsSkeleton } from '@/ui/articles/ArticleTags';
 import ArticleEngage, { ArticleEngageSkeleton } from '@/ui/articles/ArticleEngage';
-import { getArticleBySlug } from '@/lib/articles';
 import styles from '@/ui/articles/[slug]/Article.module.css';
 import ArticleMarkdown, { ArticleMarkdownSkeleton } from '@/ui/articles/[slug]/ArticleMarkdown';
 
 type ArticleProps = {
-  slug: string;
+  slug: ArticlePrisma['slug'];
+  id: ArticlePrisma['id'];
+  title: ArticlePrisma['title'];
+  content: ArticlePrisma['content'];
+  timeToRead: ArticlePrisma['timeToRead'];
+  publishedAt: ArticlePrisma['publishedAt'];
+  tags: Tag[];
 };
 
-const Article = async ({ slug }: ArticleProps) => {
-  const article = await getArticleBySlug(slug);
-
-  if (!article) {
-    notFound();
-  }
-
+const Article = async ({
+  slug,
+  tags,
+  timeToRead,
+  title,
+  publishedAt,
+  content,
+  id,
+}: ArticleProps) => {
   return (
     <article className={styles.container}>
-      <ArticleMeta
-        title={article.title}
-        timeToRead={article.timeToRead}
-        publishedAt={article.publishedAt}
-      />
-      <ArticleMarkdown markdown={article.content} />
-      <ArticleTags tags={article.tags} />
-      <ArticleEngage slug={slug} articleId={article.id} />
+      <ArticleMeta title={title} timeToRead={timeToRead} publishedAt={publishedAt} />
+      <ArticleMarkdown markdown={content} />
+      <ArticleTags tags={tags} />
+      <ArticleEngage slug={slug} articleId={id} />
     </article>
   );
 };

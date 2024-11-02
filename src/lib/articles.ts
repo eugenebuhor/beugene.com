@@ -1,6 +1,6 @@
 // eslint-disable-next-line camelcase
 import { unstable_cache } from 'next/cache';
-import { ArticleStatus } from '@prisma/client';
+import { type Article, type Tag, ArticleStatus } from '@prisma/client';
 import type { Prisma } from '@prisma/client';
 import prisma from '@/lib/prisma';
 import { InternalError, ValidationError } from '@/lib/errors';
@@ -18,14 +18,43 @@ const MAX_TAGS = 5;
 type OrderBy = 'publishedAt' | 'likes' | 'title' | 'createdAt';
 type Order = 'asc' | 'desc';
 
+const DEFAULT_ARTICLE_SELECT: Prisma.ArticleSelect = {
+  id: true,
+  title: true,
+  slug: true,
+  summary: true,
+  content: true,
+  coverImageUrl: true,
+  timeToRead: true,
+  status: true,
+  likes: true,
+  metaTitle: true,
+  metaDescription: true,
+  publishedAt: true,
+  createdAt: true,
+  updatedAt: true,
+  tags: {
+    select: {
+      id: true,
+      name: true,
+    },
+  },
+};
+
+export type GetArticleBySlugParams = {
+  select?: Prisma.ArticleSelect;
+  slug: Article['slug'];
+};
+
 export type GetArticlesParams = {
   q?: string;
   limit?: number;
   offset?: number;
-  tags?: string[];
+  tags?: Tag['name'][];
   orderBy?: OrderBy;
   order?: Order;
-  exclude?: string[];
+  exclude?: Article['slug'][];
+  select?: Prisma.ArticleSelect;
 };
 
 export type PaginatedArticles = {
@@ -47,6 +76,7 @@ export const getArticles = async (params?: GetArticlesParams): Promise<Paginated
   const orderBy: OrderBy = params?.orderBy ?? 'publishedAt';
   const order: Order = params?.order ?? 'desc';
   const exclude = params?.exclude ?? [];
+  const select = params?.select ?? DEFAULT_ARTICLE_SELECT;
 
   const allowedOrderBy: OrderBy[] = ['publishedAt', 'likes', 'title', 'createdAt'];
   const allowedOrder: Order[] = ['asc', 'desc'];
@@ -79,6 +109,7 @@ export const getArticles = async (params?: GetArticlesParams): Promise<Paginated
     orderBy,
     order,
     exclude,
+    select,
   });
 
   if (result === null) {
@@ -90,7 +121,7 @@ export const getArticles = async (params?: GetArticlesParams): Promise<Paginated
 
 const _getArticles = unstable_cache(
   async (params: Required<GetArticlesParams>): Promise<PaginatedArticles | null> => {
-    const { limit, offset, q: searchQuery, tags, orderBy, order, exclude } = params;
+    const { limit, offset, q: searchQuery, tags, orderBy, order, exclude, select } = params;
 
     const whereConditions: Prisma.ArticleWhereInput[] = [{ status: ArticleStatus.PUBLISHED }];
 
@@ -159,9 +190,7 @@ const _getArticles = unstable_cache(
           where: whereClause,
           skip: offset,
           take: limit,
-          include: {
-            tags: true,
-          },
+          select: select || DEFAULT_ARTICLE_SELECT,
           orderBy: {
             [orderBy]: order,
           },
@@ -192,26 +221,26 @@ const _getArticles = unstable_cache(
 /* Get Article by Slug*/
 
 export const getArticleBySlug = async (
-  slug: string,
+  params: GetArticleBySlugParams,
 ): Promise<Prisma.ArticleGetPayload<{
   include: { tags: true };
 }> | null> => {
-  if (!slug) {
+  if (!params.slug) {
     throw new ValidationError('Slug is required');
   }
 
-  return await _getArticleBySlug(slug);
+  return await _getArticleBySlug(params);
 };
 
 const _getArticleBySlug = unstable_cache(
   async (
-    slug: string,
+    params: GetArticleBySlugParams,
   ): Promise<Prisma.ArticleGetPayload<{
     include: { tags: true };
   }> | null> => {
-    if (!slug) {
-      return null;
-    }
+    const { slug, select } = params;
+
+    if (!slug) return null;
 
     try {
       return await prisma.article.findFirst({
@@ -219,9 +248,7 @@ const _getArticleBySlug = unstable_cache(
           slug,
           status: ArticleStatus.PUBLISHED,
         },
-        include: {
-          tags: true,
-        },
+        select: select || DEFAULT_ARTICLE_SELECT,
       });
     } catch (error) {
       console.error('Database Error:', error);
