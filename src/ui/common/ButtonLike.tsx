@@ -1,7 +1,7 @@
 'use client';
 
 import { type CSSProperties, useState, useEffect, useRef } from 'react';
-import { IoHeartOutline, IoHeart } from 'react-icons/io5';
+import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import Button from '@/ui/common/Button';
 import styles from './ButtonLike.module.css';
 
@@ -48,9 +48,9 @@ const ButtonLike = ({ isLiked, onClick }: ButtonLikeProps) => {
       aria-pressed={isLiked}
     >
       {isLiked ? (
-        <IoHeart className={`${styles.likeIcon} ${styles.liked}`} />
+        <AiFillHeart className={`${styles.likeIcon} ${styles.liked}`} />
       ) : (
-        <IoHeartOutline className={styles.likeIcon} />
+        <AiOutlineHeart className={styles.likeIcon} />
       )}
       {animating && showParticles && (
         <span className={styles.particles}>

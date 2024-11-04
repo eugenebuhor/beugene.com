@@ -32,6 +32,7 @@ const SyntaxHighlighter = ({ className, children, language, ...rest }: SyntaxHig
 
   return (
     <Prism
+      tabIndex={-1}
       style={resolvedTheme === 'light' ? oneLight : oneDark}
       language={language}
       PreTag="div"
