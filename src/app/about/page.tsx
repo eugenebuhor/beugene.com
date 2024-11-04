@@ -6,7 +6,30 @@ export const revalidate = 86400; // 24 hours
 
 export const metadata = {
   title: 'About | Yevhenii Buhor',
-  description: 'Learn more about Yevhenii Buhor, a software engineer based in Berlin, Germany.',
+  description:
+    'Learn about Yevhenii Buhor’s journey in tech, his approach to web development, and the values that drive his work in creating impactful digital experiences.',
+  openGraph: {
+    title: 'About | Yevhenii Buhor',
+    description:
+      'Learn about Yevhenii Buhor’s journey in tech, his approach to web development, and the values that drive his work in creating impactful digital experiences.',
+    url: `https://${process.env.VERCEL_URL}/about`,
+    type: 'website',
+    images: [
+      {
+        url: `https://${process.env.VERCEL_URL}/default-og-image.png`,
+        width: 1200,
+        height: 630,
+        alt: 'About Yevhenii Buhor',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About | Yevhenii Buhor',
+    description:
+      'Learn about Yevhenii Buhor’s journey in tech, his approach to web development, and the values that drive his work in creating impactful digital experiences.',
+    images: `https://${process.env.VERCEL_URL}/default-og-image.png`,
+  },
 };
 
 const AboutPage = () => {
