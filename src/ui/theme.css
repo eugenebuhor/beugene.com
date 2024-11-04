@@ -83,7 +83,7 @@
     --font-size-h4: 1.375rem; /* 22px */
     --font-size-h5: 1.25rem; /* 20px */
     --font-size-h6: 1.125rem; /* 18px */
-    --font-size-subtitle: 1.125rem; /* 18px */
+    --font-size-subtitle: 1.25rem; /* 18,75px */
     --font-size-body1: 1rem; /* 16px */
     --font-size-body2: 0.875rem; /* 14px */
     --font-size-caption: 0.75rem; /* 12px */
@@ -132,14 +132,14 @@ html[data-theme='light'] {
     --color-sidebar-surface-primary: var(--color-gray-50);
     --color-sidebar-surface-secondary: var(--color-gray-100);
     --color-sidebar-surface-tertiary: var(--color-gray-200);
-    --color-link: #2964aa;
+    --color-link: #006dff;
     --color-link-hover: #749ac8;
     --skeleton-background-color: rgba(0, 0, 0, 0.08);
     --skeleton-wave-color: rgba(255, 255, 255, 0.5);
 }
 
 html[data-theme='dark'] {
-    --color-text-primary: var(--color-gray-100);
+    --color-text-primary: var(--color-gray-200);
     --color-text-secondary: var(--color-gray-400);
     --color-text-tertiary: var(--color-gray-500);
     --color-text-quaternary: var(--color-gray-600);

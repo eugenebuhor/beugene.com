@@ -107,7 +107,7 @@
 
 /* Code */
 .codeBlock {
-    padding: 0 !important;
+    padding: 1rem !important;
     background-color: var(--color-main-surface-secondary) !important;
 }
 .codeBlock code {
@@ -118,15 +118,21 @@
     background-color: var(--color-main-surface-secondary);
     font-size: var(--font-size-body2);
     border-radius: var(--border-radius-sm);
-    padding: 0.6rem 1rem;
+    padding: 0;
 }
 .pre .code {
     padding: 0;
 }
 
-.code {
+.inlineCode {
     background-color: var(--color-main-surface-secondary);
     font-size: var(--font-size-body2);
     border-radius: var(--border-radius-sm);
     padding: 0.2rem 0.4rem;
+}
+
+/* Link */
+.link:hover {
+    opacity: 1;
+    text-decoration: underline;
 }
