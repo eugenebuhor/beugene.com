@@ -339,6 +339,8 @@ Micro-frontends allow teams to work independently on different parts of an appli
 - **Modular Components:** Design components to be easily integrated into different micro-frontend architectures.
 - **Regular Synchronization:** Coordinate between teams to align on design updates and changes.
 
+For more on micro-frontends, refer to the [Micro-Frontends Guide](https://beugene.com/articles/part-1-exploring-micro-frontend-architecture).
+
 ## Conclusion
 
 Implementing a robust design system in React applications is essential for building scalable, maintainable, and consistent user interfaces. By adhering to best practices such as enforcing consistency, prioritizing accessibility, and utilizing advanced component architectures, developers can create applications that are both user-friendly and efficient.
