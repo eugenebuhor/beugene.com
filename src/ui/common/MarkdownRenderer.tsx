@@ -34,7 +34,7 @@ const Heading = ({ content, children, underline }: HeadingProps) => {
       {children}
       &nbsp;
       <Link href={'#' + slug} aria-label={`Permalink: ${content}`} className={styles.headingAnchor}>
-        <Typography variant="body1" color="text-primary" component="span" lineHeight={0}>
+        <Typography variant="body2" color="text-primary" component="span" lineHeight={0}>
           <LuLink />
         </Typography>
       </Link>
@@ -134,7 +134,7 @@ const MarkdownRenderer = ({ markdown, className }: MarkdownRendererProps) => {
               {String(children).replace(/\n$/, '')}
             </SyntaxHighlighter>
           ) : (
-            <code className={styles.code} {...rest}>
+            <code className={styles.inlineCode} {...rest}>
               {children}
             </code>
           );
