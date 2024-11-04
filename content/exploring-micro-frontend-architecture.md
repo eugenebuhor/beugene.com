@@ -1,4 +1,4 @@
-Micro-frontend architecture breaks down complex web applications into modular, independently deployable units. This approach brings scalability, team autonomy, and flexibility to frontend development, allowing each feature to evolve separately without affecting the rest. In this guide, we dive into core principles, integration techniques like Module Federation, and practical advice for performance optimization and managing shared state—all essential to building efficient, maintainable micro-frontend systems.
+Micro-frontend architecture breaks down complex web applications into modular, independently deployable units. This approach brings scalability, team autonomy, and flexibility to frontend development, allowing each feature to evolve separately without affecting the rest. In this guide, we dive into core principles, integration techniques like Module Federation, and practical advice for performance optimization and managing shared state — all essential to building efficient, maintainable micro-frontend systems.
 
 ## Introduction
 

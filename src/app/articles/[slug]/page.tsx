@@ -1,3 +1,4 @@
+import { type Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getArticleBySlug } from '@/lib/articles';
@@ -9,6 +10,53 @@ import type { SearchParams as ArticlePageSearchParams } from '@/app/articles/pag
 import styles from '@/ui/articles/[slug]/Article.module.css';
 
 export const revalidate = 60; // 1 minute
+export async function generateMetadata({ params }: ArticleSlugPageProps): Promise<Metadata> {
+  const article = await getArticleBySlug({
+    slug: params.slug,
+    select: {
+      title: true,
+      summary: true,
+      metaTitle: true,
+      metaDescription: true,
+      publishedAt: true,
+      tags: true,
+    },
+  });
+
+  if (!article) {
+    return {};
+  }
+
+  return {
+    title: `${article.title || article.metaTitle} | Yevhenii Buhor | Web Development Insights`,
+    description: article.metaDescription || article.summary || 'Read more about this article.',
+    openGraph: {
+      title: `${article.title || article.metaTitle} | Yevhenii Buhor | Web Development Insights`,
+      description: article.metaDescription || article.summary || 'Read more about this article.',
+      url: `https://${process.env.VERCEL_URL}/articles/${params.slug}`,
+      type: 'article',
+      publishedTime: article.publishedAt ? new Date(article.publishedAt).toISOString() : '',
+      tags: article.tags.map((tag) => tag.name),
+      images: [
+        {
+          url: article.coverImageUrl || `https://${process.env.VERCEL_URL}/default-og-image.png`,
+          width: 1200,
+          height: 630,
+          alt: article.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${article.title || article.metaTitle} | Yevhenii Buhor | Web Development Insights`,
+      description: article.metaDescription || article.summary || 'Read more about this article.',
+      images: article.coverImageUrl || `https://${process.env.VERCEL_URL}/default-og-image.png`,
+    },
+    alternates: {
+      canonical: `https://${process.env.VERCEL_URL}/articles/${params.slug}`,
+    },
+  };
+}
 
 type Params = {
   slug: string;
@@ -46,9 +94,11 @@ const ArticleSlugPage = async ({ params, searchParams }: ArticleSlugPageProps) =
 
   return (
     <>
-      <Link href={backToArticlesLink} className={styles.backLink} prefetch>
-        <Typography color="text-secondary">←&nbsp;&nbsp;&nbsp;Back to Articles</Typography>
-      </Link>
+      <nav aria-label="breadcrumb">
+        <Link href={backToArticlesLink} className={styles.backLink} prefetch>
+          <Typography color="text-secondary">←&nbsp;&nbsp;&nbsp;Back to Articles</Typography>
+        </Link>
+      </nav>
       <br />
       <Article
         id={article.id}
