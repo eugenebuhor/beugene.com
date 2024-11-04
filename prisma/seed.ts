@@ -106,9 +106,7 @@ async function main() {
       });
     }
 
-    console.log(
-      `Article "${slug}" has been ${existingArticle ? 'updated' : 'created'} successfully.`,
-    );
+    console.log(`* ${existingArticle ? 'Updated' : 'Created'} successfully: "${slug}";`);
   }
 
   console.log('Seeding completed.');

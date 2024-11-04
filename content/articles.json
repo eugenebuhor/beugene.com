@@ -7,6 +7,18 @@
     "status": "PUBLISHED",
     "metaTitle": "Best Practices for Implementing Design Systems in React",
     "metaDescription": "Learn advanced strategies and guidelines for building scalable and consistent design systems in React applications. Enhance your web development workflow with proven best practices and techniques.",
+    "publishedAt": "2024-11-01T00:00:00.000Z",
     "tags": ["React", "Design Systems", "Web Development", "Styled Components", "Component Architecture"]
+  },
+  {
+    "title": "Part 1. Exploring Micro-Frontend Architecture",
+    "slug": "part-1-exploring-micro-frontend-architecture",
+    "summary": "Micro-frontend architecture breaks down complex web applications into modular, independently deployable units. This approach brings scalability, team autonomy, and flexibility to frontend development, allowing each feature to evolve separately without affecting the rest. In this guide, we dive into core principles, integration techniques like Module Federation, and practical advice for performance optimization and managing shared state—all essential to building efficient, maintainable micro-frontend systems.",
+    "coverImageUrl": "",
+    "status": "PUBLISHED",
+    "metaTitle": "Part 1. Exploring Micro-Frontend Architecture",
+    "metaDescription": "Discover advanced best practices and industry-leading features of micro-frontend architecture. Learn integration strategies, design principles, and performance optimizations to build scalable and maintainable web applications.",
+    "publishedAt": "2024-11-04T00:00:00.000Z",
+    "tags": ["Micro-Frontend", "Web Development", "Frontend Architecture"]
   }
 ]
