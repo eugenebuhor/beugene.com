@@ -1,10 +1,11 @@
 import Link from 'next/link';
 import { format } from 'date-fns/format';
 import { Article } from '@prisma/client';
+import { AiOutlineClockCircle } from 'react-icons/ai';
 import Typography from '@/ui/common/Typography';
+import Skeleton from '@/ui/common/Skeleton';
 import { DATE_FORMAT } from '@/constants';
 import styles from '@/ui/articles/ArticleMeta.module.css';
-import Skeleton from '@/ui/common/Skeleton';
 
 type ArticleMetaProps = {
   publishedAt: Article['publishedAt'];
@@ -26,13 +27,20 @@ const ArticleMeta = ({ title, publishedAt, timeToRead, articleLink = '' }: Artic
       >
         {articleLink ? <Link href={articleLink}>{title}</Link> : title}
       </Typography>
-      <Typography variant="body1" color="text-tertiary" fontFamily="subtitle">
+
+      <Typography
+        variant="body1"
+        color="text-tertiary"
+        fontFamily="subtitle"
+        className={styles.meta}
+      >
         {publishedAt ? (
           <time dateTime={new Date(publishedAt).toISOString()}>
             {format(publishedAt, DATE_FORMAT)}
           </time>
         ) : null}
         &nbsp;·&nbsp;
+        <AiOutlineClockCircle />
         {timeToRead} min read
       </Typography>
     </div>

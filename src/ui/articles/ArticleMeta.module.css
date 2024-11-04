@@ -8,3 +8,9 @@
     flex-direction: column;
     gap: 4px;
 }
+
+.meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
