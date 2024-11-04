@@ -95,7 +95,7 @@ A theme provider allows you to pass down theme variables throughout your applica
 **Minimal Example:**
 
 ```jsx
-// theme.js
+// theme.ts
 export const theme = {
   colors: {
     white: '#ffffff',
