@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
 import { ThemeProvider as NextThemeProvider } from 'next-themes';
@@ -15,7 +16,13 @@ export const metadata: Metadata = {
   description:
     'Explore insightful articles and projects by Yevhenii Buhor on modern web development, featuring industry best-practices and the latest tech trends.',
   keywords: [
+    'beugene',
     'Yevhenii Buhor',
+    'Buhor',
+    'Bugor',
+    'Eugene Buhor',
+    'Eugene Bugor',
+    'Бугор',
     'Web Development',
     'React',
     'Next.js',
@@ -30,7 +37,6 @@ export const metadata: Metadata = {
     'Berlin',
     'Germany',
     'blog',
-    'beugene',
   ],
   openGraph: {
     title: 'Yevhenii Buhor | Web Development Insights',
@@ -84,6 +90,29 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
       <head>
         <link rel="preload" href="/logo-dark.svg" as="image" />
         <link rel="preload" href="/logo-light.svg" as="image" />
+        <Script
+          id="structured-data"
+          type="application/ld+json"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Person',
+              name: 'Yevhenii Buhor',
+              url: `https://${process.env.VERCEL_URL}.com`,
+              sameAs: [
+                'https://www.linkedin.com/in/beugene',
+                'https://github.com/eugenebuhor',
+                'https://x.com/beugene_',
+              ],
+              jobTitle: 'Senior Fullstack Developer',
+              // worksFor: {
+              //   '@type': 'Organization',
+              //   name: 'Company Name',
+              // },
+            }),
+          }}
+        />
       </head>
       <body>
         <Analytics />
