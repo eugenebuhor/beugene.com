@@ -42,9 +42,15 @@ const ArticleLikes = ({
   return (
     <div className={styles.container}>
       <ButtonLike isLiked={isLiked} onClick={onToggleArticleLike} />
-      <Typography variant="body1" color="text-secondary" fontFamily="subtitle">
-        &nbsp;{likes || ''}
-      </Typography>
+      {Boolean(likes) ? (
+        <Typography variant="body1" color="text-secondary" fontFamily="subtitle">
+          {likes}
+        </Typography>
+      ) : (
+        <Typography variant="body1" color="text-secondary" fontFamily="subtitle">
+          Like this article?
+        </Typography>
+      )}
     </div>
   );
 };
