@@ -72,10 +72,10 @@ async function main() {
           summary,
           coverImageUrl,
           status: status || ArticleStatus.DRAFT,
-          likes: likes || 0,
+          likes: existingArticle.likes || likes || 0,
           metaTitle,
           metaDescription,
-          publishedAt: publishedAt ? new Date(publishedAt) : undefined,
+          publishedAt: publishedAt ? new Date(publishedAt) : existingArticle.publishedAt,
           content,
           timeToRead,
           tags: {
@@ -96,7 +96,7 @@ async function main() {
           likes: likes || 0,
           metaTitle,
           metaDescription,
-          publishedAt: publishedAt ? new Date(publishedAt) : undefined,
+          publishedAt: publishedAt ? new Date(publishedAt) : new Date(),
           content,
           timeToRead,
           tags: {

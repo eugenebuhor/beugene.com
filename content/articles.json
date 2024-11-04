@@ -1,0 +1,12 @@
+[
+  {
+    "title": "Design Systems in React Applications: Best Practices and Guidelines",
+    "slug": "design-systems-in-react-applications",
+    "summary": "The component-based architecture, like React, provides a solid foundation for dynamic user interfaces, but as projects grow, maintaining cohesive design and efficient development becomes increasingly complex. Design systems offer a structured solution by establishing reusable components, guidelines, and best practices, ensuring consistency and streamlining team collaboration. This article explores essential rules and best practices for implementing effective design systems in React applications, providing practical insights based on industry standards.",
+    "coverImageUrl": "",
+    "status": "PUBLISHED",
+    "metaTitle": "Best Practices for Implementing Design Systems in React",
+    "metaDescription": "Learn advanced strategies and guidelines for building scalable and consistent design systems in React applications. Enhance your web development workflow with proven best practices and techniques.",
+    "tags": ["React", "Design Systems", "Web Development", "Styled Components", "Component Architecture"]
+  }
+]
