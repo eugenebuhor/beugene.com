@@ -5,10 +5,11 @@ export async function generateSitemaps() {
   return [{ id: 0 }];
 }
 
-export default async function sitemap({ id }: { id: number }): Promise<MetadataRoute.Sitemap> {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPaths = [
-    { url: `${process.env.VERCEL_URL}/`, lastModified: new Date().toISOString() },
-    { url: `${process.env.VERCEL_URL}/about`, lastModified: new Date().toISOString() },
+    { url: `https://${process.env.VERCEL_URL}/`, lastModified: new Date().toISOString() },
+    { url: `https://${process.env.VERCEL_URL}/articles`, lastModified: new Date().toISOString() },
+    { url: `https://${process.env.VERCEL_URL}/about`, lastModified: new Date().toISOString() },
   ];
 
   const fetchArticles = async () => {
@@ -17,13 +18,14 @@ export default async function sitemap({ id }: { id: number }): Promise<MetadataR
       limit: 100,
       select: {
         slug: true,
+        publishedAt: true,
         updatedAt: true,
       },
     });
 
-    return articles.map(({ slug, updatedAt }) => ({
-      url: `${process.env.VERCEL_URL}/articles/${slug}`,
-      lastModified: updatedAt,
+    return articles.map(({ slug, publishedAt, updatedAt }) => ({
+      url: `https://${process.env.VERCEL_URL}/articles/${slug}`,
+      lastModified: publishedAt || updatedAt,
     }));
   };
 
