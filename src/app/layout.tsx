@@ -53,16 +53,9 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      {
-        rel: 'icon',
-        url: '/favicon-dark.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        rel: 'icon',
-        url: '/favicon-light.png',
-        media: '(prefers-color-scheme: light)',
-      },
+      { rel: 'icon', url: '/favicon.ico' },
+      { rel: 'icon', url: '/favicon-16x16.png', sizes: '16x16' },
+      { rel: 'icon', url: '/favicon-32x32.png', sizes: '32x32' },
     ],
   },
 };
@@ -87,16 +80,13 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
               '@type': 'Person',
               name: 'Yevhenii Buhor',
               url: `https://${process.env.VERCEL_URL}.com`,
+              logo: `https://${process.env.VERCEL_URL}/logo-light.svg`,
               sameAs: [
                 'https://www.linkedin.com/in/beugene',
                 'https://github.com/eugenebuhor',
                 'https://x.com/beugene_',
               ],
-              jobTitle: 'Senior Fullstack Developer',
-              // worksFor: {
-              //   '@type': 'Organization',
-              //   name: 'Company Name',
-              // },
+              jobTitle: 'Senior Software Engineer',
             }),
           }}
         />
