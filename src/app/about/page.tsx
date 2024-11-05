@@ -5,7 +5,7 @@ import { Links } from '@/constants';
 export const revalidate = 86400; // 24 hours
 
 export const metadata = {
-  title: 'About | Yevhenii Buhor',
+  title: 'About | Yevhenii Buhor | Web Development Insights',
   description:
     'Learn about Yevhenii Buhor’s journey in tech, his approach to web development, and the values that drive his work in creating impactful digital experiences.',
   keywords: [
@@ -22,12 +22,14 @@ export const metadata = {
     'Frontend',
     'Frontend Developer',
     'Senior Frontend Developer',
+    'Software Engineer',
+    'Senior Software Engineer',
     'Berlin',
     'Germany',
     'blog',
   ],
   openGraph: {
-    title: 'About | Yevhenii Buhor',
+    title: 'About | Yevhenii Buhor | Web Development Insights',
     description:
       'Learn about Yevhenii Buhor’s journey in tech, his approach to web development, and the values that drive his work in creating impactful digital experiences.',
     url: `https://${process.env.VERCEL_URL}/about`,
@@ -43,7 +45,7 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'About | Yevhenii Buhor',
+    title: 'About | Yevhenii Buhor | Web Development Insights',
     description:
       'Learn about Yevhenii Buhor’s journey in tech, his approach to web development, and the values that drive his work in creating impactful digital experiences.',
     images: `https://${process.env.VERCEL_URL}/default-og-image.png`,
