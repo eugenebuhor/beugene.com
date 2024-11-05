@@ -8,6 +8,24 @@ export const metadata = {
   title: 'About | Yevhenii Buhor',
   description:
     'Learn about Yevhenii Buhor’s journey in tech, his approach to web development, and the values that drive his work in creating impactful digital experiences.',
+  keywords: [
+    'beugene',
+    'Yevhenii Buhor',
+    'Eugene Buhor',
+    'Eugene Bugor',
+    'Buhor',
+    'Bugor',
+    'Бугор',
+    'Fullstack',
+    'Fullstack Developer',
+    'Senior Fullstack Developer',
+    'Frontend',
+    'Frontend Developer',
+    'Senior Frontend Developer',
+    'Berlin',
+    'Germany',
+    'blog',
+  ],
   openGraph: {
     title: 'About | Yevhenii Buhor',
     description:

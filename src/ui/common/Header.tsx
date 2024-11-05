@@ -11,6 +11,11 @@ const Header = () => {
         <Link href="/" className={styles.nameLogoWrapper} rel="index" aria-label="homepage">
           <LogoImage />
         </Link>
+        <Link href="/articles" prefetch>
+          <Typography variant="body2" color="text-primary" fontFamily="subtitle">
+            The Articles
+          </Typography>
+        </Link>
         <Link href="/about" prefetch>
           <Typography variant="body2" color="text-primary" fontFamily="subtitle">
             About Me
