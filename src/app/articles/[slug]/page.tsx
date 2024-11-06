@@ -33,13 +33,13 @@ export async function generateMetadata({ params }: ArticleSlugPageProps): Promis
     openGraph: {
       title: `${article.title || article.metaTitle} | Yevhenii Buhor | Web Development Insights`,
       description: article.metaDescription || article.summary || 'Read more about this article.',
-      url: `https://${process.env.VERCEL_URL}/articles/${params.slug}`,
+      url: `https://beugene.com/articles/${params.slug}`,
       type: 'article',
       publishedTime: article.publishedAt ? new Date(article.publishedAt).toISOString() : '',
       tags: article.tags.map((tag) => tag.name),
       images: [
         {
-          url: article.coverImageUrl || `https://${process.env.VERCEL_URL}/default-og-image.png`,
+          url: article.coverImageUrl || `https://beugene.com/default-og-image.png`,
           width: 1200,
           height: 630,
           alt: article.title,
@@ -50,10 +50,10 @@ export async function generateMetadata({ params }: ArticleSlugPageProps): Promis
       card: 'summary_large_image',
       title: `${article.title || article.metaTitle} | Yevhenii Buhor | Web Development Insights`,
       description: article.metaDescription || article.summary || 'Read more about this article.',
-      images: article.coverImageUrl || `https://${process.env.VERCEL_URL}/default-og-image.png`,
+      images: article.coverImageUrl || `https://beugene.com/default-og-image.png`,
     },
     alternates: {
-      canonical: `https://${process.env.VERCEL_URL}/articles/${params.slug}`,
+      canonical: `https://beugene.com/articles/${params.slug}`,
     },
   };
 }
