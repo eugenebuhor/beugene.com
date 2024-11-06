@@ -209,8 +209,6 @@ const permissions = shield({
     withdrawStake: isAuthenticated,
   },
 });
-
-// Apply permissions middleware to your GraphQL server
 ```
 
 This setup ensures that only authenticated users can access user data and perform staking operations. Additionally, implementing rate limiting using tools like [express-rate-limit](https://github.com/nfriedly/express-rate-limit) can further protect your API from excessive requests.
@@ -233,13 +231,13 @@ This setup ensures that only authenticated users can access user data and perfor
 
 ### GraphQL: Flexibility and Precision in Data Fetching
 
-**Pros:**
+**Advantages:**
 - **Flexibility:** Clients can request exactly the data they need.
 - **Single Endpoint:** Reduces the number of requests by consolidating data fetching.
 - **Strong Typing:** Schema definitions provide clear contracts between client and server.
 - **Real-Time Capabilities:** Native support for real-time data through subscriptions.
 
-**Cons:**
+**Limitations:**
 - **Complexity:** Requires a more sophisticated setup and understanding of schema design.
 - **Caching Challenges:** Traditional HTTP caching is less effective due to dynamic queries.
 - **Overhead:** Parsing and validating queries can introduce additional processing time.
@@ -251,18 +249,18 @@ Choosing between GraphQL and REST requires a thorough evaluation of your project
 
 **REST** offers a reliable, resource-based approach with robust caching and straightforward design, making it suitable for many traditional applications. It excels in simplicity and leverages mature HTTP standards, which can be advantageous for projects with well-defined resource interactions.
 
+**Choose REST if:**
+- You have a well-defined set of resources with straightforward relationships.
+- You need to leverage existing HTTP caching mechanisms effectively.
+- Simplicity and ease of implementation are priorities.
+
 **GraphQL**, on the other hand, provides unparalleled flexibility in data fetching, real-time capabilities through subscriptions, and fine-grained security controls. These features make it highly advantageous for modern, data-intensive applications like staking platforms, where dynamic data requirements and real-time updates are crucial.
 
-**Key Takeaways:**
+**Choose GraphQL If:**
+- Your application requires complex data fetching with varying client needs.
+- Real-time data updates are essential for user experience.
+- You need fine-grained control over data access and security.
 
-- **Choose REST If:**
-    - You have a well-defined set of resources with straightforward relationships.
-    - You need to leverage existing HTTP caching mechanisms effectively.
-    - Simplicity and ease of implementation are priorities.
+---
 
-- **Choose GraphQL If:**
-    - Your application requires complex data fetching with varying client needs.
-    - Real-time data updates are essential for user experience.
-    - You need fine-grained control over data access and security.
-
-Ultimately, the decision should align with your project’s requirements, performance goals, and the expertise of your development team. Whether you opt for the structured simplicity of REST or the dynamic power of GraphQL, understanding the advanced features and best practices of each will enable you to build scalable, efficient, and secure APIs tailored to your specific needs.
+Ultimately, the decision should align with your project’s requirements, performance goals, and the expertise of your development team.
