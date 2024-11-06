@@ -7,6 +7,20 @@ import PaginationControls from '@/ui/common/PaginationControls';
 import styles from '@/app/articles/page.module.css';
 
 export const revalidate = 300; // 5 minutes
+export const generateMetadata = async ({ searchParams }: ArticlesPageProps) => {
+  const parsedParams = parseSearchParams<{
+    page?: string;
+    limit?: string;
+    q?: string;
+    tags?: string[];
+  }>(searchParams);
+  const page = parseInt(parsedParams.page || '1', 10);
+
+  return {
+    title: `Articles - Page ${page} | Yevhenii Buhor | Web Development Insights`,
+    description: `Browse page ${page} of articles by Yevhenii Buhor on web development and technology.`,
+  };
+};
 
 export type SearchParams = {
   page?: string;

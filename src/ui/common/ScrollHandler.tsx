@@ -38,10 +38,12 @@ export default function ScrollHandler() {
         window.history.scrollRestoration = 'auto';
       } else {
         if (hash) {
-          const element = document.querySelector(hash);
-          if (element) {
-            element.scrollIntoView();
-          }
+          try {
+            const element = document.querySelector(hash);
+            if (element) {
+              element.scrollIntoView();
+            }
+          } catch (e) {}
         } else {
           window.scrollTo(0, 0);
         }

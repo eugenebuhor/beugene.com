@@ -5,8 +5,51 @@ import { Links } from '@/constants';
 export const revalidate = 86400; // 24 hours
 
 export const metadata = {
-  title: 'About | Yevhenii Buhor',
-  description: 'Learn more about Yevhenii Buhor, a software engineer based in Berlin, Germany.',
+  title: 'About | Yevhenii Buhor | Web Development Insights',
+  description:
+    'Learn about Yevhenii Buhor’s journey in tech, his approach to web development, and the values that drive his work in creating impactful digital experiences.',
+  keywords: [
+    'beugene',
+    'Yevhenii Buhor',
+    'Eugene Buhor',
+    'Eugene Bugor',
+    'Buhor',
+    'Bugor',
+    'Бугор',
+    'Fullstack',
+    'Fullstack Developer',
+    'Senior Fullstack Developer',
+    'Frontend',
+    'Frontend Developer',
+    'Senior Frontend Developer',
+    'Software Engineer',
+    'Senior Software Engineer',
+    'Berlin',
+    'Germany',
+    'blog',
+  ],
+  openGraph: {
+    title: 'About | Yevhenii Buhor | Web Development Insights',
+    description:
+      'Learn about Yevhenii Buhor’s journey in tech, his approach to web development, and the values that drive his work in creating impactful digital experiences.',
+    url: `https://beugene.com/about`,
+    type: 'website',
+    images: [
+      {
+        url: `https://beugene.com/default-og-image.png`,
+        width: 1200,
+        height: 630,
+        alt: 'About Yevhenii Buhor',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About | Yevhenii Buhor | Web Development Insights',
+    description:
+      'Learn about Yevhenii Buhor’s journey in tech, his approach to web development, and the values that drive his work in creating impactful digital experiences.',
+    images: `https://beugene.com/default-og-image.png`,
+  },
 };
 
 const AboutPage = () => {

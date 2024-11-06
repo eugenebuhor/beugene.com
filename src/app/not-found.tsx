@@ -3,7 +3,7 @@ import Typography from '@/ui/common/Typography';
 import styles from '@/app/page.module.css';
 
 export const metadata: Metadata = {
-  title: 'Page Not Found | Yevhenii Buhor',
+  title: 'Page Not Found | Yevhenii Buhor | Web Development Insights',
   description: 'This page could not be found.',
 };
 
