@@ -28,13 +28,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Yevhenii Buhor | Web Development Insights',
     description: 'Dive into web development insights and projects by Yevhenii Buhor.',
-    url: `https://${process.env.VERCEL_URL}`,
+    url: `https://beugene.com`,
     type: 'website',
     locale: 'en_US',
     siteName: 'Yevhenii Buhor | Web Development Insights',
     images: [
       {
-        url: `https://${process.env.VERCEL_URL}/default-og-image.png`,
+        url: `https://beugene.com/default-og-image.png`,
         width: 1200,
         height: 630,
         alt: 'Yevhenii Buhor | Web Development Insights',
@@ -46,10 +46,10 @@ export const metadata: Metadata = {
     site: '@beugene_',
     title: 'Yevhenii Buhor | Web Development Insights',
     description: 'Dive into web development insights and projects by Yevhenii Buhor.',
-    images: `https://${process.env.VERCEL_URL}/default-og-image.png`,
+    images: `https://beugene.com/default-og-image.png`,
   },
   alternates: {
-    canonical: `https://${process.env.VERCEL_URL}.com`,
+    canonical: `https://beugene.com`,
   },
   icons: {
     icon: [
@@ -79,8 +79,8 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
               '@context': 'https://schema.org',
               '@type': 'Person',
               name: 'Yevhenii Buhor',
-              url: `https://${process.env.VERCEL_URL}.com`,
-              logo: `https://${process.env.VERCEL_URL}/logo-light.svg`,
+              url: `https://beugene.com`,
+              logo: `https://beugene.com/logo-light.svg`,
               sameAs: [
                 'https://www.linkedin.com/in/beugene',
                 'https://github.com/eugenebuhor',

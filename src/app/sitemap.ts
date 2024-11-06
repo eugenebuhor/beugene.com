@@ -7,9 +7,9 @@ export async function generateSitemaps() {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPaths = [
-    { url: `https://${process.env.VERCEL_URL}/`, lastModified: new Date().toISOString() },
-    { url: `https://${process.env.VERCEL_URL}/articles`, lastModified: new Date().toISOString() },
-    { url: `https://${process.env.VERCEL_URL}/about`, lastModified: new Date().toISOString() },
+    { url: `https://beugene.com/`, lastModified: new Date().toISOString() },
+    { url: `https://beugene.com/articles`, lastModified: new Date().toISOString() },
+    { url: `https://beugene.com/about`, lastModified: new Date().toISOString() },
   ];
 
   const fetchArticles = async () => {
@@ -24,7 +24,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
 
     return articles.map(({ slug, publishedAt, updatedAt }) => ({
-      url: `https://${process.env.VERCEL_URL}/articles/${slug}`,
+      url: `https://beugene.com/articles/${slug}`,
       lastModified: publishedAt || updatedAt,
     }));
   };
