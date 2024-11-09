@@ -140,7 +140,7 @@ GET /users/1
 ```
 
 Response Headers:
-```
+```bash
 Cache-Control: max-age=3600
 ETag: "abc123"
 ```
