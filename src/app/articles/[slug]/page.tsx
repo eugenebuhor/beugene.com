@@ -13,7 +13,7 @@ export const revalidate = 60; // every 60 seconds
 
 export async function generateStaticParams() {
   const { data } = await getArticles({
-    limit: 1000,
+    limit: 100,
     offset: 0,
     select: {
       slug: true,
