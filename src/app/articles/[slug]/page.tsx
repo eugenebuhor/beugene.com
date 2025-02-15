@@ -1,7 +1,7 @@
 import { type Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getArticleBySlug } from '@/lib/articles';
+import { getArticleBySlug, getArticles } from '@/lib/articles';
 import { parseSearchParams, stringifyQueryString } from '@/utils/queryString';
 import Article from '@/ui/articles/[slug]/Article';
 import Typography from '@/ui/common/Typography';
@@ -9,7 +9,20 @@ import RelatedArticles from '@/ui/articles/[slug]/RelatedArticles';
 import type { SearchParams as ArticlePageSearchParams } from '@/app/articles/page';
 import styles from '@/ui/articles/[slug]/Article.module.css';
 
-export const revalidate = 60; // 1 minute
+export const revalidate = 60; // every 60 seconds
+
+export async function generateStaticParams() {
+  const { data } = await getArticles({
+    limit: 100,
+    offset: 0,
+    select: {
+      slug: true,
+    },
+  });
+
+  return data.map(({ slug }) => ({ slug }));
+}
+
 export async function generateMetadata({ params }: ArticleSlugPageProps): Promise<Metadata> {
   const article = await getArticleBySlug({
     slug: params.slug,
