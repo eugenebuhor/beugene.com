@@ -30,6 +30,7 @@ export const metadata = {
   ],
   openGraph: {
     title: 'About | Yevhenii Buhor | Web Development Insights',
+    siteName: 'Yevhenii Buhor | Web Development Insights',
     description:
       'Learn about Yevhenii Buhor’s journey in tech, his approach to web development, and the values that drive his work in creating impactful digital experiences.',
     url: `https://beugene.com/about`,

@@ -50,6 +50,7 @@ export async function generateMetadata({ params }: ArticleSlugPageProps): Promis
       type: 'article',
       publishedTime: article.publishedAt ? new Date(article.publishedAt).toISOString() : '',
       tags: article.tags.map((tag) => tag.name),
+      siteName: 'Yevhenii Buhor | Web Development Insights',
       images: [
         {
           url: article.coverImageUrl || `https://beugene.com/default-og-image.png`,
