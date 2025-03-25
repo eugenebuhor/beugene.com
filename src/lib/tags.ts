@@ -5,6 +5,7 @@ import { unstable_cache } from 'next/cache';
 import { ValidationError, InternalError } from '@/lib/errors';
 import { CacheKeys, CacheTags } from '@/constants';
 import { ArticleStatus } from '@prisma/client';
+import { normalizeSearchText } from '@/utils/search';
 
 const MAX_QUERY_LENGTH = 100;
 const GET_TOP_TAGS_REVALIDATE_TIMEOUT = 3600; // 1 hour
@@ -12,7 +13,7 @@ const GET_TOP_TAGS_REVALIDATE_TIMEOUT = 3600; // 1 hour
 /* Get Tags */
 
 export const getTags = async (q?: string): Promise<Tag[]> => {
-  const searchQuery = q ? q.trim() : undefined;
+  const searchQuery = normalizeSearchText(q);
 
   if (searchQuery && searchQuery.length > MAX_QUERY_LENGTH) {
     throw new ValidationError('Query parameter too long');
