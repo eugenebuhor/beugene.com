@@ -1,10 +1,11 @@
 // eslint-disable-next-line camelcase
 import { unstable_cache } from 'next/cache';
-import { type Article, type Tag, ArticleStatus } from '@prisma/client';
-import type { Prisma } from '@prisma/client';
+import { ArticleStatus } from '@prisma/client';
+import type { Prisma, Article, Tag } from '@prisma/client';
 import prisma from '@/lib/prisma';
 import { InternalError, ValidationError } from '@/lib/errors';
 import { CacheKeys, CacheTags } from '@/constants';
+import { normalizeSearchText } from '@/utils/search';
 
 const GET_ARTICLES_REVALIDATE_TIMEOUT = 300; // 5 minutes
 const GET_ARTICLE_BY_SLUG_REVALIDATE_TIMEOUT = 60; // 1 minutes
@@ -71,7 +72,7 @@ export type PaginatedArticles = {
 export const getArticles = async (params?: GetArticlesParams): Promise<PaginatedArticles> => {
   const limit = params?.limit !== undefined ? params.limit : FALLBACK_LIMIT;
   const offset = params?.offset !== undefined ? params.offset : FALLBACK_OFFSET;
-  const searchQuery = params?.q ? params.q.trim() : '';
+  const searchQuery = normalizeSearchText(params?.q);
   const tags = params?.tags ?? [];
   const orderBy: OrderBy = params?.orderBy ?? 'publishedAt';
   const order: Order = params?.order ?? 'desc';

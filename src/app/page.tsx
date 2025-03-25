@@ -1,8 +1,7 @@
-import { notFound } from 'next/navigation';
 import { getArticles } from '@/lib/articles';
-import Divider from '@/ui/common/Divider';
 import ArticleCard from '@/ui/articles/ArticleCard';
 import styles from '@/app/page.module.css';
+import { Typography, Divider } from '@/ui/common';
 
 export const revalidate = 300; // 5 minutes
 
@@ -21,11 +20,11 @@ const HomePage = async () => {
     },
   });
 
-  if (total === 0 || articles.length === 0) {
-    notFound();
-  }
+  const noResults = total === 0 || articles.length === 0;
 
-  return (
+  return noResults ? (
+    <Typography className={styles.noResults}>No articles found.</Typography>
+  ) : (
     <ul className={styles.rootPageContainer}>
       {articles.map((article, index) => (
         <li key={article.id} id={article.slug}>

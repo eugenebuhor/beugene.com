@@ -5,7 +5,3 @@
     flex-wrap: wrap;
     gap: 8px;
 }
-
-.link:hover {
-    opacity: 1;
-}

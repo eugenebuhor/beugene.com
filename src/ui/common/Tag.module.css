@@ -1,0 +1,7 @@
+.link:hover {
+    opacity: 1;
+}
+
+.selected {
+    background-color: var(--color-main-surface-tertiary);
+}
