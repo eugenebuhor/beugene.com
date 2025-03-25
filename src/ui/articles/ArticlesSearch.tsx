@@ -30,65 +30,53 @@ export default function ArticlesSearch({
   const [query, setQuery] = useState(initialQuery);
   const [selectedTags, setSelectedTags] = useState<string[]>(initialSelectedTags);
 
-  const debouncedUpdateQuery = useCallback(
-    debounce((newQuery: string) => {
-      const params = new URLSearchParams(searchParams.toString());
+  const debouncedNavigate = useCallback(
+    debounce((newQuery: string, newTags: string[]) => {
+      const currentParams = parseSearchParams(Object.fromEntries(searchParams.entries()));
+
+      const updatedParams: Record<string, string | string[]> = {
+        ...currentParams,
+        page: '1', // Reset to page 1 when search changes
+      };
 
       if (newQuery) {
-        params.set('q', newQuery);
+        updatedParams.q = newQuery;
       } else {
-        params.delete('q');
+        delete updatedParams.q;
       }
 
-      // Reset to page 1 when search changes
-      params.set('page', '1');
+      if (newTags.length > 0) {
+        updatedParams.tags = newTags;
+      } else {
+        delete updatedParams.tags;
+      }
 
-      router.push(`/articles?${params.toString()}`);
-    }, 300),
+      const queryStr = stringifyQueryString(updatedParams);
+      router.push(`/articles?${queryStr}`);
+    }, 500),
     [searchParams, router],
   );
 
   const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newQuery = e.target.value.slice(0, MAX_QUERY_LENGTH);
     setQuery(newQuery);
-    debouncedUpdateQuery(newQuery);
+    debouncedNavigate(newQuery, selectedTags);
   };
 
-  const debouncedHandleTagClick = useCallback(
-    debounce((tagName: string) => {
-      const newSelectedTags = selectedTags.includes(tagName)
-        ? selectedTags.filter((tag) => tag !== tagName)
-        : [...selectedTags, tagName];
+  const handleTagClick = (tagName: string) => {
+    const newSelectedTags = selectedTags.includes(tagName)
+      ? selectedTags.filter((tag) => tag !== tagName)
+      : [...selectedTags, tagName];
 
-      setSelectedTags(newSelectedTags);
-
-      const currentParams = parseSearchParams(Object.fromEntries(searchParams.entries()));
-
-      const updatedParams: Record<string, string | string[]> = {
-        ...currentParams,
-        page: '1', // Reset to page 1 when tags change
-      };
-
-      // Only add tags if we have any
-      if (newSelectedTags.length > 0) {
-        updatedParams.tags = newSelectedTags;
-      } else {
-        delete updatedParams.tags;
-      }
-
-      const queryStr = stringifyQueryString(updatedParams);
-
-      router.push(`/articles?${queryStr}`);
-    }, 300),
-    [searchParams, router, selectedTags],
-  );
+    setSelectedTags(newSelectedTags);
+    debouncedNavigate(query, newSelectedTags);
+  };
 
   useEffect(() => {
     return () => {
-      debouncedUpdateQuery.cancel();
-      debouncedHandleTagClick.cancel();
+      debouncedNavigate.cancel();
     };
-  }, [debouncedUpdateQuery, debouncedHandleTagClick]);
+  }, [debouncedNavigate]);
 
   return (
     <div className={clsx(styles.searchBox, className)}>
@@ -107,7 +95,7 @@ export default function ArticlesSearch({
           {tags.map((tag) => (
             <TagLink
               key={tag.id}
-              onClick={() => debouncedHandleTagClick(tag.name)}
+              onClick={() => handleTagClick(tag.name)}
               name={tag.name}
               selected={selectedTags.includes(tag.name)}
             />
