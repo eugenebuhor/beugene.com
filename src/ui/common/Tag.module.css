@@ -2,6 +2,6 @@
     opacity: 1;
 }
 
-.selected {
+button.selected {
     background-color: var(--color-main-surface-tertiary);
 }
