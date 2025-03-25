@@ -53,7 +53,7 @@ export default function ArticlesSearch({
 
       const queryStr = stringifyQueryString(updatedParams);
       router.push(`/articles?${queryStr}`);
-    }, 500),
+    }, 300),
     [searchParams, router],
   );
 
