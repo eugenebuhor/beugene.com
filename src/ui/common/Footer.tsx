@@ -36,7 +36,7 @@ const Footer = () => {
           </Typography>
 
           <Typography variant="caption" color="text-secondary" fontFamily="subtitle">
-            © 2024 Yevhenii Buhor. All rights reserved.
+            © 2025 Yevhenii Buhor. All rights reserved.
           </Typography>
         </div>
       </LayoutSection>
