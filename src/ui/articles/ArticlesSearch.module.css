@@ -1,0 +1,20 @@
+.searchBox {
+  margin-bottom: 24px;
+}
+
+.searchInput {
+  margin-bottom: 16px;
+}
+
+.tagsContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tagsLabel {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+}

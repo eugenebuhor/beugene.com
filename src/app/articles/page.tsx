@@ -1,10 +1,10 @@
-import { notFound } from 'next/navigation';
 import { parseSearchParams, stringifyQueryString } from '@/utils/queryString';
 import { getArticles } from '@/lib/articles';
+import { getTopTags } from '@/lib/tags';
 import ArticleCard from '@/ui/articles/ArticleCard';
-import Divider from '@/ui/common/Divider';
-import PaginationControls from '@/ui/common/PaginationControls';
+import ArticlesSearch from '@/ui/articles/ArticlesSearch';
 import styles from '@/app/articles/page.module.css';
+import { Typography, PaginationControls, Divider } from '@/ui/common';
 
 export const revalidate = 300; // 5 minutes
 export const generateMetadata = async ({ searchParams }: ArticlesPageProps) => {
@@ -46,6 +46,7 @@ const ArticlesPage = async ({ searchParams }: ArticlesPageProps) => {
   const tags = parsedParams.tags || [];
   const offset = (page - 1) * limit;
 
+  const topTags = await getTopTags(5);
   const { data: articles, total } = await getArticles({
     limit,
     offset,
@@ -62,38 +63,48 @@ const ArticlesPage = async ({ searchParams }: ArticlesPageProps) => {
     },
   });
 
-  if (total === 0 || articles.length === 0) {
-    notFound();
-  }
-
+  const noResults = total === 0 && articles.length === 0;
   const totalPages = Math.ceil(total / limit);
 
   return (
-    <ul className={styles.container}>
-      {articles.map((article, index) => (
-        <li key={article.id} id={article.slug}>
-          <ArticleCard
-            id={article.id}
-            slug={article.slug}
-            title={article.title}
-            summary={article.summary}
-            timeToRead={article.timeToRead}
-            publishedAt={article.publishedAt}
-            tags={article.tags}
-            articleLink={`/articles/${article.slug}?${stringifyQueryString(parsedParams) || '\u0020'}`}
-          />
-          {index === articles.length - 1 ? null : <Divider role="separator" margin="32px 0" />}
-        </li>
-      ))}
+    <>
+      <ArticlesSearch
+        className={styles.searchBox}
+        tags={topTags}
+        initialQuery={q}
+        initialSelectedTags={tags}
+      />
 
-      {totalPages > 1 && (
-        <PaginationControls
-          className={styles.paginationControls}
-          currentPage={page}
-          totalPages={totalPages}
-        />
+      {noResults ? (
+        <Typography className={styles.noResults}>No articles found.</Typography>
+      ) : (
+        <ul className={styles.container}>
+          {articles.map((article, index) => (
+            <li key={article.id} id={article.slug}>
+              <ArticleCard
+                id={article.id}
+                slug={article.slug}
+                title={article.title}
+                summary={article.summary}
+                timeToRead={article.timeToRead}
+                publishedAt={article.publishedAt}
+                tags={article.tags}
+                articleLink={`/articles/${article.slug}?${stringifyQueryString(parsedParams) || '\u0020'}`}
+              />
+              {index === articles.length - 1 ? null : <Divider role="separator" margin="32px 0" />}
+            </li>
+          ))}
+
+          {totalPages > 1 && (
+            <PaginationControls
+              className={styles.paginationControls}
+              currentPage={page}
+              totalPages={totalPages}
+            />
+          )}
+        </ul>
       )}
-    </ul>
+    </>
   );
 };
 
