@@ -1,9 +1,12 @@
 import type { Article as ArticlePrisma, Tag } from '@prisma/client';
+import dynamic from 'next/dynamic';
 import ArticleMeta, { ArticleMetaSkeleton } from '@/ui/articles/ArticleMeta';
 import ArticleTags, { ArticleTagsSkeleton } from '@/ui/articles/ArticleTags';
 import ArticleEngage, { ArticleEngageSkeleton } from '@/ui/articles/ArticleEngage';
-import styles from '@/ui/articles/[slug]/Article.module.css';
 import ArticleMarkdown, { ArticleMarkdownSkeleton } from '@/ui/articles/[slug]/ArticleMarkdown';
+import styles from '@/ui/articles/[slug]/Article.module.css';
+
+const ReadingProgress = dynamic(() => import('./ReadingProgress'), { ssr: false });
 
 type ArticleProps = {
   slug: ArticlePrisma['slug'];
@@ -26,6 +29,7 @@ const Article = async ({
 }: ArticleProps) => {
   return (
     <article className={styles.container}>
+      <ReadingProgress />
       <ArticleMeta title={title} timeToRead={timeToRead} publishedAt={publishedAt} />
       <ArticleMarkdown markdown={content} />
       <ArticleTags tags={tags} />
