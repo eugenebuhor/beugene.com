@@ -12,7 +12,7 @@ export async function createUserIfNotExists(): Promise<User | null> {
     let userUUID = await getUserUUID();
 
     if (!userUUID) {
-      const cookieStore = cookies();
+      const cookieStore = await cookies();
 
       userUUID = uuidv4();
       cookieStore.set(USER_UUID_COOKIE_KEY, userUUID, {

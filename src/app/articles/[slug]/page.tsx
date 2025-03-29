@@ -23,7 +23,8 @@ export async function generateStaticParams() {
   return data.map(({ slug }) => ({ slug }));
 }
 
-export async function generateMetadata({ params }: ArticleSlugPageProps): Promise<Metadata> {
+export async function generateMetadata(props: ArticleSlugPageProps): Promise<Metadata> {
+  const params = await props.params;
   const article = await getArticleBySlug({
     slug: params.slug,
     select: {
@@ -79,11 +80,13 @@ type Params = {
 type SearchParams = ArticlePageSearchParams;
 
 type ArticleSlugPageProps = {
-  params: Params;
-  searchParams: SearchParams;
+  params: Promise<Params>;
+  searchParams: Promise<SearchParams>;
 };
 
-const ArticleSlugPage = async ({ params, searchParams }: ArticleSlugPageProps) => {
+const ArticleSlugPage = async (props: ArticleSlugPageProps) => {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const article = await getArticleBySlug({
     slug: params.slug,
     select: {

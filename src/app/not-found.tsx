@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import Typography from '@/ui/common/Typography';
 import styles from '@/app/page.module.css';
 
@@ -10,9 +11,9 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <>
-      <a href="/articles">
+      <Link href="/articles">
         <Typography color="text-secondary">←&nbsp;&nbsp;&nbsp;Back to Articles</Typography>
-      </a>
+      </Link>
       <div className={styles.rootNotFound}>
         <Typography
           className={styles.codeError}

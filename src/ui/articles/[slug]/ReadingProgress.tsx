@@ -5,7 +5,7 @@ import type { RefObject } from 'react';
 import styles from './ReadingProgress.module.css';
 
 interface ReadingProgressProps {
-  containerRef?: RefObject<HTMLElement>;
+  containerRef?: RefObject<HTMLElement | null>;
 }
 
 const ReadingProgress = ({ containerRef }: ReadingProgressProps) => {

@@ -1,14 +1,15 @@
 'use client';
 
+import Link from 'next/link';
 import Typography from '@/ui/common/Typography';
 import styles from '@/app/page.module.css';
 
 export default function Error({ error }: { error: Error }) {
   return (
     <>
-      <a href="/articles">
+      <Link href="/articles">
         <Typography color="text-secondary">←&nbsp;&nbsp;&nbsp;Back to Articles</Typography>
-      </a>
+      </Link>
       <div className={styles.rootError}>
         <Typography
           className={styles.codeError}
