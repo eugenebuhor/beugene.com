@@ -7,7 +7,8 @@ import styles from '@/app/articles/page.module.css';
 import { Typography, PaginationControls, Divider } from '@/ui/common';
 
 export const revalidate = 300; // 5 minutes
-export const generateMetadata = async ({ searchParams }: ArticlesPageProps) => {
+export const generateMetadata = async (props: ArticlesPageProps) => {
+  const searchParams = await props.searchParams;
   const parsedParams = parseSearchParams<{
     page?: string;
     limit?: string;
@@ -33,7 +34,8 @@ type ArticlesPageProps = {
   searchParams: SearchParams;
 };
 
-const ArticlesPage = async ({ searchParams }: ArticlesPageProps) => {
+const ArticlesPage = async (props: ArticlesPageProps) => {
+  const searchParams = await props.searchParams;
   const parsedParams = parseSearchParams<{
     page?: string;
     limit?: string;

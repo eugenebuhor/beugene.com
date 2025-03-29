@@ -1,12 +1,10 @@
 import type { Article as ArticlePrisma, Tag } from '@prisma/client';
-import dynamic from 'next/dynamic';
 import ArticleMeta, { ArticleMetaSkeleton } from '@/ui/articles/ArticleMeta';
 import ArticleTags, { ArticleTagsSkeleton } from '@/ui/articles/ArticleTags';
 import ArticleEngage, { ArticleEngageSkeleton } from '@/ui/articles/ArticleEngage';
 import ArticleMarkdown, { ArticleMarkdownSkeleton } from '@/ui/articles/[slug]/ArticleMarkdown';
+import ReadingProgress from '@/ui/articles/[slug]/ReadingProgress';
 import styles from '@/ui/articles/[slug]/Article.module.css';
-
-const ReadingProgress = dynamic(() => import('./ReadingProgress'), { ssr: false });
 
 type ArticleProps = {
   slug: ArticlePrisma['slug'];

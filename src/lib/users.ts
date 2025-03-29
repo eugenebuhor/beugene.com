@@ -8,7 +8,7 @@ import { USER_UUID_COOKIE_KEY } from '@/constants';
 import { InternalError } from '@/lib/errors';
 
 export const getUserUUID = async (): Promise<string | undefined> => {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   return cookieStore.get(USER_UUID_COOKIE_KEY)?.value;
 };
 
