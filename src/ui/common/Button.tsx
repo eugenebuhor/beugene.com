@@ -1,13 +1,15 @@
 'use client';
 
-import type { MouseEventHandler, ReactNode } from 'react';
+import type { ButtonHTMLAttributes, MouseEventHandler, ReactNode } from 'react';
 import { forwardRef } from 'react';
 import clsx from 'clsx';
+import type { ThemePaletteKey } from '@/ui/theme';
 import styles from './Button.module.css';
 
-type ButtonProps = {
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
-  variant?: 'outlined' | 'contained' | 'text' | 'icon';
+  color?: 'primary' | 'secondary' | 'tertiary' | ThemePaletteKey;
+  variant?: 'outlined' | 'contained' | 'text' | 'icon' | 'icon-outlined';
   size?: 'small' | 'medium' | 'large';
   disabled?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
@@ -15,7 +17,7 @@ type ButtonProps = {
   className?: string;
   bubbling?: boolean;
   fullWidth?: boolean;
-};
+}
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -29,6 +31,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       className,
       bubbling = true,
       fullWidth = false,
+      ...rest
     },
     ref,
   ) => {
@@ -53,6 +56,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={buttonClass}
         disabled={disabled}
         onClick={handleClick}
+        {...rest}
       >
         {children}
       </button>

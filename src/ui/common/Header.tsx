@@ -1,37 +1,28 @@
 import Link from 'next/link';
-import Image from 'next/image';
-import { LayoutSectionContent } from '@/ui/common/Layouts';
-import Flex from '@/ui/common/Flex';
+import { LayoutSection } from '@/ui/common/Layouts';
 import styles from '@/ui/common/Header.module.css';
 import Typography from '@/ui/common/Typography';
+import LogoImage from '@/ui/common/LogoImage';
 
 const Header = () => {
   return (
-    <Flex component="header" justifyContent="center" className={styles.header}>
-      <LayoutSectionContent
-        justifyContent="space-between"
-        flexDirection="row"
-        alignItems="flex-end"
-        flexWrap="nowrap"
-        className={styles.layoutContent}
-        component="nav"
-      >
-        <Link
-          href="/"
-          className={styles.nameLogoWrapper}
-          rel="index"
-          aria-label="homepage"
-          title="Yevhenii Buhor"
-        >
-          <Image src="/name-logo-24.svg" alt="Yevhenii Buhor" fill priority />
+    <header className={styles.header}>
+      <LayoutSection className={styles.layoutSection} component="nav">
+        <Link href="/" className={styles.nameLogoWrapper} rel="index" aria-label="homepage">
+          <LogoImage />
         </Link>
-        <Link href="/about" aria-label="about">
-          <Typography variant="subtitle2" color="text-primary" fontFamily="subtitle">
+        <Link href="/articles" prefetch>
+          <Typography variant="body2" color="text-primary" fontFamily="subtitle">
+            The Articles
+          </Typography>
+        </Link>
+        <Link href="/about" prefetch>
+          <Typography variant="body2" color="text-primary" fontFamily="subtitle">
             About Me
           </Typography>
         </Link>
-      </LayoutSectionContent>
-    </Flex>
+      </LayoutSection>
+    </header>
   );
 };
 

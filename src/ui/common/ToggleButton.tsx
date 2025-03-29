@@ -1,15 +1,15 @@
 'use client';
 
-import type { ReactNode, ButtonHTMLAttributes } from 'react';
 import styles from '@/ui/common/ToggleButton.module.css';
+import Button from '@/ui/common/Button';
+import type { ButtonProps } from '@/ui/common/Button';
 
-export type ToggleButtonProps = {
+export interface ToggleButtonProps extends Omit<ButtonProps, 'value' | 'onChange'> {
   value: string;
   selected?: boolean;
   onChange?: (value: string) => void;
   disabled?: boolean;
-  children: ReactNode;
-} & Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'value' | 'onChange' | 'disabled' | 'children'>;
+}
 
 const ToggleButton = ({
   value,
@@ -27,7 +27,7 @@ const ToggleButton = ({
   };
 
   return (
-    <button
+    <Button
       type="button"
       className={`${styles.toggleButton} ${selected ? styles.selected : ''} ${className}`}
       onClick={handleClick}
@@ -36,7 +36,7 @@ const ToggleButton = ({
       {...rest}
     >
       {children}
-    </button>
+    </Button>
   );
 };
 

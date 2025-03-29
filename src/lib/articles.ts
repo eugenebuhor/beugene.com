@@ -1,14 +1,14 @@
-import { Prisma, ArticleStatus } from '@prisma/client';
-import type { Article } from '@prisma/client';
 // eslint-disable-next-line camelcase
 import { unstable_cache } from 'next/cache';
+import { ArticleStatus } from '@prisma/client';
+import type { Prisma, Article, Tag } from '@prisma/client';
 import prisma from '@/lib/prisma';
-import { InternalError, NotFoundError, ValidationError } from '@/lib/errors';
+import { InternalError, ValidationError } from '@/lib/errors';
+import { CacheKeys, CacheTags } from '@/constants';
+import { normalizeSearchText } from '@/utils/search';
 
-const GET_ARTICLES_CACHE_KEY = 'get-articles';
-const GET_ARTICLE_BY_SLUG_CACHE_KEY = 'get-article-by-slug';
-const GET_ARTICLES_CACHE_REVALIDATE = 300; // 5 minutes
-const GET_ARTICLE_BY_SLUG_CACHE_REVALIDATE = 300; // 5 minutes
+const GET_ARTICLES_REVALIDATE_TIMEOUT = 300; // 5 minutes
+const GET_ARTICLE_BY_SLUG_REVALIDATE_TIMEOUT = 60; // 1 minutes
 
 const FALLBACK_OFFSET = 0;
 const FALLBACK_LIMIT = 10;
@@ -16,14 +16,49 @@ const MAX_LIMIT = 100;
 const MAX_QUERY_LENGTH = 100;
 const MAX_TAGS = 5;
 
+type OrderBy = 'publishedAt' | 'likes' | 'title' | 'createdAt';
+type Order = 'asc' | 'desc';
+
+const DEFAULT_ARTICLE_SELECT: Prisma.ArticleSelect = {
+  id: true,
+  title: true,
+  slug: true,
+  summary: true,
+  content: true,
+  coverImageUrl: true,
+  timeToRead: true,
+  status: true,
+  likes: true,
+  metaTitle: true,
+  metaDescription: true,
+  publishedAt: true,
+  createdAt: true,
+  updatedAt: true,
+  tags: {
+    select: {
+      id: true,
+      name: true,
+    },
+  },
+};
+
+export type GetArticleBySlugParams = {
+  select?: Prisma.ArticleSelect;
+  slug: Article['slug'];
+};
+
 export type GetArticlesParams = {
   q?: string;
   limit?: number;
   offset?: number;
-  tags?: string[];
+  tags?: Tag['name'][];
+  orderBy?: OrderBy;
+  order?: Order;
+  exclude?: Article['slug'][];
+  select?: Prisma.ArticleSelect;
 };
 
-type PaginatedArticles = {
+export type PaginatedArticles = {
   data: Prisma.ArticleGetPayload<{
     include: { tags: true };
   }>[];
@@ -34,26 +69,22 @@ type PaginatedArticles = {
 
 /* Get Articles */
 
-/**
- * Public function to get articles array.
- *
- * @param params - Optional parameters for querying articles.
- * @returns An array of articles.
- * @throws ValidationError if params validation fails.
- * @throws NotFoundError if no article found.
- * @throws InternalError if database query fails.
- */
-export async function getArticles(params?: GetArticlesParams): Promise<PaginatedArticles> {
+export const getArticles = async (params?: GetArticlesParams): Promise<PaginatedArticles> => {
   const limit = params?.limit !== undefined ? params.limit : FALLBACK_LIMIT;
   const offset = params?.offset !== undefined ? params.offset : FALLBACK_OFFSET;
-  const q = params?.q;
+  const searchQuery = normalizeSearchText(params?.q);
   const tags = params?.tags ?? [];
+  const orderBy: OrderBy = params?.orderBy ?? 'publishedAt';
+  const order: Order = params?.order ?? 'desc';
+  const exclude = params?.exclude ?? [];
+  const select = params?.select ?? DEFAULT_ARTICLE_SELECT;
+
+  const allowedOrderBy: OrderBy[] = ['publishedAt', 'likes', 'title', 'createdAt'];
+  const allowedOrder: Order[] = ['asc', 'desc'];
 
   if (isNaN(limit) || isNaN(offset) || limit < 0 || offset < 0 || limit > MAX_LIMIT) {
     throw new ValidationError('Invalid limit or offset');
   }
-
-  const searchQuery = q ? q.trim() : '';
 
   if (searchQuery && searchQuery.length > MAX_QUERY_LENGTH) {
     throw new ValidationError('Query parameter too long');
@@ -63,34 +94,35 @@ export async function getArticles(params?: GetArticlesParams): Promise<Paginated
     throw new ValidationError(`Too many tags provided, maximum allowed is ${MAX_TAGS}`);
   }
 
-  const result = await _getArticles({ limit, offset, q: searchQuery, tags });
+  if (!allowedOrderBy.includes(orderBy)) {
+    throw new ValidationError(`Invalid sort key. Allowed values are: ${allowedOrderBy.join(', ')}`);
+  }
+
+  if (!allowedOrder.includes(order)) {
+    throw new ValidationError('Invalid sort direction. Allowed values are "asc" and "desc"');
+  }
+
+  const result = await _getArticles({
+    limit,
+    offset,
+    q: searchQuery,
+    tags,
+    orderBy,
+    order,
+    exclude,
+    select,
+  });
 
   if (result === null) {
     throw new InternalError('Internal server error');
-  } else if (result.total === 0) {
-    throw new NotFoundError('No articles found');
   }
 
   return result;
-}
+};
 
-/**
- * Internal function to fetch articles from the database with caching.
- *
- * cache key: get-articles
- * cache options: revalidate every 300 seconds (5 minutes)
- *
- * @param params - Validated parameters for querying articles.
- * @returns Promise<Article[] | null> a promise of an array of articles or null if a database error occurs.
- */
 const _getArticles = unstable_cache(
-  async (params: {
-    limit: number;
-    offset: number;
-    q: string;
-    tags: string[];
-  }): Promise<PaginatedArticles | null> => {
-    const { limit, offset, q: searchQuery, tags } = params;
+  async (params: Required<GetArticlesParams>): Promise<PaginatedArticles | null> => {
+    const { limit, offset, q: searchQuery, tags, orderBy, order, exclude, select } = params;
 
     const whereConditions: Prisma.ArticleWhereInput[] = [{ status: ArticleStatus.PUBLISHED }];
 
@@ -141,6 +173,14 @@ const _getArticles = unstable_cache(
       });
     }
 
+    if (exclude.length > 0) {
+      whereConditions.push({
+        slug: {
+          notIn: exclude,
+        },
+      });
+    }
+
     const whereClause: Prisma.ArticleWhereInput = {
       AND: whereConditions,
     };
@@ -151,11 +191,9 @@ const _getArticles = unstable_cache(
           where: whereClause,
           skip: offset,
           take: limit,
-          include: {
-            tags: true,
-          },
+          select: select || DEFAULT_ARTICLE_SELECT,
           orderBy: {
-            publishedAt: 'desc',
+            [orderBy]: order,
           },
         }),
         prisma.article.count({
@@ -174,65 +212,67 @@ const _getArticles = unstable_cache(
       return null;
     }
   },
-  [GET_ARTICLES_CACHE_KEY],
-  { revalidate: GET_ARTICLES_CACHE_REVALIDATE },
+  [CacheKeys.GET_ARTICLES],
+  {
+    revalidate: GET_ARTICLES_REVALIDATE_TIMEOUT,
+    tags: [CacheTags.ARTICLES],
+  },
 );
 
 /* Get Article by Slug*/
 
-/**
- * Public function to get an article.
- *
- * @param slug - The slug of the article to  fetch.
- * @returns Promise<Article> The article object.
- * @throws NotFoundError if article is not found.
- */
-export async function getArticleBySlug(slug: string): Promise<Article> {
-  if (!slug) {
+export const getArticleBySlug = async (
+  params: GetArticleBySlugParams,
+): Promise<Prisma.ArticleGetPayload<{
+  include: { tags: true };
+}> | null> => {
+  if (!params.slug) {
     throw new ValidationError('Slug is required');
   }
 
-  const article = await _getArticleBySlug(slug);
+  return await _getArticleBySlug(params);
+};
 
-  if (!article) {
-    throw new NotFoundError('Article not found');
-  }
-
-  return article;
-}
-
-/**
- * Internal function to fetch an article by slug from the database with caching.
- *
- * cache key: get-article-by-slug
- * cache options: revalidate every 300 seconds (5 minutes)
- *
- * @param slug - The slug of the article to fetch.
- * @returns Promise<Article | null> a promise of an article or null if a database error occurs.
- */
 const _getArticleBySlug = unstable_cache(
-  async (slug: string): Promise<Article | null> => {
-    if (!slug) {
-      return null;
-    }
+  async (
+    params: GetArticleBySlugParams,
+  ): Promise<Prisma.ArticleGetPayload<{
+    include: { tags: true };
+  }> | null> => {
+    const { slug, select } = params;
+
+    if (!slug) return null;
 
     try {
-      const article = await prisma.article.findFirst({
+      return await prisma.article.findFirst({
         where: {
           slug,
           status: ArticleStatus.PUBLISHED,
         },
-        include: {
-          tags: true,
-        },
+        select: select || DEFAULT_ARTICLE_SELECT,
       });
-
-      return article;
     } catch (error) {
       console.error('Database Error:', error);
       return null;
     }
   },
-  [GET_ARTICLE_BY_SLUG_CACHE_KEY],
-  { revalidate: GET_ARTICLE_BY_SLUG_CACHE_REVALIDATE },
+  [CacheKeys.GET_ARTICLE_BY_SLUG],
+  {
+    revalidate: GET_ARTICLE_BY_SLUG_REVALIDATE_TIMEOUT,
+    tags: [CacheTags.ARTICLE],
+  },
 );
+
+/* Get Article Likes */
+
+export const getArticleLikes = async (id: number): Promise<{ total: number }> => {
+  const likesCount = await prisma.like.count({
+    where: {
+      articleId: id,
+    },
+  });
+
+  return {
+    total: likesCount,
+  };
+};

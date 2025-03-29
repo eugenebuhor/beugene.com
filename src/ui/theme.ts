@@ -69,7 +69,7 @@ export type ThemePaletteKey =
  *
  * Represents the different font-weight options.
  */
-export type TypographyWeight = 'thin' | 'light' | 'regular' | 'medium' | 'bold' | 'black';
+export type TypographyWeight = 'regular' | 'bold';
 
 /**
  * TypographyFamily
@@ -84,14 +84,14 @@ export type TypographyFamily = 'title' | 'subtitle' | 'text';
  * Represents the different typography variants used in the application.
  */
 export type TypographyVariant =
+  | 'title'
   | 'h1'
   | 'h2'
   | 'h3'
   | 'h4'
   | 'h5'
   | 'h6'
-  | 'subtitle1'
-  | 'subtitle2'
+  | 'subtitle'
   | 'body1'
   | 'body2'
   | 'caption'

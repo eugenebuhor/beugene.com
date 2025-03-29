@@ -1,0 +1,35 @@
+[
+  {
+    "title": "Design Systems in React Applications: Best Practices and Guidelines",
+    "slug": "design-systems-in-react-applications",
+    "summary": "The component-based architecture, like React, provides a solid foundation for dynamic user interfaces, but as projects grow, maintaining cohesive design and efficient development becomes increasingly complex. Design systems offer a structured solution by establishing reusable components, guidelines, and best practices, ensuring consistency and streamlining team collaboration. This article explores essential rules and best practices for implementing effective design systems in React applications, providing practical insights based on industry standards.",
+    "coverImageUrl": "",
+    "status": "PUBLISHED",
+    "metaTitle": "Best Practices for Implementing Design Systems in React",
+    "metaDescription": "Learn advanced strategies and guidelines for building scalable and consistent design systems in React applications. Enhance your web development workflow with proven best practices and techniques.",
+    "publishedAt": "2024-11-01T00:00:00.000Z",
+    "tags": ["React", "Design Systems", "Web Development", "Styled Components", "Component Architecture"]
+  },
+  {
+    "title": "Exploring Micro-Frontend Architecture",
+    "slug": "exploring-micro-frontend-architecture",
+    "summary": "Micro-frontend architecture breaks down complex web applications into modular, independently deployable units. This approach brings scalability, team autonomy, and flexibility to frontend development, allowing each feature to evolve separately without affecting the rest. In this guide, we dive into core principles, integration techniques like Module Federation, and practical advice for performance optimization and managing shared state — all essential to building efficient, maintainable micro-frontend systems.",
+    "coverImageUrl": "",
+    "status": "PUBLISHED",
+    "metaTitle": "Exploring Micro-Frontend Architecture",
+    "metaDescription": "Discover advanced best practices and industry-leading features of micro-frontend architecture. Learn integration strategies, design principles, and performance optimizations to build scalable and maintainable web applications.",
+    "publishedAt": "2024-11-04T00:00:00.000Z",
+    "tags": ["Micro-Frontend", "Web Development", "Frontend Architecture"]
+  },
+  {
+    "title": "GraphQL vs. REST: Choosing the Right API for Your Project",
+    "slug": "graphql-vs-rest-choosing-the-right-api-for-your-project",
+    "summary": "In the dynamic realm of web development, selecting the appropriate API architecture is pivotal to the success of your project. Among the most debated choices today are GraphQL and REST APIs, each offering distinct advantages and challenges. This article delves into the advanced nuances of both, providing actionable insights to help you determine which approach aligns best with your project’s requirements, particularly through the lens of a staking platform.",
+    "coverImageUrl": "",
+    "status": "PUBLISHED",
+    "metaTitle": "GraphQL vs. REST: Choosing the Right API for Your Project",
+    "metaDescription": "Explore the key differences between GraphQL and REST APIs, with practical examples and best practices for selecting the right API architecture for your web development projects.",
+    "publishedAt": "2024-11-05T00:00:00.000Z",
+    "tags": ["GraphQL", "REST", "API", "Web Development", "Data Fetching"]
+  }
+]

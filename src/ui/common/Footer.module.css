@@ -1,11 +1,29 @@
 .footer {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
     width: 100%;
     min-height: var(--size-footer-height);
     min-width: var(--size-min-width);
 }
 
-.layoutContent {
+.layout {
+    gap: 32px;
     border-top: 1px solid var(--color-border-light);
     padding-top: 25px;
     padding-bottom: 25px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    align-items: baseline;
+}
+
+.socialLinks {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
 }

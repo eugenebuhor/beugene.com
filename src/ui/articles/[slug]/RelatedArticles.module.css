@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    margin-top: 5rem;
+}
+
+.skeleton,
+.container .nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.article {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.85rem 1.15rem;
+    border-radius: var(--border-radius-md);
+    background-color: var(--color-main-surface-secondary);
+    color: var(--color-text-primary);
+}
+
+.article p {
+    margin: 0;
+}

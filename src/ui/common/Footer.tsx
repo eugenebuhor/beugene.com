@@ -1,43 +1,46 @@
 import Link from 'next/link';
 import { FaGithub, FaLinkedinIn } from 'react-icons/fa';
-import { LayoutSectionContent } from '@/ui/common/Layouts';
-import Flex from '@/ui/common/Flex';
+import { LayoutSection } from '@/ui/common/Layouts';
 import styles from '@/ui/common/Footer.module.css';
 import Typography from '@/ui/common/Typography';
 import ThemeSwitch from '@/ui/common/ThemeSwitch';
-import { LINKS } from '@/constants';
+import { Links } from '@/constants';
 
 const Footer = () => {
   return (
-    <Flex component="footer" justifyContent="center" className={styles.footer}>
-      <LayoutSectionContent gap={32} className={styles.layoutContent}>
-        <Flex justifyContent="space-between" flexWrap="nowrap">
-          <Flex component="nav" gap={15} alignItems="center">
-            <Link href={LINKS.GITHUB} target="_blank">
-              <Typography variant="subtitle1" color="text-primary" verticalAlign="middle">
+    <footer className={styles.footer}>
+      <LayoutSection component="div" className={styles.layout}>
+        <div className={styles.row}>
+          <nav className={styles.socialLinks}>
+            <Link href={Links.GITHUB} target="_blank" aria-label="GitHub" rel="noopener noreferrer">
+              <Typography variant="h6" component="h6" color="text-primary" verticalAlign="middle">
                 <FaGithub viewBox="0 0 496 496" />
               </Typography>
             </Link>
-            <Link href={LINKS.LINKED_IN} target="_blank">
-              <Typography variant="subtitle1" color="text-primary" verticalAlign="middle">
+            <Link
+              href={Links.LINKED_IN}
+              target="_blank"
+              aria-label="LinkedIn"
+              rel="noopener noreferrer"
+            >
+              <Typography variant="h6" component="h6" color="text-primary" verticalAlign="middle">
                 <FaLinkedinIn viewBox="0 0 448 448" />
               </Typography>
             </Link>
-          </Flex>
+          </nav>
           <ThemeSwitch />
-        </Flex>
-        <Flex justifyContent="space-between" alignItems="baseline" flexWrap="nowrap">
+        </div>
+        <div className={styles.row}>
           <Typography variant="caption" color="text-secondary" fontFamily="subtitle">
             Berlin, Germany
           </Typography>
-          <Link href="/license">
-            <Typography variant="caption" color="text-secondary" fontFamily="subtitle">
-              Copyright © 2024
-            </Typography>
-          </Link>
-        </Flex>
-      </LayoutSectionContent>
-    </Flex>
+
+          <Typography variant="caption" color="text-secondary" fontFamily="subtitle">
+            © 2025 Yevhenii Buhor. All rights reserved.
+          </Typography>
+        </div>
+      </LayoutSection>
+    </footer>
   );
 };
 
