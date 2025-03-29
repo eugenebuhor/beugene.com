@@ -31,7 +31,7 @@ export type SearchParams = {
 };
 
 type ArticlesPageProps = {
-  searchParams: SearchParams;
+  searchParams: Promise<SearchParams>;
 };
 
 const ArticlesPage = async (props: ArticlesPageProps) => {

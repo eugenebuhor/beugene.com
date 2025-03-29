@@ -80,8 +80,8 @@ type Params = {
 type SearchParams = ArticlePageSearchParams;
 
 type ArticleSlugPageProps = {
-  params: Params;
-  searchParams: SearchParams;
+  params: Promise<Params>;
+  searchParams: Promise<SearchParams>;
 };
 
 const ArticleSlugPage = async (props: ArticleSlugPageProps) => {
