@@ -25,7 +25,13 @@ const ArticleMeta = ({ title, publishedAt, timeToRead, articleLink = '' }: Artic
         fontFamily="title"
         trim={4}
       >
-        {articleLink ? <Link href={articleLink}>{title}</Link> : title}
+        {articleLink ? (
+          <Link href={articleLink} prefetch>
+            {title}
+          </Link>
+        ) : (
+          title
+        )}
       </Typography>
 
       <Typography
