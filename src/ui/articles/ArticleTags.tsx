@@ -1,7 +1,7 @@
 import type { Tag } from '@prisma/client';
-import { stringifyQueryString } from '@/utils/queryString';
 import styles from '@/ui/articles/ArticleTags.module.css';
 import { Skeleton, Tag as TagLink } from '@/ui/common';
+import { stringifyArticlesSearchParams } from '@/ui/articles/utils/articlesSearch';
 
 type ArticleTagsProps = {
   tags: Tag[];
@@ -9,7 +9,7 @@ type ArticleTagsProps = {
 
 const ArticleTags = ({ tags }: ArticleTagsProps) => {
   const getRedirectLink = (tagName: string) => {
-    const queryStringWithParams = stringifyQueryString({ tags: [tagName] });
+    const queryStringWithParams = stringifyArticlesSearchParams({ tags: [tagName] });
     return `/articles/?${queryStringWithParams}`;
   };
 

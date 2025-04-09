@@ -15,6 +15,7 @@ const FALLBACK_LIMIT = 10;
 const MAX_LIMIT = 100;
 const MAX_QUERY_LENGTH = 100;
 const MAX_TAGS = 5;
+const MAX_OFFSET = 10000;
 
 type OrderBy = 'publishedAt' | 'likes' | 'title' | 'createdAt';
 type Order = 'asc' | 'desc';
@@ -82,7 +83,14 @@ export const getArticles = async (params?: GetArticlesParams): Promise<Paginated
   const allowedOrderBy: OrderBy[] = ['publishedAt', 'likes', 'title', 'createdAt'];
   const allowedOrder: Order[] = ['asc', 'desc'];
 
-  if (isNaN(limit) || isNaN(offset) || limit < 0 || offset < 0 || limit > MAX_LIMIT) {
+  if (
+    isNaN(limit) ||
+    isNaN(offset) ||
+    limit < 0 ||
+    offset < 0 ||
+    limit > MAX_LIMIT ||
+    offset > MAX_OFFSET
+  ) {
     throw new ValidationError('Invalid limit or offset');
   }
 

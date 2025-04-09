@@ -1,16 +1,26 @@
 import queryString from 'query-string';
+import type { ParseOptions, StringifiableRecord, ParsedQuery } from 'query-string';
 
-type SearchParams = Record<string, string | string[] | undefined>;
-
-export const parseSearchParams = <T extends Record<string, string | string[] | undefined>>(
-  searchParams: SearchParams,
+export const parseSearchParams = <T extends ParsedQuery>(
+  searchParams: StringifiableRecord,
+  types?: ParseOptions['types'],
 ): T => {
   const stringifiedSearchParams = queryString.stringify(searchParams, { encode: false });
-  const parsedParams = queryString.parse(stringifiedSearchParams, { arrayFormat: 'bracket' });
+  const parsedParams = queryString.parse(
+    stringifiedSearchParams,
+    types
+      ? {
+          arrayFormat: 'bracket',
+          types,
+        }
+      : {
+          arrayFormat: 'bracket',
+        },
+  );
 
   return parsedParams as T;
 };
 
-export const stringifyQueryString = (searchParams: Record<string, string | string[]>) => {
+export const stringifyQueryString = (searchParams: StringifiableRecord): string => {
   return queryString.stringify(searchParams, { arrayFormat: 'bracket' });
 };
