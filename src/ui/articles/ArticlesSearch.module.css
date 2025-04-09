@@ -24,3 +24,7 @@
   pointer-events: none;
   transition: opacity 0.2s ease-in-out;
 }
+
+.searchInput .inputClearButton {
+  font-size: var(--font-size-body2);
+}

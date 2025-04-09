@@ -6,7 +6,7 @@ import { Typography, Divider } from '@/ui/common';
 export const revalidate = 300; // 5 minutes
 
 const HomePage = async () => {
-  const { data: articles, total } = await getArticles({
+  const { data: articles } = await getArticles({
     limit: 5,
     offset: 0,
     select: {
@@ -20,7 +20,7 @@ const HomePage = async () => {
     },
   });
 
-  const noResults = total === 0 || articles.length === 0;
+  const noResults = articles.length === 0;
 
   return noResults ? (
     <Typography className={styles.noResults}>No articles found.</Typography>

@@ -3,101 +3,110 @@
 import { useState, useEffect, useCallback, useTransition, useRef } from 'react';
 import type { ChangeEvent } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { debounce } from 'lodash';
+import { debounce, isEqual } from 'lodash';
 import clsx from 'clsx';
 import type { Tag } from '@prisma/client';
 import { IoClose as ClearIcon } from 'react-icons/io5';
 import styles from './ArticlesSearch.module.css';
-import { Button, Input, Tag as TagLink } from '@/ui/common';
-import { parseSearchParams, stringifyQueryString } from '@/utils/queryString';
-import SpinningLoader from '@/ui/common/SpinningLoader';
+import { Button, Input, Tag as TagLink, SpinningLoader } from '@/ui/common';
+import {
+  parseArticlesSearchParams,
+  stringifyArticlesSearchParams,
+} from '@/ui/articles/utils/articlesSearch';
 
 interface ArticlesSearchProps {
   tags: Tag[];
   className?: string;
   initialQuery?: string;
-  initialSelectedTags?: string[];
+  initialInputTags?: string[];
 }
 
 const MAX_QUERY_LENGTH = 50;
 
-export default function ArticlesSearch({
+const ArticlesSearch = ({
   tags,
   className,
   initialQuery = '',
-  initialSelectedTags = [],
-}: ArticlesSearchProps) {
+  initialInputTags = [],
+}: ArticlesSearchProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
 
-  const [query, setQuery] = useState<string>(initialQuery);
-  const [selectedTags, setSelectedTags] = useState<string[]>(initialSelectedTags);
+  const [inputQuery, setInputQuery] = useState<string>(initialQuery);
+  const [inputTags, setInputTags] = useState<string[]>(initialInputTags);
 
-  const queryRef = useRef(query);
-  const selectedTagsRef = useRef(selectedTags);
+  const navigateRef = useRef<(query: string, tags: string[]) => void>(() => {});
+  const inputTagsRef = useRef<string[]>(inputTags);
+
+  useEffect(() => {
+    navigateRef.current = (query: string, tags: string[]) => {
+      const currentParams = parseArticlesSearchParams(Object.fromEntries(searchParams.entries()));
+
+      const updatedParams: Record<string, string | string[]> = {
+        ...currentParams,
+        page: '1', // Reset to page 1 when search changes
+      };
+
+      if (query) {
+        updatedParams.q = query;
+      } else {
+        delete updatedParams.q;
+      }
+
+      if (tags.length > 0) {
+        updatedParams.tags = tags;
+      } else {
+        delete updatedParams.tags;
+      }
+
+      const updatedQueryString = stringifyArticlesSearchParams(updatedParams);
+      const currentQueryString = stringifyArticlesSearchParams(currentParams);
+
+      if (currentQueryString !== updatedQueryString) {
+        startTransition(() => {
+          router.push(`/articles?${updatedQueryString}`);
+        });
+      }
+    };
+  }, [searchParams, router, startTransition]);
 
   const debouncedNavigate = useCallback(
-    debounce((newQuery: string, newTags: string[]) => {
-      startTransition(() => {
-        const currentParams = parseSearchParams(Object.fromEntries(searchParams.entries()));
-
-        const updatedParams: Record<string, string | string[]> = {
-          ...currentParams,
-          page: '1', // Reset to page 1 when search changes
-        };
-
-        if (newQuery) {
-          updatedParams.q = newQuery;
-        } else {
-          delete updatedParams.q;
-        }
-
-        if (newTags.length > 0) {
-          updatedParams.tags = newTags;
-        } else {
-          delete updatedParams.tags;
-        }
-
-        const queryStr = stringifyQueryString(updatedParams);
-        router.push(`/articles?${queryStr}`);
-      });
+    debounce((query: string, tags: string[]) => {
+      if (navigateRef.current) {
+        navigateRef.current(query, tags);
+      }
     }, 300),
-    [searchParams, router, startTransition],
+    [],
   );
 
   const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const newQuery = e.target.value.slice(0, MAX_QUERY_LENGTH);
-
-    queryRef.current = newQuery;
-    setQuery(newQuery);
-    debouncedNavigate(newQuery, selectedTags);
+    const value = e.target.value;
+    const newQuery = value.length > MAX_QUERY_LENGTH ? value.slice(0, MAX_QUERY_LENGTH) : value;
+    setInputQuery(newQuery);
+    debouncedNavigate(newQuery.trim(), inputTags);
   };
 
   const handleTagClick = (tagName: string) => {
-    const newSelectedTags = selectedTags.includes(tagName)
-      ? selectedTags.filter((tag) => tag !== tagName)
-      : [...selectedTags, tagName];
+    const newInputTags = inputTags.includes(tagName)
+      ? inputTags.filter((tag) => tag !== tagName)
+      : [...inputTags, tagName];
 
-    selectedTagsRef.current = newSelectedTags;
-    setSelectedTags(newSelectedTags);
-    debouncedNavigate(query, newSelectedTags);
+    setInputTags(newInputTags);
+    inputTagsRef.current = newInputTags;
+    debouncedNavigate(inputQuery, newInputTags);
   };
 
-  const handleClearAll = () => {
-    setSelectedTags([]);
-    debouncedNavigate(query, []);
+  const handleClearAllTags = () => {
+    setInputTags([]);
+    inputTagsRef.current = [];
+    debouncedNavigate(inputQuery, []);
   };
 
-  useEffect(() => {
-    if (initialQuery !== queryRef.current) {
-      setQuery(initialQuery);
-    }
-
-    if (initialSelectedTags !== selectedTagsRef.current) {
-      setSelectedTags(initialSelectedTags);
-    }
-  }, [initialQuery, initialSelectedTags]);
+  const handleClearQuery = () => {
+    setInputQuery('');
+    debouncedNavigate('', inputTags);
+  };
 
   useEffect(() => {
     return () => {
@@ -105,17 +114,40 @@ export default function ArticlesSearch({
     };
   }, [debouncedNavigate]);
 
+  useEffect(() => {
+    // Update input tags and query if tags change externally
+    if (!isEqual(inputTagsRef.current, initialInputTags)) {
+      setInputTags(initialInputTags);
+      setInputQuery('');
+      inputTagsRef.current = initialInputTags;
+    }
+  }, [initialInputTags]);
+
   return (
     <div className={clsx(styles.searchBox, className)}>
       <Input
         type="text"
         placeholder="Search articles..."
-        value={query}
+        value={inputQuery}
         onChange={handleQueryChange}
         className={styles.searchInput}
         fullWidth
         aria-label="Search articles"
-        endAdornment={isPending && <SpinningLoader />}
+        endAdornment={
+          isPending ? (
+            <SpinningLoader />
+          ) : inputQuery?.length ? (
+            <Button
+              size="small"
+              variant="icon"
+              className={styles.inputClearButton}
+              onClick={handleClearQuery}
+              aria-label="Clear input query"
+            >
+              <ClearIcon />
+            </Button>
+          ) : null
+        }
       />
 
       {tags.length > 0 && (
@@ -125,19 +157,19 @@ export default function ArticlesSearch({
               key={tag.id}
               onClick={() => handleTagClick(tag.name)}
               name={tag.name}
-              selected={selectedTags.includes(tag.name)}
+              selected={inputTags.includes(tag.name)}
               disabled={isPending}
               aria-label={`Filter articles by tag: ${tag.name}`}
             />
           ))}
-          {selectedTags.length > 0 && (
+          {inputTags.length > 0 && (
             <Button
               className={styles.clearAllButton}
-              onClick={handleClearAll}
+              onClick={handleClearAllTags}
               disabled={isPending}
               variant="text"
               size="small"
-              aria-label="Clear all selected tags"
+              aria-label="Clear input tags"
             >
               <ClearIcon />
               &nbsp;<>Clear All</>
@@ -147,4 +179,6 @@ export default function ArticlesSearch({
       )}
     </div>
   );
-}
+};
+
+export default ArticlesSearch;
