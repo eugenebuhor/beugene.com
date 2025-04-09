@@ -21,6 +21,8 @@ export { default as Skeleton } from './Skeleton';
 export * from './Skeleton';
 export { default as ScrollHandler } from './ScrollHandler';
 export * from './ScrollHandler';
+export { default as SpinningLoader } from './SpinningLoader';
+export * from './SpinningLoader';
 export { default as SyntaxHighlighter } from './SyntaxHighlighter';
 export * from './SyntaxHighlighter';
 export { default as MarkdownRenderer } from './MarkdownRenderer';

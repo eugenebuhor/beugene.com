@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useTransition, useRef } from 'react';
+import { useState, useEffect, useCallback, useTransition } from 'react';
 import type { ChangeEvent } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { debounce } from 'lodash';
@@ -8,9 +8,8 @@ import clsx from 'clsx';
 import type { Tag } from '@prisma/client';
 import { IoClose as ClearIcon } from 'react-icons/io5';
 import styles from './ArticlesSearch.module.css';
-import { Button, Input, Tag as TagLink } from '@/ui/common';
+import { Button, Input, Tag as TagLink, SpinningLoader } from '@/ui/common';
 import { parseSearchParams, stringifyQueryString } from '@/utils/queryString';
-import SpinningLoader from '@/ui/common/SpinningLoader';
 
 interface ArticlesSearchProps {
   tags: Tag[];
@@ -31,11 +30,8 @@ export default function ArticlesSearch({
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
 
-  const [query, setQuery] = useState<string>(initialQuery);
-  const [selectedTags, setSelectedTags] = useState<string[]>(initialSelectedTags);
-
-  const queryRef = useRef(query);
-  const selectedTagsRef = useRef(selectedTags);
+  const [inputQuery, setInputQuery] = useState<string>(initialQuery);
+  const [inputTags, setInputTags] = useState<string[]>(initialSelectedTags);
 
   const debouncedNavigate = useCallback(
     debounce((newQuery: string, newTags: string[]) => {
@@ -68,43 +64,34 @@ export default function ArticlesSearch({
 
   const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newQuery = e.target.value.slice(0, MAX_QUERY_LENGTH);
+    setInputQuery(newQuery);
 
-    queryRef.current = newQuery;
-    setQuery(newQuery);
-    debouncedNavigate(newQuery, selectedTags);
+    const newQueryTrimmed = newQuery.trim();
+    const inputQueryTrimmed = inputQuery.trim();
+
+    if (newQueryTrimmed !== inputQueryTrimmed) {
+      debouncedNavigate(newQueryTrimmed, inputTags);
+    }
   };
 
   const handleTagClick = (tagName: string) => {
-    const newSelectedTags = selectedTags.includes(tagName)
-      ? selectedTags.filter((tag) => tag !== tagName)
-      : [...selectedTags, tagName];
+    const newSelectedTags = inputTags.includes(tagName)
+      ? inputTags.filter((tag) => tag !== tagName)
+      : [...inputTags, tagName];
 
-    selectedTagsRef.current = newSelectedTags;
-    setSelectedTags(newSelectedTags);
-    debouncedNavigate(query, newSelectedTags);
+    setInputTags(newSelectedTags);
+    debouncedNavigate(inputQuery, newSelectedTags);
   };
 
   const handleClearAllTags = () => {
-    setSelectedTags([]);
-    selectedTagsRef.current = [];
-    debouncedNavigate(query, []);
+    setInputTags([]);
+    debouncedNavigate(inputQuery, []);
   };
 
   const handleClearQuery = () => {
-    setQuery('');
-    queryRef.current = '';
-    debouncedNavigate('', selectedTags);
+    setInputQuery('');
+    debouncedNavigate('', inputTags);
   };
-
-  useEffect(() => {
-    if (initialQuery !== queryRef.current) {
-      setQuery(initialQuery);
-    }
-
-    if (initialSelectedTags !== selectedTagsRef.current) {
-      setSelectedTags(initialSelectedTags);
-    }
-  }, [initialQuery, initialSelectedTags]);
 
   useEffect(() => {
     return () => {
@@ -117,7 +104,7 @@ export default function ArticlesSearch({
       <Input
         type="text"
         placeholder="Search articles..."
-        value={query}
+        value={inputQuery}
         onChange={handleQueryChange}
         className={styles.searchInput}
         fullWidth
@@ -125,12 +112,13 @@ export default function ArticlesSearch({
         endAdornment={
           isPending ? (
             <SpinningLoader />
-          ) : query?.trim()?.length ? (
+          ) : inputQuery?.trim()?.length ? (
             <Button
               size="small"
               variant="icon"
               className={styles.inputClearButton}
               onClick={handleClearQuery}
+              aria-label="Clear input query"
             >
               <ClearIcon />
             </Button>
@@ -145,19 +133,19 @@ export default function ArticlesSearch({
               key={tag.id}
               onClick={() => handleTagClick(tag.name)}
               name={tag.name}
-              selected={selectedTags.includes(tag.name)}
+              selected={inputTags.includes(tag.name)}
               disabled={isPending}
               aria-label={`Filter articles by tag: ${tag.name}`}
             />
           ))}
-          {selectedTags.length > 0 && (
+          {inputTags.length > 0 && (
             <Button
               className={styles.clearAllButton}
               onClick={handleClearAllTags}
               disabled={isPending}
               variant="text"
               size="small"
-              aria-label="Clear all selected tags"
+              aria-label="Clear input tags"
             >
               <ClearIcon />
               &nbsp;<>Clear All</>
