@@ -122,7 +122,7 @@ html[data-theme='light'] {
     --color-border-medium: rgba(0, 0, 0, 0.15);
     --color-border-heavy: rgba(0, 0, 0, 0.2);
     --color-border-x-heavy: rgba(0, 0, 0, 0.25);
-    --color-border-sharp: rgba(0, 0, 0, 0.05);
+    --color-border-sharp: rgba(0, 0, 0, 0.5);
     --color-main-surface-background: hsla(0, 0%, 100%, 0.95);
     --color-main-surface-primary: var(--color-white);
     --color-main-surface-secondary: var(--color-gray-50);
@@ -147,7 +147,7 @@ html[data-theme='dark'] {
     --color-border-medium: hsla(0, 0%, 100%, 0.15);
     --color-border-heavy: hsla(0, 0%, 100%, 0.2);
     --color-border-x-heavy: hsla(0, 0%, 100%, 0.25);
-    --color-border-sharp: hsla(0, 0%, 100%, 0.05);
+    --color-border-sharp: hsla(0, 0%, 100%, 0.5);
     --color-main-surface-background: rgba(33, 33, 33, 0.9);
     --color-main-surface-primary: var(--color-gray-800);
     --color-main-surface-secondary: var(--color-gray-750);

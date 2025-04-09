@@ -70,7 +70,7 @@ const AboutPage = () => {
       </Typography>
 
       <Typography variant="subtitle" component="p">
-        Whether it&apos;s creating a dynamic user experience, architecting resilient backend
+        Whether it&apos;s creating a dynamic user experience, architecting resilient frontend
         systems, or integrating the latest tech trends, I&apos;m always exploring what&apos;s next,
         incorporating emerging technologies to keep your product one step ahead.
       </Typography>

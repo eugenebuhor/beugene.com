@@ -18,3 +18,9 @@
   color: var(--color-text-secondary);
   margin: 0;
 }
+
+.searching {
+  opacity: 0.7;
+  pointer-events: none;
+  transition: opacity 0.2s ease-in-out;
+}
