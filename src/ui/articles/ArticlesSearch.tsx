@@ -115,9 +115,10 @@ const ArticlesSearch = ({
   }, [debouncedNavigate]);
 
   useEffect(() => {
-    // Update input tags if they change externally
+    // Update input tags and query if tags change externally
     if (!isEqual(inputTagsRef.current, initialInputTags)) {
       setInputTags(initialInputTags);
+      setInputQuery('');
       inputTagsRef.current = initialInputTags;
     }
   }, [initialInputTags]);
