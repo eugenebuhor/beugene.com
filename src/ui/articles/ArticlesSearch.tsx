@@ -84,9 +84,16 @@ export default function ArticlesSearch({
     debouncedNavigate(query, newSelectedTags);
   };
 
-  const handleClearAll = () => {
+  const handleClearAllTags = () => {
     setSelectedTags([]);
+    selectedTagsRef.current = [];
     debouncedNavigate(query, []);
+  };
+
+  const handleClearQuery = () => {
+    setQuery('');
+    queryRef.current = '';
+    debouncedNavigate('', selectedTags);
   };
 
   useEffect(() => {
@@ -115,7 +122,20 @@ export default function ArticlesSearch({
         className={styles.searchInput}
         fullWidth
         aria-label="Search articles"
-        endAdornment={isPending && <SpinningLoader />}
+        endAdornment={
+          isPending ? (
+            <SpinningLoader />
+          ) : query?.trim()?.length ? (
+            <Button
+              size="small"
+              variant="icon"
+              className={styles.inputClearButton}
+              onClick={handleClearQuery}
+            >
+              <ClearIcon />
+            </Button>
+          ) : null
+        }
       />
 
       {tags.length > 0 && (
@@ -133,7 +153,7 @@ export default function ArticlesSearch({
           {selectedTags.length > 0 && (
             <Button
               className={styles.clearAllButton}
-              onClick={handleClearAll}
+              onClick={handleClearAllTags}
               disabled={isPending}
               variant="text"
               size="small"
