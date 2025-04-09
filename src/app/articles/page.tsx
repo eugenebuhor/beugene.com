@@ -69,7 +69,7 @@ const ArticlesPage = async (props: ArticlesPageProps) => {
         className={styles.searchBox}
         tags={topTags}
         initialQuery={q}
-        initialSelectedTags={tags}
+        initialInputTags={tags}
       />
 
       {articles.length === 0 ? (

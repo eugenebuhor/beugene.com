@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useTransition, useRef } from 'react';
 import type { ChangeEvent } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { debounce } from 'lodash';
+import { debounce, isEqual } from 'lodash';
 import clsx from 'clsx';
 import type { Tag } from '@prisma/client';
 import { IoClose as ClearIcon } from 'react-icons/io5';
@@ -18,7 +18,7 @@ interface ArticlesSearchProps {
   tags: Tag[];
   className?: string;
   initialQuery?: string;
-  initialSelectedTags?: string[];
+  initialInputTags?: string[];
 }
 
 const MAX_QUERY_LENGTH = 50;
@@ -27,16 +27,17 @@ const ArticlesSearch = ({
   tags,
   className,
   initialQuery = '',
-  initialSelectedTags = [],
+  initialInputTags = [],
 }: ArticlesSearchProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
 
   const [inputQuery, setInputQuery] = useState<string>(initialQuery);
-  const [inputTags, setInputTags] = useState<string[]>(initialSelectedTags);
+  const [inputTags, setInputTags] = useState<string[]>(initialInputTags);
 
   const navigateRef = useRef<(query: string, tags: string[]) => void>(() => {});
+  const inputTagsRef = useRef<string[]>(inputTags);
 
   useEffect(() => {
     navigateRef.current = (query: string, tags: string[]) => {
@@ -87,16 +88,18 @@ const ArticlesSearch = ({
   };
 
   const handleTagClick = (tagName: string) => {
-    const newSelectedTags = inputTags.includes(tagName)
+    const newInputTags = inputTags.includes(tagName)
       ? inputTags.filter((tag) => tag !== tagName)
       : [...inputTags, tagName];
 
-    setInputTags(newSelectedTags);
-    debouncedNavigate(inputQuery, newSelectedTags);
+    setInputTags(newInputTags);
+    inputTagsRef.current = newInputTags;
+    debouncedNavigate(inputQuery, newInputTags);
   };
 
   const handleClearAllTags = () => {
     setInputTags([]);
+    inputTagsRef.current = [];
     debouncedNavigate(inputQuery, []);
   };
 
@@ -110,6 +113,14 @@ const ArticlesSearch = ({
       debouncedNavigate.cancel();
     };
   }, [debouncedNavigate]);
+
+  useEffect(() => {
+    // Update input tags if they change externally
+    if (!isEqual(inputTagsRef.current, initialInputTags)) {
+      setInputTags(initialInputTags);
+      inputTagsRef.current = initialInputTags;
+    }
+  }, [initialInputTags]);
 
   return (
     <div className={clsx(styles.searchBox, className)}>
